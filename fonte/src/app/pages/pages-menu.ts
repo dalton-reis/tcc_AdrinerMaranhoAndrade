@@ -17,6 +17,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     group: true,
   },
   {
+    title: 'Code Execution',
+    icon: 'code',
+    link: '/pages/code-execution',
+  },
+  {
     title: 'Layout',
     icon: 'layout-outline',
     children: [
