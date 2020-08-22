@@ -1,5 +1,7 @@
+import { ToolbarItem } from './toolbar-item';
+
 export interface GraphicEngine {
 
-  init(parent: HTMLDivElement);
+  getToolbar(): ToolbarItem[];
 
 }

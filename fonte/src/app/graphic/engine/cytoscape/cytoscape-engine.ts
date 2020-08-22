@@ -1,21 +1,29 @@
 import cytoscape from 'cytoscape';
 import { GraphicEngine } from '../graphic-engine';
+import { CytoscapeToolbar } from './cytoscape-toolbar';
+import { ToolbarItem } from '../toolbar-item';
 
 export class CytoscapeEngine implements GraphicEngine {
 
   cy = null;
+  toolbar: ToolbarItem[] = [];
 
-  init(parent: HTMLDivElement) {
+  constructor(parent) {
+    this.init(parent);
+  }
+
+  private init(parent: HTMLDivElement) {
     if (!parent) {
       throw Error('A parent should be defined.');
     }
+    parent.style.height = '100%';
     this.cy = cytoscape({
       // very commonly used options
       container: parent,
       elements: [{
         group: 'nodes',
         data: { weight: 75 },
-        position: { x: 200, y: 200 }
+        position: { x: 400, y: 200 },
       }],
       style: [ /* ... */ ],
       layout: { name: 'grid' /* , ... */ },
@@ -50,8 +58,11 @@ export class CytoscapeEngine implements GraphicEngine {
       pixelRatio: 'auto'
     });
 
-    this.cy.resize();
-    console.log(this.cy);
+    this.toolbar = CytoscapeToolbar.create(this.cy);
+  }
+
+  getToolbar() {
+    return this.toolbar;
   }
 
 }

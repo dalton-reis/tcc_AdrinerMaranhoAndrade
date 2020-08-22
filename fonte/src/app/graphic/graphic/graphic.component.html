@@ -1,3 +1,8 @@
+<div class="graphic-toolbar">
+  <div *ngFor="let toolbarItem of graphicToolbar; trackBy: toolbarId">
+    <button (click)="toolbarItem.action()">{{toolbarItem.label}}</button>
+  </div>
+</div>
 <div class="graphic-container">
   <div #graphicContainer></div>
 </div>

@@ -6,15 +6,15 @@ export class EngineProvider {
   private EngineProvider() {}
 
   private static ENGINES = {
-    'cytoscape': () => new CytoscapeEngine(),
+    'cytoscape': parent => new CytoscapeEngine(parent),
   };
 
-  static get(engineName: string): GraphicEngine {
+  static create(engineName: string, parent: HTMLDivElement): GraphicEngine {
     const engineProvider = this.ENGINES[engineName];
     if (!engineProvider) {
       throw Error(`Engine not specified: ${engineName}`);
     }
-    return engineProvider();
+    return engineProvider(parent);
   }
 
   static default(): string {
