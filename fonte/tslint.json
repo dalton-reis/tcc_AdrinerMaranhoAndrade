@@ -106,12 +106,14 @@
       true,
       "attribute",
       "ngx",
+      "smalg",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
       "ngx",
+      "smalg",
       "kebab-case"
     ],
     "ban": [
