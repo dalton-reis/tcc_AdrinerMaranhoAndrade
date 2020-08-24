@@ -18,6 +18,7 @@ export class MonacoEditor {
     this.editor = monaco.editor.create(parent, {
       value: 'function hello() {\n\talert("Hello world!");\n}',
       language: config.language,
+      automaticLayout: true
     });
   }
 
