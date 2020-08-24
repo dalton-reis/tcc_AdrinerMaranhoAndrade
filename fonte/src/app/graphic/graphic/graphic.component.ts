@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input, AfterViewInit, ElementRef } from '@angular/core';
 import { GraphicEngine } from '../engine/graphic-engine';
-import { EngineProvider } from '../engine/engine-provider';
+import { GraphicEngineProvider } from '../engine/graphic-engine-provider';
 import { ToolbarItem } from '../engine/toolbar-item';
 
 @Component({
@@ -10,7 +10,7 @@ import { ToolbarItem } from '../engine/toolbar-item';
 })
 export class GraphicComponent implements AfterViewInit {
 
-  @Input() engineType: string = EngineProvider.default();
+  @Input() engineType: string = GraphicEngineProvider.default();
   @ViewChild('graphicContainer') parentContainer: ElementRef;
 
   graphicEngine: GraphicEngine;
@@ -19,7 +19,7 @@ export class GraphicComponent implements AfterViewInit {
   constructor() { }
 
   ngAfterViewInit(): void {
-    this.graphicEngine = EngineProvider.create(this.engineType, this.parentContainer.nativeElement);
+    this.graphicEngine = GraphicEngineProvider.create(this.engineType, this.parentContainer.nativeElement);
     // Avoid ExpressionChangedAfterItHasBeenCheckedError as the logic is relied on ngAfterViewInit
     setTimeout(() => this.init());
   }

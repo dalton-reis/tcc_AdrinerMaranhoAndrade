@@ -1,8 +1,8 @@
-import { ToolbarItem } from "../toolbar-item";
+import { ToolbarItem } from '../toolbar-item';
 
 export class CytoscapeToolbar {
 
-  private CytoscapeToolbar() {}
+  private constructor() {}
 
   static create(cy): ToolbarItem[] {
     return [{

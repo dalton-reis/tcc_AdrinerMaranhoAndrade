@@ -27,6 +27,11 @@
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
                 "output": "/assets/img/markers"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/monaco-editor/min/vs/",
+                "output": "./vs"
               }
             ],
             "styles": [
@@ -84,6 +89,11 @@
           "options": {
             "browserTarget": "ngx-admin-demo:build"
           },
+          "assets": [{
+            "glob": "**/*",
+            "input": "./node_modules/monaco-editor/min/vs/",
+            "output": "./vs"
+          }],
           "configurations": {
             "production": {
               "browserTarget": "ngx-admin-demo:build:production"

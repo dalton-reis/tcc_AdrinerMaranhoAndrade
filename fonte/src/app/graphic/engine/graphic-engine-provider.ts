@@ -1,9 +1,9 @@
 import { CytoscapeEngine } from './cytoscape/cytoscape-engine';
 import { GraphicEngine } from './graphic-engine';
 
-export class EngineProvider {
+export class GraphicEngineProvider {
 
-  private EngineProvider() {}
+  private constructor() {}
 
   private static ENGINES = {
     'cytoscape': parent => new CytoscapeEngine(parent),
