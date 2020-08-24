@@ -13,7 +13,8 @@ export class MonacoEditor {
   }
 
   private create(parent: HTMLDivElement, config: MonacoEditorConfig) {
-    parent.style.height = '1000px';
+    parent.style.height = '100%';
+    parent.style.width = '100%';
     this.editor = monaco.editor.create(parent, {
       value: 'function hello() {\n\talert("Hello world!");\n}',
       language: config.language,

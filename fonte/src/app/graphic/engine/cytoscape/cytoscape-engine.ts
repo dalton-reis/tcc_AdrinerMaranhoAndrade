@@ -17,6 +17,7 @@ export class CytoscapeEngine implements GraphicEngine {
       throw Error('A parent should be defined.');
     }
     parent.style.height = '100%';
+    parent.style.width = '100%';
     this.cy = cytoscape({
       // very commonly used options
       container: parent,
