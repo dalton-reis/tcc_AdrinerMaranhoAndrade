@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CodeEditorComponent } from './code-editor/code-editor.component';
-
-
+import { ToolbarModule } from '../toolbar/toolbar.module';
 
 @NgModule({
   declarations: [
@@ -10,6 +9,7 @@ import { CodeEditorComponent } from './code-editor/code-editor.component';
   ],
   imports: [
     CommonModule,
+    ToolbarModule,
   ],
   exports: [
     CodeEditorComponent,

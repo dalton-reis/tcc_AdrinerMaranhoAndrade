@@ -1,6 +1,7 @@
 import { Component, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CodeEditorProvider } from '../engine/code-editor-provider';
 import { CodeEditor } from '../engine/code-editor';
+import { ToolbarItem } from '../../@core/data/toolbar-item';
 
 @Component({
   selector: 'app-code-editor',
@@ -13,6 +14,7 @@ export class CodeEditorComponent implements AfterViewInit {
   @ViewChild('codeEditorContainer') codeEditorContainer: ElementRef;
 
   codeEditor: CodeEditor;
+  codeEditorToolbar: ToolbarItem[];
 
   constructor() { }
 
@@ -23,7 +25,7 @@ export class CodeEditorComponent implements AfterViewInit {
   }
 
   private init() {
-
+    this.codeEditorToolbar = this.codeEditor.getToolbar();
   }
 
 }

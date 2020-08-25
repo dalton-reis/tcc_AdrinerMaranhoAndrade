@@ -1,7 +1,7 @@
 import cytoscape from 'cytoscape';
 import { GraphicEngine } from '../graphic-engine';
 import { CytoscapeToolbar } from './cytoscape-toolbar';
-import { ToolbarItem } from '../toolbar-item';
+import { ToolbarItem } from '../../../@core/data/toolbar-item';
 
 export class CytoscapeEngine implements GraphicEngine {
 

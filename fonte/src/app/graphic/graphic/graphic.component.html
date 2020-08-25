@@ -1,10 +1,4 @@
-<div class="row graphic-toolbar">
-  <div class="col-lg-12">
-    <div *ngFor="let toolbarItem of graphicToolbar; trackBy: toolbarId">
-      <button nbButton status="info" size="small" (click)="toolbarItem.action()">{{toolbarItem.label}}</button>
-    </div>
-  </div>
-</div>
+<app-toolbar [items]="graphicToolbar"></app-toolbar>
 <div class="row graphic-container">
   <div class="col-lg-12">
     <div #graphicContainer></div>

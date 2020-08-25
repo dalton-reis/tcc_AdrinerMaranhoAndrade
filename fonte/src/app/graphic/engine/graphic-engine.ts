@@ -1,4 +1,4 @@
-import { ToolbarItem } from './toolbar-item';
+import { ToolbarItem } from '../../@core/data/toolbar-item';
 
 export interface GraphicEngine {
 

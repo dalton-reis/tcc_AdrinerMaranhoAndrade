@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GraphicComponent } from './graphic/graphic.component';
-import { SharedModule } from '../shared/shared.module';
+import { ToolbarModule } from '../toolbar/toolbar.module';
 
 @NgModule({
   declarations: [
@@ -9,7 +9,7 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     CommonModule,
-    SharedModule,
+    ToolbarModule,
   ],
   exports: [
     GraphicComponent,

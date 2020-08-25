@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, AfterViewInit, ElementRef } from '@angular/core';
 import { GraphicEngine } from '../engine/graphic-engine';
 import { GraphicEngineProvider } from '../engine/graphic-engine-provider';
-import { ToolbarItem } from '../engine/toolbar-item';
+import { ToolbarItem } from '../../@core/data/toolbar-item';
 
 @Component({
   selector: 'app-graphic',
@@ -26,10 +26,6 @@ export class GraphicComponent implements AfterViewInit {
 
   private init() {
     this.graphicToolbar = this.graphicEngine.getToolbar();
-  }
-
-  toolbarId(_, toolbarItem: ToolbarItem) {
-    return toolbarItem.id;
   }
 
 }

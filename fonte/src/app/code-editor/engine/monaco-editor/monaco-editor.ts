@@ -1,9 +1,11 @@
 import { MonacoEditorConfig } from './monaco-editor-config';
 import { MonacoLoader } from './monaco-loader';
+import { CodeEditor } from '../code-editor';
+import { MonacoEditorToolbar } from './monaco-editor-toolbar';
 
 declare const monaco: any;
 
-export class MonacoEditor {
+export class MonacoEditor implements CodeEditor {
 
   parent: HTMLDivElement;
   editor: any;
@@ -16,10 +18,17 @@ export class MonacoEditor {
     parent.style.height = '100%';
     parent.style.width = '100%';
     this.editor = monaco.editor.create(parent, {
-      value: 'function hello() {\n\talert("Hello world!");\n}',
+      value:
+`class Problem {
+}`,
       language: config.language,
-      automaticLayout: true
+      automaticLayout: true,
+
     });
+  }
+
+  getToolbar() {
+    return MonacoEditorToolbar.create(() => this.editor);
   }
 
 }
