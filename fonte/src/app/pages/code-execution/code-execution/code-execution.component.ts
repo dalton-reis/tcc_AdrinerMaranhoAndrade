@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Action } from '../../../@core/data/toolbar-action';
+import { ScriptCompilerProvider } from '../../../script-engine/compilers/script-compiler-provider';
+import { ScriptEngineProvider } from '../../../script-engine/engine/script-engine-provider';
+import { GraphicEngine } from '../../../graphic/engine/graphic-engine';
+import { ScriptEngine } from '../../../script-engine/engine/scritp-engine';
 
 @Component({
   selector: 'app-code-execution',
@@ -7,9 +12,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CodeExecutionComponent implements OnInit {
 
-  constructor() { }
+  constructor() {}
+
+  @Input() codeType: string = 'smalg-javascript';
+
+  private graphicEngine: GraphicEngine;
+  private scriptEngine: ScriptEngine;
 
   ngOnInit(): void {
+  }
+
+  executeCodeEditorAction(action: Action) {
+    if (action.type === 'EXECUTE') {
+      const scriptCompiler = ScriptCompilerProvider.get(this.codeType);
+      const compiledScript = scriptCompiler.compile(action.params.code);
+      if (!this.graphicEngine) {
+        throw new Error('No graphic engine found');
+      }
+      if (this.scriptEngine) {
+        this.scriptEngine.abort();
+      }
+      this.scriptEngine = ScriptEngineProvider.create(compiledScript, this.graphicEngine);
+      this.scriptEngine.execute();
+    }
+  }
+
+  setGraphicEngine(graphicEngine: GraphicEngine) {
+    this.graphicEngine = graphicEngine;
   }
 
 }

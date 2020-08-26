@@ -62,6 +62,18 @@ export class CytoscapeEngine implements GraphicEngine {
     this.toolbar = CytoscapeToolbar.create(this.cy);
   }
 
+  execute(action: GraphicAction) {
+    console.log(action);
+  }
+
+  undo(): void {
+    console.log('undo');
+  }
+
+  clear(): void {
+    console.log('clear');
+  }
+
   getToolbar() {
     return this.toolbar;
   }

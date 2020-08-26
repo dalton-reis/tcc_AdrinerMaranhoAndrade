@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, AfterViewInit, ElementRef, Output, EventEmitter } from '@angular/core';
 import { GraphicEngine } from '../engine/graphic-engine';
 import { GraphicEngineProvider } from '../engine/graphic-engine-provider';
 import { ToolbarItem } from '../../@core/data/toolbar-item';
@@ -11,6 +11,7 @@ import { ToolbarItem } from '../../@core/data/toolbar-item';
 export class GraphicComponent implements AfterViewInit {
 
   @Input() engineType: string = GraphicEngineProvider.default();
+  @Output() onLoad = new EventEmitter<GraphicEngine>();
   @ViewChild('graphicContainer') parentContainer: ElementRef;
 
   graphicEngine: GraphicEngine;
@@ -26,6 +27,7 @@ export class GraphicComponent implements AfterViewInit {
 
   private init() {
     this.graphicToolbar = this.graphicEngine.getToolbar();
+    this.onLoad.emit(this.graphicEngine);
   }
 
 }

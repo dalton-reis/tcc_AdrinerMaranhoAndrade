@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-lg-6 code-editor-container">
-    <app-code-editor></app-code-editor>
+    <app-code-editor [type]="codeType" (action)="executeCodeEditorAction($event)"></app-code-editor>
   </div>
   <div class="col-lg-6 graphic-container">
-    <app-graphic></app-graphic>
+    <app-graphic (onLoad)="setGraphicEngine($event)"></app-graphic>
   </div>
 </div>

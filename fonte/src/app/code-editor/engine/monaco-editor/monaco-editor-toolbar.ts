@@ -8,7 +8,7 @@ export class MonacoEditorToolbar {
     return [{
       id: 'executar',
       label: 'Executar',
-      action: () => console.log(editorProvider()),
+      action: (actionEmitter) => actionEmitter({ type: 'EXECUTE', params: { code: editorProvider().getValue() } }),
     }];
   }
 

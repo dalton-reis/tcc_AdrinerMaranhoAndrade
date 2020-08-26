@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ToolbarItem } from '../@core/data/toolbar-item';
+import { Action } from '../@core/data/toolbar-action';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,6 +10,7 @@ import { ToolbarItem } from '../@core/data/toolbar-item';
 export class ToolbarComponent implements OnInit {
 
   @Input() items: ToolbarItem[] = [];
+  @Output() action = new EventEmitter<Action>();
 
   constructor() { }
 
@@ -17,6 +19,10 @@ export class ToolbarComponent implements OnInit {
 
   itemId(_, toolbarItem: ToolbarItem) {
     return toolbarItem.id;
+  }
+
+  executeItem(toolbarItem: ToolbarItem) {
+    toolbarItem.action(action => this.action.emit(action));
   }
 
 }

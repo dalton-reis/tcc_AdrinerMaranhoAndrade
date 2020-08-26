@@ -6,7 +6,7 @@ export class CodeEditorProvider {
   private constructor() {}
 
   private static TYPES = {
-    'javascript': (parent: HTMLDivElement) => new MonacoEditor(parent, { language: 'javascript' }),
+    'smalg-javascript': (parent: HTMLDivElement) => new MonacoEditor(parent, { language: 'javascript' }),
   };
 
   static create(type: string, parent: HTMLDivElement): CodeEditor {
@@ -16,7 +16,7 @@ export class CodeEditorProvider {
   }
 
   static default(): string {
-    return 'javascript';
+    return 'smalg-javascript';
   }
 
 }

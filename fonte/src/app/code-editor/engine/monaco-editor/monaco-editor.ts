@@ -19,8 +19,10 @@ export class MonacoEditor implements CodeEditor {
     parent.style.width = '100%';
     this.editor = monaco.editor.create(parent, {
       value:
-`class Problem {
-}`,
+`context.novoObjeto();
+context.novoContainer();
+context.novoContainer();
+context.novoObjeto();`,
       language: config.language,
       automaticLayout: true,
 
