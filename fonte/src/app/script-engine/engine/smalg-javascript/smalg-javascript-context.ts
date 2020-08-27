@@ -1,15 +1,21 @@
-import { GraphicEngine } from '../../../graphic/engine/graphic-engine';
+import { SmalgContainer } from './types/smalg-container';
+import { SmalgObject } from './types/smalg-object';
+import { SmalgPrimitive } from './types/smalg-primitive';
 
 export class SmalgJavascriptContext {
 
   constructor(private actions: GraphicAction[]) {}
 
-  novoObjeto() {
-    this.actions.push({ type: 'CREATE_OBJECT' });
+  newObject() {
+    return new SmalgObject(this.actions);
   }
 
-  novoContainer() {
-    this.actions.push({ type: 'CREATE_CONTAINER' });
+  newContainer(size: number) {
+    return new SmalgContainer({ size }, this.actions);
+  }
+
+  newPrimitive(value: string | number | boolean) {
+    return new SmalgPrimitive(value, this.actions);
   }
 
 }
