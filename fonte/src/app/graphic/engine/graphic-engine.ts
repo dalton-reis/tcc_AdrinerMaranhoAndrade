@@ -1,8 +1,8 @@
-import { ToolbarItem } from '../../@core/data/toolbar-item';
+import { ToolbarItem } from '../../models/toolbar-item';
 
 export interface GraphicEngine {
 
-  execute(action: GraphicAction);
+  execute(action: ExecutionAction);
 
   undo(): void;
 

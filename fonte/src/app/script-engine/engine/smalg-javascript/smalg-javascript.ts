@@ -6,7 +6,7 @@ import { SmalgJavascriptContext } from './smalg-javascript-context';
 export class SmalgJavascriptScriptEngine implements ScriptEngine {
 
   private currentStep = 0;
-  private actions: GraphicAction[] = [];
+  private actions: ExecutionAction[] = [];
   private intervalId: NodeJS.Timeout;
 
   constructor(

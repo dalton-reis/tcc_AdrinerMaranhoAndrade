@@ -1,12 +1,12 @@
-import { CytoscapeEngine } from './cytoscape/cytoscape-engine';
 import { GraphicEngine } from './graphic-engine';
+import { DataStructureEngine } from './data-structure/data-structure-engine';
 
 export class GraphicEngineProvider {
 
   private constructor() {}
 
   private static ENGINES = {
-    'cytoscape': parent => new CytoscapeEngine(parent),
+    'data-structure': parent => new DataStructureEngine(parent),
   };
 
   static create(engineName: string, parent: HTMLDivElement): GraphicEngine {
@@ -18,7 +18,7 @@ export class GraphicEngineProvider {
   }
 
   static default(): string {
-    return 'cytoscape';
+    return 'data-structure';
   }
 
 }

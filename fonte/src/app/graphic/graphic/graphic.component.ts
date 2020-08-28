@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, AfterViewInit, ElementRef, Output, EventEmitter } from '@angular/core';
 import { GraphicEngine } from '../engine/graphic-engine';
 import { GraphicEngineProvider } from '../engine/graphic-engine-provider';
-import { ToolbarItem } from '../../@core/data/toolbar-item';
+import { ToolbarItem } from '../../models/toolbar-item';
 
 @Component({
   selector: 'app-graphic',

@@ -1,8 +1,8 @@
 import { Component, Input, AfterViewInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { CodeEditorProvider } from '../engine/code-editor-provider';
 import { CodeEditor } from '../engine/code-editor';
-import { ToolbarItem } from '../../@core/data/toolbar-item';
-import { Action } from '../../@core/data/toolbar-action';
+import { Action } from '../../models/toolbar-action';
+import { ToolbarItem } from '../../models/toolbar-item';
 
 @Component({
   selector: 'app-code-editor',

@@ -1,4 +1,4 @@
-import { ToolbarItem } from '../../../@core/data/toolbar-item';
+import { ToolbarItem } from '../../../models/toolbar-item';
 
 export class MonacoEditorToolbar {
 

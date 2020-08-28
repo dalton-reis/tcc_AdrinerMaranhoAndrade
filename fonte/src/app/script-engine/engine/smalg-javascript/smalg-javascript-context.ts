@@ -4,7 +4,7 @@ import { SmalgPrimitive } from './types/smalg-primitive';
 
 export class SmalgJavascriptContext {
 
-  constructor(private actions: GraphicAction[]) {}
+  constructor(private actions: ExecutionAction[]) {}
 
   newObject() {
     return new SmalgObject(this.actions);

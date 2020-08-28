@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ToolbarItem } from '../@core/data/toolbar-item';
-import { Action } from '../@core/data/toolbar-action';
-
+import { ToolbarItem } from '../models/toolbar-item';
+import { Action } from '../models/toolbar-action';
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',

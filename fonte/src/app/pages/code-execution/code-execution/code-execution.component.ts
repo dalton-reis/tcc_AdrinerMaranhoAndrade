@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Action } from '../../../@core/data/toolbar-action';
 import { ScriptCompilerProvider } from '../../../script-engine/compilers/script-compiler-provider';
 import { ScriptEngineProvider } from '../../../script-engine/engine/script-engine-provider';
 import { GraphicEngine } from '../../../graphic/engine/graphic-engine';
 import { ScriptEngine } from '../../../script-engine/engine/scritp-engine';
+import { Action } from '../../../models/toolbar-action';
 
 @Component({
   selector: 'app-code-execution',
