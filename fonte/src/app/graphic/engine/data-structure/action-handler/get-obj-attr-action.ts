@@ -5,6 +5,7 @@ export class GetObjAttrAction implements CytoscapeActionHandler {
 
   handle(cytoscape: any, action: ExecutionAction) {
     const { id, name } = action.params;
+    console.log(`focus_obj_attr`);
     console.log(action);
   }
 

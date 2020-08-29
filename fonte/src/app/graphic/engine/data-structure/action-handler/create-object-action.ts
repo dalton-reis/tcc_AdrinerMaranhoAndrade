@@ -5,7 +5,12 @@ export class CreateObjectAction implements CytoscapeActionHandler {
 
   handle(cytoscape: any, action: ExecutionAction) {
     const { id } = action.params;
-    cytoscape.add({ data: { id }, style: { shape: 'round-rectangle' }});
+    cytoscape.add({
+      data: { id },
+      style: {
+        shape: 'round-rectangle',
+      },
+    });
   }
 
   name() {

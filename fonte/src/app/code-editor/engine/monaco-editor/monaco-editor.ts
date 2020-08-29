@@ -26,10 +26,12 @@ const int_1 = context.newPrimitive(1);
 const double_1 = context.newPrimitive(1.0);
 const string_1 = context.newPrimitive('teste');
 const boolean_1 = context.newPrimitive(false);
+const boolean_2 = context.newPrimitive(true);
 
 object_1.setAttribute('attr1', int_1);
 object_1.setAttribute('attr2', double_1);
 container_1.set(0, boolean_1);
+container_1.set(0, boolean_2);
 container_1.set(1, string_1);
 `,
       language: config.language,

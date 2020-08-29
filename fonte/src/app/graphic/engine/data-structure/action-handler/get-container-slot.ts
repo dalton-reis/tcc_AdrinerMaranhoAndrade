@@ -5,6 +5,7 @@ export class GetContainerSlotAction implements CytoscapeActionHandler {
 
   handle(cytoscape: any, action: ExecutionAction) {
     const { id, index } = action.params;
+    console.log(`focus_slot_index`);
     console.log(action);
   }
 
