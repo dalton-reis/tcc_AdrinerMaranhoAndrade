@@ -6,7 +6,7 @@ export class CreateObjectAction implements CytoscapeActionHandler {
 
   private layoutHandler: ObjectLayoutHandler = new ObjectLayoutHandler();
 
-  handle(cytoscape: any, action: ExecutionAction) {
+  async handle(cytoscape: any, action: ExecutionAction): Promise<void> {
     const { id } = action.params;
     cytoscape.add({
       data: { id },
@@ -15,7 +15,7 @@ export class CreateObjectAction implements CytoscapeActionHandler {
       },
     });
 
-    this.layoutHandler.run(cytoscape, id);
+    await this.layoutHandler.run(cytoscape, id);
   }
 
   name() {

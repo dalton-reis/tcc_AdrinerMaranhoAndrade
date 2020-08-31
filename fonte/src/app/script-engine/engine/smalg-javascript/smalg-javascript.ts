@@ -7,7 +7,8 @@ export class SmalgJavascriptScriptEngine implements ScriptEngine {
 
   private currentStep = 0;
   private actions: ExecutionAction[] = [];
-  private intervalId: NodeJS.Timeout;
+  private executing: boolean = false;
+  private timeoutId: NodeJS.Timeout;
 
   constructor(
     private script: CompiledScript,
@@ -20,35 +21,43 @@ export class SmalgJavascriptScriptEngine implements ScriptEngine {
     this.script.execute(new SmalgJavascriptContext(this.actions));
   }
 
-  execute() {
-    if (!this.intervalId) {
-      this.intervalId = setInterval(() => {
-        this.forward();
-        if (this.currentStep >= this.actions.length) {
-          this.stop();
-        }
-      }, 1000);
+  execute(): void {
+    if (!this.executing) {
+      this.executing = true;
+      this.startExecution();
     }
   }
 
-  stop() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-      this.intervalId = null;
-    }
+  private async startExecution(): Promise<void> {
+    await this.forward();
+    this.scheduleExecution(1000);
   }
 
-  forward() {
+  private async scheduleExecution(time: number): Promise<void> {
+    this.timeoutId = setTimeout(async () => {
+      if (this.currentStep >= this.actions.length) {
+        this.stop();
+      } else {
+        await this.forward();
+        this.scheduleExecution(time);
+      }
+    }, time);
+  }
+
+  stop(): void {
+    clearTimeout(this.timeoutId);
+    this.executing = false;
+  }
+
+  async forward(): Promise<void> {
     if (this.currentStep < this.actions.length) {
-      this.graphicEngine.execute(this.actions[this.currentStep++]);
+      await this.graphicEngine.execute(this.actions[this.currentStep++]);
     }
   }
 
-  previous() {
-    if (!this.intervalId) {
+  async previous(): Promise<void> {
       this.currentStep--;
       this.graphicEngine.undo();
-    }
   }
 
   abort() {

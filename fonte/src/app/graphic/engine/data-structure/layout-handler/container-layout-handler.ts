@@ -1,29 +1,26 @@
 import { $id } from '../../core/cytoscape/cytoscape-utils';
+import { CoreLayoutHandler } from './core-layout-handler';
+import { LayoutExecutor } from './layout-executor';
 
 export class ContainerLayoutHandler {
 
-  moveToSlot(slotElement: any, valueElement: any) {
-    valueElement.layout({
-      name: 'grid',
-      fit: false,
-      boundingBox: slotElement.boundingBox(),
-      animate: true,
-      animationDuration: 200,
-    }).run();
+  private coreLayoutExecutor = new CoreLayoutHandler();
+  private layoutExecutor = new LayoutExecutor();
+
+  async moveToSlot(slotElement: any, valueElement: any) {
+    await this.coreLayoutExecutor.moveToElement(valueElement, slotElement);
   }
 
-  run(cytoscape: any, id: string) {
+  async run(cytoscape: any, id: string) {
     const containerElement = $id(cytoscape, id);
     // Grid layout does not apply for compound nodes.
     const notCompoundChildren = containerElement.descendants(element => element.children().length === 0);
-    notCompoundChildren.layout({
+    await this.layoutExecutor.executeLayout(notCompoundChildren, {
       name: 'grid',
       fit: false,
       rows: 1,
       cols: notCompoundChildren.length,
-      animate: true,
-      animationDuration: 200,
-    }).run();
+    });
   }
 
 }

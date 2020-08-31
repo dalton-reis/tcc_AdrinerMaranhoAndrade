@@ -15,8 +15,6 @@ import { DataScrutureEngineToolbar } from './data-structure-toolbar';
 const LAYOUT_OPTIONS = {
   name: 'grid',
   padding: 30,
-  animate: true,
-  animationDuration: 500,
 };
 
 export class DataStructureEngine implements GraphicEngine {
@@ -67,7 +65,7 @@ export class DataStructureEngine implements GraphicEngine {
     this.actionHandlers[actionHandler.name()] = actionHandler;
   }
 
-  execute(action: ExecutionAction) {
+  async execute(action: ExecutionAction) {
     if (action.type.scope !== ExecutionActionScope.GRAPHIC) {
       console.error(action.type.scope);
       throw Error('invalid.action.for.scope');
@@ -77,7 +75,7 @@ export class DataStructureEngine implements GraphicEngine {
       console.error(action.type.name);
       throw Error('no.action.handler.defined');
     }
-    actionHandler.handle(this.cy, action);
+    await actionHandler.handle(this.cy, action);
     //this.organize();
   }
 

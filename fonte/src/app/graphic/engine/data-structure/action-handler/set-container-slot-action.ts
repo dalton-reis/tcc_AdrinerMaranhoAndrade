@@ -8,7 +8,7 @@ export class SetContainerSlotAction implements CytoscapeActionHandler {
 
   private layoutHandler: ContainerLayoutHandler = new ContainerLayoutHandler();
 
-  handle(cytoscape: any, action: ExecutionAction) {
+  async handle(cytoscape: any, action: ExecutionAction): Promise<void> {
     const id: string = action.params.id;
     const index: number = action.params.index;
     const value: SmalgType = action.params.value;
@@ -20,7 +20,7 @@ export class SetContainerSlotAction implements CytoscapeActionHandler {
     this.layoutHandler.moveToSlot(slotElement, valueElement);
     valueElement.move({parent: slotElement.id()});
 
-    this.layoutHandler.run(cytoscape, id);
+    await this.layoutHandler.run(cytoscape, id);
   }
 
   name() {

@@ -1,16 +1,25 @@
 import { $id } from '../../core/cytoscape/cytoscape-utils';
+import { CoreLayoutHandler } from './core-layout-handler';
+import { LayoutExecutor } from './layout-executor';
 
 export class ObjectLayoutHandler {
 
-  run(cytoscape: any, id: string) {
+  private coreLayoutHandler = new CoreLayoutHandler();
+  private layoutExecutor = new LayoutExecutor();
+
+  async moveToSlotElement(attrSlotElement: any, valueElement: any) {
+    await this.coreLayoutHandler.moveToElement(valueElement, attrSlotElement);
+  }
+
+  async run(cytoscape: any, id: string) {
     const objectElement = $id(cytoscape, id);
     const notCompoundChildren = objectElement.descendants(element => element.children().length === 0);
-    notCompoundChildren.layout({
+
+    await this.layoutExecutor.executeLayout(notCompoundChildren, {
       name: 'grid',
       fit: false,
       cols: 2,
-      spacingFactor: .9,
-    }).run();
+    });
   }
 
 }

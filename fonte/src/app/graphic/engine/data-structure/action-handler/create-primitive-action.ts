@@ -11,7 +11,7 @@ const MIN_WIDTH = 30;
 
 export class CreatePrimitiveAction implements CytoscapeActionHandler {
 
-  handle(cytoscape: any, action: ExecutionAction) {
+  async handle(cytoscape: any, action: ExecutionAction): Promise<void> {
     const { id, type, value } = action.params;
     const labelValue = value + '';
     const nodeWidth = labelValue.length * 10;

@@ -10,7 +10,7 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
 
   private layoutHandler: ObjectLayoutHandler = new ObjectLayoutHandler();
 
-  handle(cytoscape: any, action: ExecutionAction) {
+  async handle(cytoscape: any, action: ExecutionAction): Promise<void> {
     const id: string = action.params.id;
     const name: string = action.params.name;
     const value: SmalgType = action.params.value;
@@ -21,7 +21,7 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
     const valueElement = $id(cytoscape, value.__getId__());
     valueElement.move({ parent: attributeEntryValueElement.id() });
 
-    this.layoutHandler.run(cytoscape, id);
+    await this.layoutHandler.run(cytoscape, id);
   }
 
   private getAttrValueElement(cytoscape: any, id: string, name: string) {

@@ -3,7 +3,7 @@ import { CytoscapeActionHandler } from '../../core/cytoscape/cytoscape-action-ha
 
 export class GetObjAttrAction implements CytoscapeActionHandler {
 
-  handle(cytoscape: any, action: ExecutionAction) {
+  async handle(cytoscape: any, action: ExecutionAction): Promise<void> {
     const { id, name } = action.params;
     console.log(`focus_obj_attr`);
     console.log(action);

@@ -21,7 +21,7 @@ export class CreateContainerAction implements CytoscapeActionHandler {
 
   private layoutHandler: ContainerLayoutHandler = new ContainerLayoutHandler();
 
-  handle(cytoscape: any, action: ExecutionAction) {
+  async handle(cytoscape: any, action: ExecutionAction): Promise<void> {
     const { id, size } = action.params;
     cytoscape.add({
       data: { id },
@@ -39,7 +39,7 @@ export class CreateContainerAction implements CytoscapeActionHandler {
         grabbable: false,
       });
     }
-    this.layoutHandler.run(cytoscape, id);
+    await this.layoutHandler.run(cytoscape, id);
   }
 
 

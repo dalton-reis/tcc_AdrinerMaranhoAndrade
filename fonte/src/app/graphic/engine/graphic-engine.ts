@@ -2,7 +2,7 @@ import { ToolbarItem } from '../../models/toolbar-item';
 
 export interface GraphicEngine {
 
-  execute(action: ExecutionAction);
+  execute(action: ExecutionAction): Promise<void>;
 
   undo(): void;
 

@@ -3,7 +3,7 @@ import { CytoscapeActionHandler } from '../../core/cytoscape/cytoscape-action-ha
 
 export class GetContainerSlotAction implements CytoscapeActionHandler {
 
-  handle(cytoscape: any, action: ExecutionAction) {
+  async handle(cytoscape: any, action: ExecutionAction): Promise<void> {
     const { id, index } = action.params;
     console.log(`focus_slot_index`);
     console.log(action);

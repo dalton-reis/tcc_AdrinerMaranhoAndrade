@@ -1,13 +1,13 @@
 export interface ScriptEngine {
 
-  execute();
+  execute(): void;
 
-  stop();
+  stop(): void;
 
-  forward();
+  forward(): Promise<void>;
 
-  previous();
+  previous(): Promise<void>;
 
-  abort();
+  abort(): void;
 
 }
