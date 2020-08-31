@@ -2,10 +2,13 @@ import { DataStructureAction } from '../../../../models/data-structure-action';
 import { CytoscapeActionHandler } from '../../core/cytoscape/cytoscape-action-handler';
 import { SmalgType } from '../../../../script-engine/engine/smalg-javascript/types/smalg-type';
 import { $id } from '../../core/cytoscape/cytoscape-utils';
+import { ObjectLayoutHandler } from '../layout-handler/object-layout-handler';
 
 const MIN_WIDTH = 30;
 
 export class SetObjAttrAction implements CytoscapeActionHandler {
+
+  private layoutHandler: ObjectLayoutHandler = new ObjectLayoutHandler();
 
   handle(cytoscape: any, action: ExecutionAction) {
     const id: string = action.params.id;
@@ -17,6 +20,8 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
     if (currentValueElement) currentValueElement.move({ parent: null });
     const valueElement = $id(cytoscape, value.__getId__());
     valueElement.move({ parent: attributeEntryValueElement.id() });
+
+    this.layoutHandler.run(cytoscape, id);
   }
 
   private getAttrValueElement(cytoscape: any, id: string, name: string) {
@@ -46,6 +51,7 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
         id: `${attrElement.id()}_key`,
         labelValue,
         parent: attrElement.id(),
+        index: 0,
       },
       style: {
         width: nodeWidth < MIN_WIDTH ? MIN_WIDTH : nodeWidth,
@@ -58,6 +64,7 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
       data: {
         id: `${attrElement.id()}_value`,
         parent: attrElement.id(),
+        index: 1,
       },
       style: {
         width: nodeWidth < MIN_WIDTH ? MIN_WIDTH : nodeWidth,

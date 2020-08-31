@@ -2,7 +2,6 @@ import { GraphicEngine } from '../graphic-engine';
 import { ToolbarItem } from '../../../models/toolbar-item';
 import { ExecutionActionScope } from '../../../models/execution-action-scope';
 import { CytoscapeEngine } from '../core/cytoscape/cytoscape-engine';
-import { CytoscapeDefaultToolbar } from '../core/cytoscape/cytoscape-toolbar';
 import { CytoscapeActionHandler } from '../core/cytoscape/cytoscape-action-handler';
 import { CreateObjectAction } from './action-handler/create-object-action';
 import { CreateContainerAction } from './action-handler/create-container-action';
@@ -11,6 +10,14 @@ import { GetContainerSlotAction } from './action-handler/get-container-slot';
 import { GetObjAttrAction } from './action-handler/get-obj-attr-action';
 import { SetContainerSlotAction } from './action-handler/set-container-slot-action';
 import { SetObjAttrAction } from './action-handler/set-obj-attr-action';
+import { DataScrutureEngineToolbar } from './data-structure-toolbar';
+
+const LAYOUT_OPTIONS = {
+  name: 'grid',
+  padding: 30,
+  animate: true,
+  animationDuration: 500,
+};
 
 export class DataStructureEngine implements GraphicEngine {
 
@@ -40,13 +47,10 @@ export class DataStructureEngine implements GraphicEngine {
           'text-halign': 'center',
         },
       }],
-      layout: {
-        name: 'random',
-        fit: true,
-      },
+      layout: LAYOUT_OPTIONS,
     });
 
-    this.toolbar = CytoscapeDefaultToolbar.create(this.cy);
+    this.toolbar = DataScrutureEngineToolbar.create(this);
   }
 
   private registerActionHandlers() {
@@ -74,6 +78,7 @@ export class DataStructureEngine implements GraphicEngine {
       throw Error('no.action.handler.defined');
     }
     actionHandler.handle(this.cy, action);
+    //this.organize();
   }
 
   undo(): void {
@@ -82,6 +87,15 @@ export class DataStructureEngine implements GraphicEngine {
 
   clear(): void {
     this.cy.remove(this.cy.elements());
+  }
+
+  center() {
+    this.cy.fit();
+  }
+
+  organize() {
+    const orphans = this.cy.elements('node[!parent]');
+    orphans.layout(LAYOUT_OPTIONS).run();
   }
 
   getToolbar() {

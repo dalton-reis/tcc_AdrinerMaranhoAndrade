@@ -23,8 +23,8 @@ export class MonacoEditor implements CodeEditor {
 const object_1 = context.newObject();
 const container_1 = context.newContainer(6);
 const int_1 = context.newPrimitive(1);
-const double_1 = context.newPrimitive(1.0);
-const string_1 = context.newPrimitive('teste');
+const double_1 = context.newPrimitive(2.5);
+const string_1 = context.newPrimitive('teste grande');
 const boolean_1 = context.newPrimitive(false);
 const boolean_2 = context.newPrimitive(true);
 
