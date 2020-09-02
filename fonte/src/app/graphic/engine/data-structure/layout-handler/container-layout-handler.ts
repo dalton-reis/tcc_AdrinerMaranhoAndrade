@@ -18,6 +18,7 @@ export class ContainerLayoutHandler {
     await this.layoutExecutor.executeLayout(notCompoundChildren, {
       name: 'grid',
       fit: false,
+      condense: true,
       rows: 1,
       cols: notCompoundChildren.length,
     });

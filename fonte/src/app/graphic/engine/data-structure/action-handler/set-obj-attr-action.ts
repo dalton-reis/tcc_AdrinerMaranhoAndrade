@@ -15,22 +15,23 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
     const name: string = action.params.name;
     const value: SmalgType = action.params.value;
 
-    const attributeEntryValueElement = this.getAttrValueElement(cytoscape, id, name);
+    const attributeEntryValueElement = await this.getAttrValueElement(cytoscape, id, name);
     const currentValueElement = attributeEntryValueElement.children()[0];
     if (currentValueElement) currentValueElement.move({ parent: null });
     const valueElement = $id(cytoscape, value.__getId__());
+    await this.layoutHandler.moveToAttrSlot(attributeEntryValueElement, valueElement);
     valueElement.move({ parent: attributeEntryValueElement.id() });
 
     await this.layoutHandler.run(cytoscape, id);
   }
 
-  private getAttrValueElement(cytoscape: any, id: string, name: string) {
+  private async getAttrValueElement(cytoscape: any, id: string, name: string): Promise<any> {
     const attributeEntryValueElement = $id(cytoscape, `${id}_${name}_value`);
     if (attributeEntryValueElement) return attributeEntryValueElement;
-    return this.newAttrElement(cytoscape, id, name);
+    return await this.newAttrElement(cytoscape, id, name);
   }
 
-  private newAttrElement(cytoscape: any, id: string, name: string) {
+  private async newAttrElement(cytoscape: any, id: string, name: string): Promise<any> {
     const attrElement = cytoscape.add({
       data: {
         id: `${id}_${name}`,
@@ -75,6 +76,8 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
         'border-color': '#999999',
       },
     });
+
+    await this.layoutHandler.run(cytoscape, id);
 
     return valueElement;
   }

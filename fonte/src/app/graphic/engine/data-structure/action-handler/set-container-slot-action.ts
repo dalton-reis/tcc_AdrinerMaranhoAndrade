@@ -17,7 +17,7 @@ export class SetContainerSlotAction implements CytoscapeActionHandler {
 
     const currentSlotElement = slotElement.children()[0];
     if (currentSlotElement) cytoscape.remove(currentSlotElement);
-    this.layoutHandler.moveToSlot(slotElement, valueElement);
+    await this.layoutHandler.moveToSlot(slotElement, valueElement);
     valueElement.move({parent: slotElement.id()});
 
     await this.layoutHandler.run(cytoscape, id);

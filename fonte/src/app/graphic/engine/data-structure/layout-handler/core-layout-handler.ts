@@ -6,7 +6,7 @@ export class CoreLayoutHandler {
 
   async moveToElement(element: any, targetElement: any): Promise<void> {
     await this.layoutExecutor.executeLayout(element, {
-      name: 'grid',
+      name: 'random',
       fit: false,
       boundingBox: targetElement.boundingBox(),
     });

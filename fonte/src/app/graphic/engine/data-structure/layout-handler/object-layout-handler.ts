@@ -7,7 +7,7 @@ export class ObjectLayoutHandler {
   private coreLayoutHandler = new CoreLayoutHandler();
   private layoutExecutor = new LayoutExecutor();
 
-  async moveToSlotElement(attrSlotElement: any, valueElement: any) {
+  async moveToAttrSlot(attrSlotElement: any, valueElement: any) {
     await this.coreLayoutHandler.moveToElement(valueElement, attrSlotElement);
   }
 
@@ -18,6 +18,7 @@ export class ObjectLayoutHandler {
     await this.layoutExecutor.executeLayout(notCompoundChildren, {
       name: 'grid',
       fit: false,
+      condense: true,
       cols: 2,
     });
   }
