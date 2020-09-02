@@ -11,6 +11,7 @@ import { GetObjAttrAction } from './action-handler/get-obj-attr-action';
 import { SetContainerSlotAction } from './action-handler/set-container-slot-action';
 import { SetObjAttrAction } from './action-handler/set-obj-attr-action';
 import { DataScrutureEngineToolbar } from './data-structure-toolbar';
+import { stylesheet } from './data-structure-stylesheet';
 
 const LAYOUT_OPTIONS = {
   name: 'grid',
@@ -35,16 +36,7 @@ export class DataStructureEngine implements GraphicEngine {
 
     this.cy = CytoscapeEngine.create(parent, {
       elements: [],
-      style: [
-        {
-        selector: 'node[labelValue]',
-        css: {
-          'content': 'data(labelValue)',
-          'text-wrap': 'wrap',
-          'text-valign': 'center',
-          'text-halign': 'center',
-        },
-      }],
+      style: stylesheet,
       layout: LAYOUT_OPTIONS,
     });
 

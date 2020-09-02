@@ -7,6 +7,8 @@ interface SmalgContainerProperties {
 
 export class SmalgContainer extends SmalgType {
 
+  static TYPE_DESCRIPTOR = 'smalg.js.container';
+
   private container = [];
 
   constructor(private properties: SmalgContainerProperties, private actions: ExecutionAction[]) {
@@ -41,6 +43,10 @@ export class SmalgContainer extends SmalgType {
       type: DataStructureAction.GET_CONTAINER_SLOT, params: { id: this.__getId__(), index },
     });
     return this.container[index];
+  }
+
+  typeDescriptor(): string {
+    return SmalgContainer.TYPE_DESCRIPTOR;
   }
 
 }

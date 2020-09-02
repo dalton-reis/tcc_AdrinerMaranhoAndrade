@@ -5,6 +5,8 @@ const ALLOWED_TYPES = ['string', 'boolean', 'number'];
 
 export class SmalgPrimitive extends SmalgType {
 
+  static TYPE_DESCRIPTOR = 'smalg.js.primitive';
+
   private type: string;
 
   constructor(private value: string | number | boolean, private actions: ExecutionAction[]) {
@@ -26,6 +28,10 @@ export class SmalgPrimitive extends SmalgType {
 
   getValue(): string | number | boolean {
     return this.value;
+  }
+
+  typeDescriptor(): string {
+    return SmalgPrimitive.TYPE_DESCRIPTOR;
   }
 
 }

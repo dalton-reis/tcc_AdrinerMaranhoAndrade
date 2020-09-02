@@ -3,6 +3,8 @@ import { DataStructureAction } from '../../../../models/data-structure-action';
 
 export class SmalgObject extends SmalgType {
 
+  static TYPE_DESCRIPTOR = 'smalg.js.object';
+
   private obj = {};
 
   constructor(private actions: ExecutionAction[]) {
@@ -18,6 +20,10 @@ export class SmalgObject extends SmalgType {
   getAttribute(name: string) {
     this.actions.push({ type: DataStructureAction.GET_OBJ_ATTR, params: { id: this.__getId__(), name } });
     return this.obj[name];
+  }
+
+  typeDescriptor(): string {
+    return SmalgObject.TYPE_DESCRIPTOR;
   }
 
 }

@@ -1,11 +1,6 @@
 import { DataStructureAction } from '../../../../models/data-structure-action';
 import { CytoscapeActionHandler } from '../../core/cytoscape/cytoscape-action-handler';
-
-const COLORS = {
-  boolean: '#8046c2',
-  number: '#35db61',
-  string: '#eb9b1a',
-};
+import { SmalgPrimitive } from '../../../../script-engine/engine/smalg-javascript/types/smalg-primitive';
 
 const MIN_WIDTH = 30;
 
@@ -16,12 +11,13 @@ export class CreatePrimitiveAction implements CytoscapeActionHandler {
     const labelValue = value + '';
     const nodeWidth = labelValue.length * 10;
     cytoscape.add({
-      data: { id, labelValue },
-      style: {
-        width: nodeWidth < MIN_WIDTH ? MIN_WIDTH : nodeWidth,
-        shape: 'round-rectangle',
-        'background-color': COLORS[type],
+      data: {
+        id,
+        labelValue,
+        type: SmalgPrimitive.TYPE_DESCRIPTOR,
+        nodeWidth: nodeWidth < MIN_WIDTH ? MIN_WIDTH : nodeWidth,
       },
+      classes: [ type ],
     });
   }
 

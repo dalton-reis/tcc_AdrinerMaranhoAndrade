@@ -37,12 +37,7 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
         id: `${id}_${name}`,
         parent: id,
       },
-      style: {
-        'background-color': '#b0b0b0',
-        'border-width': '0px',
-      },
-      selectable: false,
-      grabbable: false,
+      classes: ['entry'],
     });
 
     const labelValue = `${name}:`;
@@ -53,14 +48,9 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
         labelValue,
         parent: attrElement.id(),
         index: 0,
+        nodeWidth: nodeWidth < MIN_WIDTH ? MIN_WIDTH : nodeWidth,
       },
-      style: {
-        width: nodeWidth < MIN_WIDTH ? MIN_WIDTH : nodeWidth,
-        shape: 'round-rectangle',
-        'background-color': '#949494',
-      },
-      selectable: false,
-      grabbable: false,
+      classes: ['entry-key'],
     });
 
     const valueElement = cytoscape.add({
@@ -69,14 +59,7 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
         parent: attrElement.id(),
         index: 1,
       },
-      style: {
-        width: nodeWidth < MIN_WIDTH ? MIN_WIDTH : nodeWidth,
-        shape: 'rectangle',
-        'background-color': '#c2c2c2',
-        'border-width': '0px',
-      },
-      selectable: false,
-      grabbable: false,
+      classes: ['slot'],
     });
 
     await this.layoutHandler.run(cytoscape, id);
