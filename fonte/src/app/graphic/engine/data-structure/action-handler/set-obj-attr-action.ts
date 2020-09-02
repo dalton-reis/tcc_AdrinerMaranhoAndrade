@@ -17,7 +17,7 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
 
     const attributeEntryValueElement = await this.getAttrValueElement(cytoscape, id, name);
     const currentValueElement = attributeEntryValueElement.children()[0];
-    if (currentValueElement) currentValueElement.move({ parent: null });
+    if (currentValueElement) cytoscape.remove(currentValueElement);
     const valueElement = $id(cytoscape, value.__getId__());
     await this.layoutHandler.moveToAttrSlot(attributeEntryValueElement, valueElement);
     valueElement.move({ parent: attributeEntryValueElement.id() });
@@ -59,6 +59,8 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
         shape: 'round-rectangle',
         'background-color': '#949494',
       },
+      selectable: false,
+      grabbable: false,
     });
 
     const valueElement = cytoscape.add({
@@ -69,12 +71,12 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
       },
       style: {
         width: nodeWidth < MIN_WIDTH ? MIN_WIDTH : nodeWidth,
-        shape: 'round-rectangle',
+        shape: 'rectangle',
         'background-color': '#c2c2c2',
-        'border-width': '2px',
-        'border-style': 'solid',
-        'border-color': '#999999',
+        'border-width': '0px',
       },
+      selectable: false,
+      grabbable: false,
     });
 
     await this.layoutHandler.run(cytoscape, id);

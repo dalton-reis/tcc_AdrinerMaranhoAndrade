@@ -19,8 +19,9 @@ export class ContainerLayoutHandler {
       name: 'grid',
       fit: false,
       condense: true,
-      rows: 1,
-      cols: notCompoundChildren.length,
+      rows: notCompoundChildren.length,
+      cols: 1,
+      spacingFactor: 1.5,
     });
   }
 

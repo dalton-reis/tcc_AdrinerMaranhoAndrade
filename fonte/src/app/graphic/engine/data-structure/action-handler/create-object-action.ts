@@ -12,6 +12,8 @@ export class CreateObjectAction implements CytoscapeActionHandler {
       data: { id },
       style: {
         shape: 'round-rectangle',
+        'border-width': '0px',
+        'background-color': '#b0b0b0',
       },
     });
 

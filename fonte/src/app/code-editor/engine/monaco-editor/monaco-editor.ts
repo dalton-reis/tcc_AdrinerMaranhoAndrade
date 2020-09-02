@@ -19,20 +19,23 @@ export class MonacoEditor implements CodeEditor {
     parent.style.width = '100%';
     this.editor = monaco.editor.create(parent, {
       value:
-`
-const object_1 = context.newObject();
+`const object_1 = context.newObject();
 const container_1 = context.newContainer(6);
 const int_1 = context.newPrimitive(1);
 const double_1 = context.newPrimitive(2.5);
-const string_1 = context.newPrimitive('teste grande');
+const string_1 = context.newPrimitive('testando');
+const string_2 = context.newPrimitive('teste 2');
+const string_3 = context.newPrimitive('teste 3');
 const boolean_1 = context.newPrimitive(false);
 const boolean_2 = context.newPrimitive(true);
 
-object_1.setAttribute('attr1', int_1);
-object_1.setAttribute('attr2', double_1);
+object_1.setAttribute('id', int_1);
+object_1.setAttribute('valor', double_1);
+object_1.setAttribute('descrição', string_2);
 container_1.set(0, boolean_1);
 container_1.set(0, boolean_2);
 container_1.set(1, string_1);
+container_1.set(2, string_3);
 `,
       language: config.language,
       automaticLayout: true,
