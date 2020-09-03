@@ -49,6 +49,7 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
         id: `${attrElement.id()}_key`,
         labelValue,
         index: 0,
+        parent: attrElement.id(),
         nodeWidth: nodeWidth < MIN_WIDTH ? MIN_WIDTH : nodeWidth,
       },
       classes: ['entry-key'],
@@ -58,15 +59,14 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
       data: {
         id: `${attrElement.id()}_value`,
         index: 1,
+        parent: attrElement.id(),
       },
       classes: ['slot'],
     });
 
-    await this.layoutHandler.run(objectElement);
-
+    await this.layoutHandler.onCreateAttr(objectElement, attrElement);
     attrElement.move({ parent: id });
-    attrElementKey.move({ parent: attrElement.id() });
-    attrElementValue.move({ parent: attrElement.id() });
+    await this.layoutHandler.run(objectElement);
 
     return attrElementValue;
   }

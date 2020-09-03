@@ -11,11 +11,21 @@ export class ObjectLayoutHandler {
     await this.coreLayoutHandler.moveToElement(attrSlotElement, valueElement);
   }
 
+  async onCreateAttr(objectElement: any, attrElement: any) {
+    const notCompoundChildren = attrElement.descendants(element => element.children().length === 0);
+
+    return await this.coreLayoutHandler.moveToElement(objectElement, notCompoundChildren);
+  }
+
   async run(objectElement: any) {
     // Grid layout does not apply for compound nodes.
     const notCompoundChildren = objectElement.descendants(element => element.children().length === 0);
 
-    await this.layoutExecutor.executeLayout(notCompoundChildren, {
+    return await this.runLayout(objectElement, notCompoundChildren);
+  }
+
+  private async runLayout(objectElement: any, elements: any) {
+    await this.layoutExecutor.executeLayout(elements, {
       name: 'grid',
       fit: false,
       condense: true,
