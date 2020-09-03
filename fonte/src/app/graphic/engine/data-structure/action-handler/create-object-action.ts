@@ -9,14 +9,14 @@ export class CreateObjectAction implements CytoscapeActionHandler {
 
   async handle(cytoscape: any, action: ExecutionAction): Promise<void> {
     const { id } = action.params;
-    cytoscape.add({
+    const objectElement = cytoscape.add({
       data: {
         id,
         type: SmalgObject.TYPE_DESCRIPTOR,
       },
     });
 
-    await this.layoutHandler.run(cytoscape, id);
+    await this.layoutHandler.run(objectElement);
   }
 
   name() {

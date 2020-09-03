@@ -7,7 +7,7 @@ export class LayoutExecutor {
       elements.layout({
         ...options,
         stop: () => resolve(),
-        animate: true,
+        animate: options.animate || true,
         animationDuration: 1000,
       }).run();
     });

@@ -15,56 +15,60 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
     const name: string = action.params.name;
     const value: SmalgType = action.params.value;
 
-    const attributeEntryValueElement = await this.getAttrValueElement(cytoscape, id, name);
+    const objectElement = $id(cytoscape, id);
+    const attributeEntryValueElement = await this.getAttrValueElement(cytoscape, objectElement, name);
     const currentValueElement = attributeEntryValueElement.children()[0];
     if (currentValueElement) cytoscape.remove(currentValueElement);
     const valueElement = $id(cytoscape, value.__getId__());
     await this.layoutHandler.moveToAttrSlot(attributeEntryValueElement, valueElement);
     valueElement.move({ parent: attributeEntryValueElement.id() });
 
-    await this.layoutHandler.run(cytoscape, id);
+    await this.layoutHandler.run($id(cytoscape, id));
   }
 
-  private async getAttrValueElement(cytoscape: any, id: string, name: string): Promise<any> {
+  private async getAttrValueElement(cytoscape: any, objectElement: any, name: string): Promise<any> {
+    const id = objectElement.id();
     const attributeEntryValueElement = $id(cytoscape, `${id}_${name}_value`);
     if (attributeEntryValueElement) return attributeEntryValueElement;
-    return await this.newAttrElement(cytoscape, id, name);
+    return await this.newAttrElement(cytoscape, objectElement, name);
   }
 
-  private async newAttrElement(cytoscape: any, id: string, name: string): Promise<any> {
+  private async newAttrElement(cytoscape: any, objectElement: any, name: string): Promise<any> {
+    const id = objectElement.id();
     const attrElement = cytoscape.add({
       data: {
         id: `${id}_${name}`,
-        parent: id,
       },
       classes: ['entry'],
     });
 
     const labelValue = `${name}:`;
     const nodeWidth = labelValue.length * 10;
-    cytoscape.add({
+    const attrElementKey = cytoscape.add({
       data: {
         id: `${attrElement.id()}_key`,
         labelValue,
-        parent: attrElement.id(),
         index: 0,
         nodeWidth: nodeWidth < MIN_WIDTH ? MIN_WIDTH : nodeWidth,
       },
       classes: ['entry-key'],
     });
 
-    const valueElement = cytoscape.add({
+    const attrElementValue = cytoscape.add({
       data: {
         id: `${attrElement.id()}_value`,
-        parent: attrElement.id(),
         index: 1,
       },
       classes: ['slot'],
     });
 
-    await this.layoutHandler.run(cytoscape, id);
+    await this.layoutHandler.run(objectElement);
 
-    return valueElement;
+    attrElement.move({ parent: id });
+    attrElementKey.move({ parent: attrElement.id() });
+    attrElementValue.move({ parent: attrElement.id() });
+
+    return attrElementValue;
   }
 
   name() {

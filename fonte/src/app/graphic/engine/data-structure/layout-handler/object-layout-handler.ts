@@ -8,11 +8,11 @@ export class ObjectLayoutHandler {
   private layoutExecutor = new LayoutExecutor();
 
   async moveToAttrSlot(attrSlotElement: any, valueElement: any) {
-    await this.coreLayoutHandler.moveToElement(valueElement, attrSlotElement);
+    await this.coreLayoutHandler.moveToElement(attrSlotElement, valueElement);
   }
 
-  async run(cytoscape: any, id: string) {
-    const objectElement = $id(cytoscape, id);
+  async run(objectElement: any) {
+    // Grid layout does not apply for compound nodes.
     const notCompoundChildren = objectElement.descendants(element => element.children().length === 0);
 
     await this.layoutExecutor.executeLayout(notCompoundChildren, {
@@ -20,6 +20,7 @@ export class ObjectLayoutHandler {
       fit: false,
       condense: true,
       cols: 2,
+      boundingBox: objectElement.boundingBox(),
     });
   }
 

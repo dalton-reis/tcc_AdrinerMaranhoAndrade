@@ -20,7 +20,7 @@ export class SetContainerSlotAction implements CytoscapeActionHandler {
     await this.layoutHandler.moveToSlot(slotElement, valueElement);
     valueElement.move({parent: slotElement.id()});
 
-    await this.layoutHandler.run(cytoscape, id);
+    await this.layoutHandler.run($id(cytoscape, id));
   }
 
   name() {
