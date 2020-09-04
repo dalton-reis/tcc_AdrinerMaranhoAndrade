@@ -9,12 +9,21 @@ export class SmalgPrimitive extends SmalgType {
 
   private type: string;
 
-  constructor(private value: string | number | boolean, private actions: ExecutionAction[]) {
+  constructor(
+    private value: string | number | boolean,
+    private actions: ExecutionAction[],
+    copiedFrom?: SmalgPrimitive,
+  ) {
     super();
     this.type = this.getType(value);
     actions.push({
       type: DataStructureAction.CREATE_PRIMITIVE,
-      params: { id: this.__getId__(), type: this.type, value: this.value },
+      params: {
+        id: this.__getId__(),
+        type: this.type,
+        value: this.value,
+        copiedFrom: copiedFrom ? copiedFrom.__getId__() : undefined,
+      },
     });
   }
 
@@ -32,6 +41,10 @@ export class SmalgPrimitive extends SmalgType {
 
   typeDescriptor(): string {
     return SmalgPrimitive.TYPE_DESCRIPTOR;
+  }
+
+  __reference__(): SmalgType {
+    return new SmalgPrimitive(this.value, this.actions, this);
   }
 
 }

@@ -8,6 +8,7 @@ export class ContainerLayoutHandler {
   private layoutExecutor = new LayoutExecutor();
 
   async moveToSlot(slotElement: any, valueElement: any) {
+    const containerElement = slotElement.parent()[0];
     await this.coreLayoutExecutor.moveToElement(slotElement, valueElement);
   }
 

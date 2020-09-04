@@ -12,17 +12,14 @@ import { SetContainerSlotAction } from './action-handler/set-container-slot-acti
 import { SetObjAttrAction } from './action-handler/set-obj-attr-action';
 import { DataScrutureEngineToolbar } from './data-structure-toolbar';
 import { stylesheet } from './data-structure-stylesheet';
-
-const LAYOUT_OPTIONS = {
-  name: 'grid',
-  padding: 30,
-};
+import { PrimitivesContainer } from './global/primitives-container';
 
 export class DataStructureEngine implements GraphicEngine {
 
   cy = null;
   toolbar: ToolbarItem[] = [];
   actionHandlers: { [type: string]: CytoscapeActionHandler } = {};
+  executing = false;
 
   constructor(parent) {
     this.createCytoscape(parent);
@@ -37,7 +34,6 @@ export class DataStructureEngine implements GraphicEngine {
     this.cy = CytoscapeEngine.create(parent, {
       elements: [],
       style: stylesheet,
-      layout: LAYOUT_OPTIONS,
     });
 
     this.toolbar = DataScrutureEngineToolbar.create(this);
@@ -67,8 +63,11 @@ export class DataStructureEngine implements GraphicEngine {
       console.error(action.type.name);
       throw Error('no.action.handler.defined');
     }
+    if (!this.executing) {
+      this.cy.add(this.globalElements());
+      this.executing = true;
+    }
     await actionHandler.handle(this.cy, action);
-    //this.organize();
   }
 
   undo(): void {
@@ -76,6 +75,7 @@ export class DataStructureEngine implements GraphicEngine {
   }
 
   clear(): void {
+    this.executing = false;
     this.cy.remove(this.cy.elements());
   }
 
@@ -85,11 +85,16 @@ export class DataStructureEngine implements GraphicEngine {
 
   organize() {
     const orphans = this.cy.elements('node[!parent]');
-    orphans.layout(LAYOUT_OPTIONS).run();
   }
 
   getToolbar() {
     return this.toolbar;
+  }
+
+  private globalElements(): any[] {
+    return [
+      PrimitivesContainer.get(),
+    ];
   }
 
 }

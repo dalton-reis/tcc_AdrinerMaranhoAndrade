@@ -4,6 +4,7 @@ import { ExecutionActionScope } from './execution-action-scope';
 export class DataStructureAction {
 
   static CREATE_OBJECT = DataStructureAction.action('CREATE_OBJECT');
+  static CLONE_TYPE = DataStructureAction.action('CLONE_TYPE');
   static SET_OBJ_ATTR = DataStructureAction.action('SET_OBJ_ATTR');
   static GET_OBJ_ATTR = DataStructureAction.action('GET_OBJ_ATTR');
   static CREATE_CONTAINER = DataStructureAction.action('CREATE_CONTAINER');

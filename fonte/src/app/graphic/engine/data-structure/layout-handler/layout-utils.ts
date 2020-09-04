@@ -13,8 +13,22 @@ export const adjustBoundingBox =
 };
 
 const INNER_CONTAINER_ELEMENT_PADDING = 10;
-export const containerBoundingBox = containerElement => adjustBoundingBox(
+export const containerBoundingBox = (containerElement: any) => adjustBoundingBox(
   containerElement.boundingBox(),
   INNER_CONTAINER_ELEMENT_PADDING * 2,
   INNER_CONTAINER_ELEMENT_PADDING * (containerElement.children().length + 1),
+);
+
+const INNER_OBJECT_ELEMENT_PADDING = 10;
+export const objectBoundingBox = (objectElement: any) => adjustBoundingBox(
+  objectElement.boundingBox(),
+  INNER_OBJECT_ELEMENT_PADDING * 2,
+  INNER_OBJECT_ELEMENT_PADDING * (objectElement.children().length + 1),
+);
+
+const INNER_PRIMITIVES_CONTAINER_ELEMENT_PADDING = 10;
+export const primitivesContainerBoundingBox = (primitivesContainerElement: any) => adjustBoundingBox(
+  primitivesContainerElement.boundingBox(),
+  INNER_PRIMITIVES_CONTAINER_ELEMENT_PADDING * 2,
+  INNER_PRIMITIVES_CONTAINER_ELEMENT_PADDING * 2,
 );

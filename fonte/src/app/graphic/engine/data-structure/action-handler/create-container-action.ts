@@ -1,8 +1,7 @@
 import { DataStructureAction } from '../../../../models/data-structure-action';
 import { CytoscapeActionHandler } from '../../core/cytoscape/cytoscape-action-handler';
 import { ContainerLayoutHandler } from '../layout-handler/container-layout-handler';
-import { SmalgContainer } from '../../../../script-engine/engine/smalg-javascript/types/smalg-container';
-import { $id } from '../../core/cytoscape/cytoscape-utils';
+import { ElementTypes } from '../data-structure-types';
 
 export class CreateContainerAction implements CytoscapeActionHandler {
 
@@ -13,7 +12,7 @@ export class CreateContainerAction implements CytoscapeActionHandler {
     const containerElement = cytoscape.add({
       data: {
         id,
-        type: SmalgContainer.TYPE_DESCRIPTOR,
+        type: ElementTypes.CONTAINER,
       },
     });
     for (let i = 0; i < size; i++) {

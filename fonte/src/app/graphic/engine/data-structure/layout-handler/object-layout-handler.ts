@@ -1,6 +1,7 @@
 import { $id } from '../../core/cytoscape/cytoscape-utils';
 import { CoreLayoutHandler } from './core-layout-handler';
 import { LayoutExecutor } from './layout-executor';
+import { objectBoundingBox } from './layout-utils';
 
 export class ObjectLayoutHandler {
 
@@ -8,6 +9,8 @@ export class ObjectLayoutHandler {
   private layoutExecutor = new LayoutExecutor();
 
   async moveToAttrSlot(attrSlotElement: any, valueElement: any) {
+    const attrElement = attrSlotElement.parent()[0];
+    const objectElement = attrElement.parent()[0];
     await this.coreLayoutHandler.moveToElement(attrSlotElement, valueElement);
   }
 
@@ -30,7 +33,7 @@ export class ObjectLayoutHandler {
       fit: false,
       condense: true,
       cols: 2,
-      boundingBox: objectElement.boundingBox(),
+      boundingBox: objectBoundingBox(objectElement),
     });
   }
 

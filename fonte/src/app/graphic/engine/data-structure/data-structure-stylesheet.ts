@@ -1,9 +1,26 @@
-import { SmalgObject } from '../../../script-engine/engine/smalg-javascript/types/smalg-object';
-import { SmalgPrimitive } from '../../../script-engine/engine/smalg-javascript/types/smalg-primitive';
-import { SmalgContainer } from '../../../script-engine/engine/smalg-javascript/types/smalg-container';
+import { ElementTypes } from './data-structure-types';
+import { PrimitivesContainer } from './global/primitives-container';
 
 const stylesheet = [
   {
+    selector: `#${PrimitivesContainer.id}`,
+    style: {
+      'shape': 'round-rectangle',
+      'width': '80',
+      'height': '100',
+      'min-height': '100',
+      'min-width': '50',
+      'content': 'data(label)',
+      'text-wrap': 'wrap',
+      'text-valign': 'top',
+      'text-halign': 'center',
+      'events': 'no',
+      'background-color': '#c2c2c2',
+      'background-opacity': '.5',
+      'border-width': '3px',
+      'border-color': '#b0b0b0',
+    },
+  }, {
     selector: 'node[labelValue]',
     style: {
       'content': 'data(labelValue)',
@@ -17,45 +34,50 @@ const stylesheet = [
       'events': 'no',
     },
   }, {
+    selector: '.blocked',
+    style: {
+      'events': 'no',
+    },
+  }, {
     selector: 'node[nodeWidth]',
     style: {
       'width': 'data(nodeWidth)',
     },
   }, {
-    selector: `node[type = "${SmalgObject.TYPE_DESCRIPTOR}"]`,
+    selector: `node[type = "${ElementTypes.OBJECT}"]`,
     style: {
       'shape': 'round-rectangle',
       'border-width': '0px',
       'background-color': '#b0b0b0',
     },
   }, {
-    selector: `node[type = "${SmalgObject.TYPE_DESCRIPTOR}"] .entry`,
+    selector: `node.entry`,
     style: {
       'background-color': '#b0b0b0',
       'border-width': '0px',
     },
   }, {
-    selector: `node[type = "${SmalgObject.TYPE_DESCRIPTOR}"] .entry-key`,
+    selector: `node.entry-key`,
     style: {
       'shape': 'round-rectangle',
       'background-color': '#949494',
     },
   }, {
-    selector: `node .slot`,
+    selector: `node.slot`,
     style: {
       'shape': 'rectangle',
       'background-color': '#c2c2c2',
       'border-width': '0px',
     },
   }, {
-    selector: `node[type = "${SmalgContainer.TYPE_DESCRIPTOR}"]`,
+    selector: `node[type = "${ElementTypes.CONTAINER}"]`,
     style: {
       'shape': 'rectangle',
       'background-color': '#999999',
       'border-width': '0px',
     },
   }, {
-    selector: `node[type = "${SmalgPrimitive.TYPE_DESCRIPTOR}"]`,
+    selector: `node[type = "${ElementTypes.PRIMITIVE}"]`,
     style: {
       'shape': 'round-rectangle',
     },
