@@ -9,7 +9,7 @@ export class SmalgContainer extends SmalgType {
 
   static TYPE_DESCRIPTOR = 'smalg.js.container';
 
-  private container = [];
+  private container: SmalgType[] = [];
 
   constructor(private properties: SmalgContainerProperties, private actions: ExecutionAction[]) {
     super();
@@ -32,6 +32,7 @@ export class SmalgContainer extends SmalgType {
     if (index < 0 || index >= this.properties.size) {
       throw Error('container.index.out.of.bounds');
     }
+    value = value.__reference__();
     this.actions.push({
       type: DataStructureAction.SET_CONTAINER_SLOT, params: { id: this.__getId__(), index, value },
     });
@@ -42,11 +43,15 @@ export class SmalgContainer extends SmalgType {
     this.actions.push({
       type: DataStructureAction.GET_CONTAINER_SLOT, params: { id: this.__getId__(), index },
     });
-    return this.container[index];
+    return this.container[index].__reference__();
   }
 
   typeDescriptor(): string {
     return SmalgContainer.TYPE_DESCRIPTOR;
+  }
+
+  __reference__(): SmalgType {
+    return this;
   }
 
 }

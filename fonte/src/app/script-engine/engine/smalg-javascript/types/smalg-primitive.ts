@@ -34,4 +34,8 @@ export class SmalgPrimitive extends SmalgType {
     return SmalgPrimitive.TYPE_DESCRIPTOR;
   }
 
+  __reference__(): SmalgType {
+    return new SmalgPrimitive(this.value, this.actions);
+  }
+
 }

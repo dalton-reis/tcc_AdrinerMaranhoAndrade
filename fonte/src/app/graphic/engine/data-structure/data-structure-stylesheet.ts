@@ -17,6 +17,11 @@ const stylesheet = [
       'events': 'no',
     },
   }, {
+    selector: '.blocked',
+    style: {
+      'events': 'no',
+    },
+  }, {
     selector: 'node[nodeWidth]',
     style: {
       'width': 'data(nodeWidth)',
@@ -29,19 +34,19 @@ const stylesheet = [
       'background-color': '#b0b0b0',
     },
   }, {
-    selector: `node[type = "${SmalgObject.TYPE_DESCRIPTOR}"] .entry`,
+    selector: `node.entry`,
     style: {
       'background-color': '#b0b0b0',
       'border-width': '0px',
     },
   }, {
-    selector: `node[type = "${SmalgObject.TYPE_DESCRIPTOR}"] .entry-key`,
+    selector: `node.entry-key`,
     style: {
       'shape': 'round-rectangle',
       'background-color': '#949494',
     },
   }, {
-    selector: `node .slot`,
+    selector: `node.slot`,
     style: {
       'shape': 'rectangle',
       'background-color': '#c2c2c2',

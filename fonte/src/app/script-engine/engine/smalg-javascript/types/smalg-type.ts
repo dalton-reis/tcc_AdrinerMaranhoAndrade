@@ -8,6 +8,8 @@ export abstract class SmalgType {
     return this.id;
   }
 
+  abstract __reference__(): SmalgType;
+
   abstract typeDescriptor(): string;
 
 }

@@ -2,7 +2,6 @@ import { DataStructureAction } from '../../../../models/data-structure-action';
 import { CytoscapeActionHandler } from '../../core/cytoscape/cytoscape-action-handler';
 import { ContainerLayoutHandler } from '../layout-handler/container-layout-handler';
 import { SmalgContainer } from '../../../../script-engine/engine/smalg-javascript/types/smalg-container';
-import { $id } from '../../core/cytoscape/cytoscape-utils';
 
 export class CreateContainerAction implements CytoscapeActionHandler {
 
