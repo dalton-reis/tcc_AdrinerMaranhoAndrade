@@ -1,7 +1,25 @@
 import { ElementTypes } from './data-structure-types';
+import { PrimitivesContainer } from './global/primitives-container';
 
 const stylesheet = [
   {
+    selector: `#${PrimitivesContainer.id}`,
+    style: {
+      'shape': 'round-rectangle',
+      'width': '80',
+      'height': '100',
+      'min-height': '100',
+      'min-width': '50',
+      'content': 'data(label)',
+      'text-wrap': 'wrap',
+      'text-valign': 'top',
+      'text-halign': 'center',
+      'events': 'no',
+      'background-color': '#c2c2c2',
+      'border-width': '3px',
+      'border-color': '#b0b0b0',
+    },
+  }, {
     selector: 'node[labelValue]',
     style: {
       'content': 'data(labelValue)',

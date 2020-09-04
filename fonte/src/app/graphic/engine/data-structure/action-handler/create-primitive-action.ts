@@ -3,6 +3,7 @@ import { CytoscapeActionHandler } from '../../core/cytoscape/cytoscape-action-ha
 import { PrimitiveLayoutHandler } from '../layout-handler/primitive-layout-handler';
 import { $id } from '../../core/cytoscape/cytoscape-utils';
 import { ElementTypes } from '../data-structure-types';
+import { PrimitivesContainer } from '../global/primitives-container';
 
 const MIN_WIDTH = 30;
 
@@ -26,7 +27,9 @@ export class CreatePrimitiveAction implements CytoscapeActionHandler {
     if (copiedFrom) {
       this.layoutHandler.moveToPrimitive($id(cytoscape, copiedFrom), newPrimitive);
     } else {
-
+      const primitivesContainer = $id(cytoscape, PrimitivesContainer.id);
+      newPrimitive.move({ parent: primitivesContainer.id() });
+      this.layoutHandler.adjustPrimitives(primitivesContainer);
     }
   }
 
