@@ -16,6 +16,7 @@ const stylesheet = [
       'text-halign': 'center',
       'events': 'no',
       'background-color': '#c2c2c2',
+      'background-opacity': '.5',
       'border-width': '3px',
       'border-color': '#b0b0b0',
     },
