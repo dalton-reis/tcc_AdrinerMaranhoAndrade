@@ -1,6 +1,5 @@
 import { DataStructureAction } from '../../../../models/data-structure-action';
 import { CytoscapeActionHandler } from '../../core/cytoscape/cytoscape-action-handler';
-import { SmalgType } from '../../../../script-engine/engine/smalg-javascript/types/smalg-type';
 import { $id } from '../../core/cytoscape/cytoscape-utils';
 import { ObjectLayoutHandler } from '../layout-handler/object-layout-handler';
 
@@ -13,13 +12,13 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
   async handle(cytoscape: any, action: ExecutionAction): Promise<void> {
     const id: string = action.params.id;
     const name: string = action.params.name;
-    const value: SmalgType = action.params.value;
+    const value: string = action.params.value;
 
     const objectElement = $id(cytoscape, id);
     const attributeEntryValueElement = await this.getAttrValueElement(cytoscape, objectElement, name);
     const currentValueElement = attributeEntryValueElement.children()[0];
     if (currentValueElement) cytoscape.remove(currentValueElement);
-    const valueElement = $id(cytoscape, value.__getId__());
+    const valueElement = $id(cytoscape, value);
     await this.layoutHandler.moveToAttrSlot(attributeEntryValueElement, valueElement);
     valueElement.move({ parent: attributeEntryValueElement.id() });
 
@@ -44,7 +43,7 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
 
     const labelValue = `${name}:`;
     const nodeWidth = labelValue.length * 10;
-    const attrElementKey = cytoscape.add({
+    cytoscape.add({
       data: {
         id: `${attrElement.id()}_key`,
         labelValue,

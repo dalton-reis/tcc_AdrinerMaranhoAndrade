@@ -1,6 +1,4 @@
-import { SmalgObject } from '../../../script-engine/engine/smalg-javascript/types/smalg-object';
-import { SmalgPrimitive } from '../../../script-engine/engine/smalg-javascript/types/smalg-primitive';
-import { SmalgContainer } from '../../../script-engine/engine/smalg-javascript/types/smalg-container';
+import { ElementTypes } from './data-structure-types';
 
 const stylesheet = [
   {
@@ -27,7 +25,7 @@ const stylesheet = [
       'width': 'data(nodeWidth)',
     },
   }, {
-    selector: `node[type = "${SmalgObject.TYPE_DESCRIPTOR}"]`,
+    selector: `node[type = "${ElementTypes.OBJECT}"]`,
     style: {
       'shape': 'round-rectangle',
       'border-width': '0px',
@@ -53,14 +51,14 @@ const stylesheet = [
       'border-width': '0px',
     },
   }, {
-    selector: `node[type = "${SmalgContainer.TYPE_DESCRIPTOR}"]`,
+    selector: `node[type = "${ElementTypes.CONTAINER}"]`,
     style: {
       'shape': 'rectangle',
       'background-color': '#999999',
       'border-width': '0px',
     },
   }, {
-    selector: `node[type = "${SmalgPrimitive.TYPE_DESCRIPTOR}"]`,
+    selector: `node[type = "${ElementTypes.PRIMITIVE}"]`,
     style: {
       'shape': 'round-rectangle',
     },

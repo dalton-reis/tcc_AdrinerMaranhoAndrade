@@ -1,8 +1,8 @@
 import { DataStructureAction } from '../../../../models/data-structure-action';
 import { CytoscapeActionHandler } from '../../core/cytoscape/cytoscape-action-handler';
-import { SmalgPrimitive } from '../../../../script-engine/engine/smalg-javascript/types/smalg-primitive';
 import { PrimitiveLayoutHandler } from '../layout-handler/primitive-layout-handler';
 import { $id } from '../../core/cytoscape/cytoscape-utils';
+import { ElementTypes } from '../data-structure-types';
 
 const MIN_WIDTH = 30;
 
@@ -18,13 +18,15 @@ export class CreatePrimitiveAction implements CytoscapeActionHandler {
       data: {
         id,
         labelValue,
-        type: SmalgPrimitive.TYPE_DESCRIPTOR,
+        type: ElementTypes.PRIMITIVE,
         nodeWidth: nodeWidth < MIN_WIDTH ? MIN_WIDTH : nodeWidth,
       },
       classes: [ type ],
     });
     if (copiedFrom) {
       this.layoutHandler.moveToPrimitive($id(cytoscape, copiedFrom), newPrimitive);
+    } else {
+
     }
   }
 

@@ -1,7 +1,7 @@
 import { DataStructureAction } from '../../../../models/data-structure-action';
 import { CytoscapeActionHandler } from '../../core/cytoscape/cytoscape-action-handler';
 import { ObjectLayoutHandler } from '../layout-handler/object-layout-handler';
-import { SmalgObject } from '../../../../script-engine/engine/smalg-javascript/types/smalg-object';
+import { ElementTypes } from '../data-structure-types';
 
 export class CreateObjectAction implements CytoscapeActionHandler {
 
@@ -12,7 +12,7 @@ export class CreateObjectAction implements CytoscapeActionHandler {
     const objectElement = cytoscape.add({
       data: {
         id,
-        type: SmalgObject.TYPE_DESCRIPTOR,
+        type: ElementTypes.OBJECT,
       },
     });
 

@@ -16,7 +16,10 @@ export class SmalgObject extends SmalgType {
   setAttribute(name: string, value: SmalgType) {
     value = value.__reference__();
 
-    this.actions.push({ type: DataStructureAction.SET_OBJ_ATTR, params: { id: this.__getId__(), name, value } });
+    this.actions.push({
+      type: DataStructureAction.SET_OBJ_ATTR,
+      params: { id: this.__getId__(), name, value: value.__getId__() },
+    });
     this.obj[name] = value;
   }
 

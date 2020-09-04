@@ -34,7 +34,7 @@ export class SmalgContainer extends SmalgType {
     }
     value = value.__reference__();
     this.actions.push({
-      type: DataStructureAction.SET_CONTAINER_SLOT, params: { id: this.__getId__(), index, value },
+      type: DataStructureAction.SET_CONTAINER_SLOT, params: { id: this.__getId__(), index, value: value.__getId__() },
     });
     this.container[index] = value;
   }
