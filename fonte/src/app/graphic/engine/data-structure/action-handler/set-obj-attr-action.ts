@@ -1,7 +1,8 @@
 import { DataStructureAction } from '../../../../models/data-structure-action';
 import { CytoscapeActionHandler } from '../../core/cytoscape/cytoscape-action-handler';
-import { $id } from '../../core/cytoscape/cytoscape-utils';
+import { $id, $removeRelation, $addRelation } from '../../core/cytoscape/cytoscape-utils';
 import { ObjectLayoutHandler } from '../layout-handler/object-layout-handler';
+import { ElementTypes } from '../data-structure-types';
 
 const MIN_WIDTH = 30;
 
@@ -13,14 +14,12 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
     const id: string = action.params.id;
     const name: string = action.params.name;
     const value: string = action.params.value;
-
+    const valueElement = $id(cytoscape, value);
     const objectElement = $id(cytoscape, id);
     const attributeEntryValueElement = await this.getAttrValueElement(cytoscape, objectElement, name);
-    const currentValueElement = attributeEntryValueElement.children()[0];
-    if (currentValueElement) cytoscape.remove(currentValueElement);
-    const valueElement = $id(cytoscape, value);
-    await this.layoutHandler.moveToAttrSlot(attributeEntryValueElement, valueElement);
-    valueElement.move({ parent: attributeEntryValueElement.id() });
+
+    this.clearCurrentValue(cytoscape, attributeEntryValueElement);
+    await this.setValue(cytoscape, attributeEntryValueElement, valueElement);
 
     await this.layoutHandler.run($id(cytoscape, id));
   }
@@ -68,6 +67,26 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
     await this.layoutHandler.run(objectElement);
 
     return attrElementValue;
+  }
+
+  private clearCurrentValue(cytoscape, attributeEntryValueElement): void {
+    const attributeValueRelations = attributeEntryValueElement.neighborhood();
+    if (attributeValueRelations.length > 0) {
+      $removeRelation(cytoscape, attributeEntryValueElement, attributeValueRelations[0]);
+    }
+    const currentValueElement = attributeEntryValueElement.children()[0];
+    if (currentValueElement) {
+        cytoscape.remove(currentValueElement);
+    }
+  }
+
+  private async setValue(cytoscape, attributeEntryValueElement, valueElement) {
+    if (valueElement.data('type') === ElementTypes.PRIMITIVE) {
+      await this.layoutHandler.moveToAttrSlot(attributeEntryValueElement, valueElement);
+      valueElement.move({ parent: attributeEntryValueElement.id() });
+    } else {
+      $addRelation(cytoscape, attributeEntryValueElement, valueElement);
+    }
   }
 
   name() {

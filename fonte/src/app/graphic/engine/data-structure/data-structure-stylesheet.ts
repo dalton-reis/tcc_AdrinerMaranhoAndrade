@@ -21,6 +21,12 @@ const stylesheet = [
       'border-color': '#b0b0b0',
     },
   }, {
+    selector: `edges.relation`,
+    style: {
+      'line-style': 'dashed',
+      'line-color': '#707070',
+    },
+  }, {
     selector: 'node[labelValue]',
     style: {
       'content': 'data(labelValue)',
@@ -73,7 +79,7 @@ const stylesheet = [
     selector: `node[type = "${ElementTypes.CONTAINER}"]`,
     style: {
       'shape': 'rectangle',
-      'background-color': '#999999',
+      'background-color': '#b0b0b0',
       'border-width': '0px',
     },
   }, {

@@ -21,6 +21,7 @@ export class MonacoEditor implements CodeEditor {
       value:
 `const object_1 = context.newObject();
 const container_1 = context.newContainer(6);
+const container_2 = context.newContainer(2);
 const int_1 = context.newPrimitive(1);
 const double_1 = context.newPrimitive(2.5);
 const string_1 = context.newPrimitive('testando');
@@ -32,10 +33,16 @@ const boolean_2 = context.newPrimitive(true);
 object_1.setAttribute('id', int_1);
 object_1.setAttribute('valor', double_1);
 object_1.setAttribute('descrição', string_2);
+object_1.setAttribute('descrição', string_3);
+object_1.setAttribute('container1', container_2);
+object_1.setAttribute('container1', container_1);
+object_1.setAttribute('container2', container_2);
 container_1.set(0, boolean_1);
 container_1.set(0, boolean_2);
 container_1.set(1, string_1);
 container_1.set(2, string_3);
+container_1.set(3, container_2);
+container_1.set(3, object_1);
 `,
       language: config.language,
       automaticLayout: true,
