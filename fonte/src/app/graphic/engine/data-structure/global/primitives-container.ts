@@ -1,6 +1,7 @@
 export class PrimitivesContainer {
 
   static id = 'primitives-container';
+  static position = { x: 50, y: 50 };
 
   static get() {
     return {
@@ -8,7 +9,9 @@ export class PrimitivesContainer {
         id: PrimitivesContainer.id,
         label: 'Valores Imutáveis',
       },
-      position: { x: 0, y: 0 },
+      locked: true,
+      position: PrimitivesContainer.position,
+      classes: ['blocked'],
     };
   }
 

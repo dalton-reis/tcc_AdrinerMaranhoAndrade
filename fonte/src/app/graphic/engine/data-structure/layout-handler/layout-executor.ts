@@ -17,7 +17,7 @@ export class LayoutExecutor {
       animationDuration = 1000,
     } = context;
     blockedElements.forEach(element => element.addClass('blocked'));
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       elements.layout({
         ...options,
         stop: () => {
@@ -27,6 +27,7 @@ export class LayoutExecutor {
         animate,
         animationDuration,
       }).run();
+      setTimeout(() => reject('Timeout'), animationDuration + 500);
     });
   }
 

@@ -4,12 +4,15 @@ import { containerBoundingBox } from './layout-utils';
 
 export class ContainerLayoutHandler {
 
-  private coreLayoutExecutor = new CoreLayoutHandler();
+  private coreLayoutHandler = new CoreLayoutHandler();
   private layoutExecutor = new LayoutExecutor();
 
   async moveToSlot(slotElement: any, valueElement: any) {
-    const containerElement = slotElement.parent()[0];
-    await this.coreLayoutExecutor.moveToElement(slotElement, valueElement);
+    await this.coreLayoutHandler.moveToElement(slotElement, valueElement);
+  }
+
+  async updateRootLayout(cytoscape: any) {
+    await this.coreLayoutHandler.organizeElements(cytoscape);
   }
 
   async run(containerElement: any) {

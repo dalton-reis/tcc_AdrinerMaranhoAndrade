@@ -9,9 +9,11 @@ export class ObjectLayoutHandler {
   private layoutExecutor = new LayoutExecutor();
 
   async moveToAttrSlot(attrSlotElement: any, valueElement: any) {
-    const attrElement = attrSlotElement.parent()[0];
-    const objectElement = attrElement.parent()[0];
     await this.coreLayoutHandler.moveToElement(attrSlotElement, valueElement);
+  }
+
+  async updateRootLayout(cytoscape: any) {
+    await this.coreLayoutHandler.organizeElements(cytoscape);
   }
 
   async onCreateAttr(objectElement: any, attrElement: any) {

@@ -14,8 +14,7 @@ const stylesheet = [
       'text-wrap': 'wrap',
       'text-valign': 'top',
       'text-halign': 'center',
-      'events': 'no',
-      'background-color': '#c2c2c2',
+      'background-color': '#dedede',
       'background-opacity': '.5',
       'border-width': '3px',
       'border-color': '#b0b0b0',
@@ -72,7 +71,7 @@ const stylesheet = [
     selector: `node.slot`,
     style: {
       'shape': 'rectangle',
-      'background-color': '#c2c2c2',
+      'background-color': '#dedede',
       'border-width': '0px',
     },
   }, {

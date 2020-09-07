@@ -21,6 +21,7 @@ export class CreatePrimitiveAction implements CytoscapeActionHandler {
         labelValue,
         type: ElementTypes.PRIMITIVE,
         nodeWidth: nodeWidth < MIN_WIDTH ? MIN_WIDTH : nodeWidth,
+        position: PrimitivesContainer.position,
       },
       classes: [ type ],
     });
