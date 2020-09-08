@@ -12,10 +12,6 @@ export class ObjectLayoutHandler {
     await this.coreLayoutHandler.moveToElement(attrSlotElement, valueElement);
   }
 
-  async updateRootLayout(cytoscape: any) {
-    await this.coreLayoutHandler.organizeElements(cytoscape);
-  }
-
   async onCreateAttr(objectElement: any, attrElement: any) {
     const notCompoundChildren = attrElement.descendants(element => element.children().length === 0);
 

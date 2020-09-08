@@ -1,9 +1,4 @@
 import cytoscape from 'cytoscape';
-import cola from 'cytoscape-cola';
-import coseBilkent from 'cytoscape-cose-bilkent';
-
-cytoscape.use(cola);
-cytoscape.use( coseBilkent );
 
 export class CytoscapeEngine {
 

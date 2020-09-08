@@ -13,7 +13,6 @@ import { SetObjAttrAction } from './action-handler/set-obj-attr-action';
 import { DataScrutureEngineToolbar } from './data-structure-toolbar';
 import { stylesheet } from './data-structure-stylesheet';
 import { PrimitivesContainer } from './global/primitives-container';
-import { Anchor } from './global/anchor';
 
 export class DataStructureEngine implements GraphicEngine {
 
@@ -94,7 +93,6 @@ export class DataStructureEngine implements GraphicEngine {
   private globalElements(): any[] {
     return [
       PrimitivesContainer.get(),
-      Anchor.get(),
     ];
   }
 

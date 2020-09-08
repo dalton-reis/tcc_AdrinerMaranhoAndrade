@@ -11,10 +11,6 @@ export class ContainerLayoutHandler {
     await this.coreLayoutHandler.moveToElement(slotElement, valueElement);
   }
 
-  async updateRootLayout(cytoscape: any) {
-    await this.coreLayoutHandler.organizeElements(cytoscape);
-  }
-
   async run(containerElement: any) {
     // Grid layout does not apply for compound nodes.
     const notCompoundChildren = containerElement.descendants(element => element.children().length === 0);

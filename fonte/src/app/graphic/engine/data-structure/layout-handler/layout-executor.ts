@@ -27,7 +27,7 @@ export class LayoutExecutor {
         animate,
         animationDuration,
       }).run();
-      setTimeout(() => reject('Timeout'), animationDuration + 500);
+      setTimeout(() => reject('Timeout'), animationDuration + 10000);
     });
   }
 

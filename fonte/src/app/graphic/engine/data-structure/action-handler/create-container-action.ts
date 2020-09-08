@@ -2,8 +2,7 @@ import { DataStructureAction } from '../../../../models/data-structure-action';
 import { CytoscapeActionHandler } from '../../core/cytoscape/cytoscape-action-handler';
 import { ContainerLayoutHandler } from '../layout-handler/container-layout-handler';
 import { ElementTypes } from '../data-structure-types';
-import { $add, $id, $addRelation } from '../../core/cytoscape/cytoscape-utils';
-import { Anchor } from '../global/anchor';
+import { $add } from '../../core/cytoscape/cytoscape-utils';
 
 export class CreateContainerAction implements CytoscapeActionHandler {
 
@@ -27,9 +26,7 @@ export class CreateContainerAction implements CytoscapeActionHandler {
         classes: ['slot'],
       });
     }
-    $addRelation(cytoscape, containerElement, $id(cytoscape, Anchor.id));
     await this.layoutHandler.run(containerElement);
-    await this.layoutHandler.updateRootLayout(cytoscape);
   }
 
 
