@@ -62,6 +62,12 @@ const stylesheet = [
       'border-width': '0px',
     },
   }, {
+    selector: `node.entry.selected`,
+    style: {
+      'border-width': '2px',
+      'border-color': 'red',
+    },
+  }, {
     selector: `node.entry-key`,
     style: {
       'shape': 'round-rectangle',
@@ -73,6 +79,12 @@ const stylesheet = [
       'shape': 'rectangle',
       'background-color': '#dedede',
       'border-width': '0px',
+    },
+  }, {
+    selector: 'node.slot.selected',
+    style: {
+      'border-width': '2px',
+      'border-color': 'red',
     },
   }, {
     selector: `node[type = "${ElementTypes.CONTAINER}"]`,

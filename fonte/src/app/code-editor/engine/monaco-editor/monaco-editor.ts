@@ -37,12 +37,16 @@ object_1.setAttribute('descrição', string_3);
 object_1.setAttribute('container1', container_2);
 object_1.setAttribute('container1', container_1);
 object_1.setAttribute('container2', container_2);
+object_1.getAttribute('id');
+object_1.getAttribute('valor');
 container_1.set(0, boolean_1);
 container_1.set(0, boolean_2);
 container_1.set(1, string_1);
 container_1.set(2, string_3);
 container_1.set(3, container_2);
 container_1.set(3, object_1);
+container_1.get(2);
+container_1.get(3);
 `,
       language: config.language,
       automaticLayout: true,
