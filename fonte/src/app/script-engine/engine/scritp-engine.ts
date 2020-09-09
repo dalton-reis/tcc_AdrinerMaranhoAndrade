@@ -1,12 +1,12 @@
 export interface ScriptEngine {
 
-  execute(): void;
+  resume(): void;
 
   stop(): void;
 
-  forward(): Promise<void>;
+  forward(): Promise<boolean>;
 
-  previous(): Promise<void>;
+  previous(): Promise<boolean>;
 
   abort(): void;
 

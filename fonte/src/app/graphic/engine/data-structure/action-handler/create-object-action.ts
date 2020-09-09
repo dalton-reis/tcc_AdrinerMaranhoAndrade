@@ -15,6 +15,7 @@ export class CreateObjectAction implements CytoscapeActionHandler {
         type: ElementTypes.OBJECT,
       },
     });
+    await this.layoutHandler.setInitialPosition(objectElement);
     await this.layoutHandler.run(objectElement);
   }
 

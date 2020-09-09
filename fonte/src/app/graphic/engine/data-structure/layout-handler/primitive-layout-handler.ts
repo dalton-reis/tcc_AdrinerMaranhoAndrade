@@ -8,7 +8,7 @@ export class PrimitiveLayoutHandler {
   private layoutExecutor = new LayoutExecutor();
 
   async moveToPrimitive(targetPrimitive: any, sourcePrimitive: any) {
-    return await this.coreLayoutHandler.moveToElement(targetPrimitive, sourcePrimitive, {
+    await this.coreLayoutHandler.moveToPosition(targetPrimitive.boundingBox(), sourcePrimitive, {
       animate: false,
     });
   }

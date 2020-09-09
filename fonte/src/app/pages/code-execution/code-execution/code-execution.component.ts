@@ -33,7 +33,7 @@ export class CodeExecutionComponent implements OnInit {
         this.scriptEngine.abort();
       }
       this.scriptEngine = ScriptEngineProvider.create(compiledScript, this.graphicEngine);
-      this.scriptEngine.execute();
+      this.scriptEngine.resume();
     }
   }
 

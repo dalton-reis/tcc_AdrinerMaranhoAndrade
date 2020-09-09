@@ -16,15 +16,17 @@ export class CreateContainerAction implements CytoscapeActionHandler {
         type: ElementTypes.CONTAINER,
       },
     });
+    await this.layoutHandler.setInitialPosition(containerElement);
     for (let i = 0; i < size; i++) {
-      await $add(cytoscape, {
+      const slotElement = await $add(cytoscape, {
         data: {
           id: `${id}_${i}`,
-          parent: id,
           index: i,
         },
         classes: ['slot'],
       });
+      await this.layoutHandler.moveToContainer(containerElement, slotElement);
+      slotElement.move({ parent: id });
     }
     await this.layoutHandler.run(containerElement);
   }

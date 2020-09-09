@@ -4,9 +4,9 @@ export interface GraphicEngine {
 
   execute(action: ExecutionAction): Promise<void>;
 
-  undo(): void;
+  undo(): Promise<void>;
 
-  clear(): void;
+  clear(): Promise<void>;
 
   getToolbar(): ToolbarItem[];
 

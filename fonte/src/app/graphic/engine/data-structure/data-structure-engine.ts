@@ -70,11 +70,11 @@ export class DataStructureEngine implements GraphicEngine {
     await actionHandler.handle(this.cy, action);
   }
 
-  undo(): void {
+  async undo(): Promise<void> {
     console.log('undo');
   }
 
-  clear(): void {
+  async clear(): Promise<void> {
     this.executing = false;
     this.cy.remove(this.cy.elements());
   }
@@ -84,6 +84,7 @@ export class DataStructureEngine implements GraphicEngine {
   }
 
   organize() {
+
   }
 
   getToolbar() {

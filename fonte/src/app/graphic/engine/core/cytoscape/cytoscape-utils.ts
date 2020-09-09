@@ -20,9 +20,10 @@ export const $removeRelation = (cytoscape: any, el1: any, el2: any) => {
 };
 
 export const $add = async (cytoscape, element) => {
-  const addPromise = new Promise((resolve) => cytoscape.promiseOn('add').then(event => resolve(event.target)));
-  cytoscape.add(element);
-  return await addPromise;
+  // const addPromise = new Promise((resolve) => cytoscape.promiseOn('add').then(event => resolve(event.target)));
+  // cytoscape.add(element);
+  // return await addPromise;
+  return cytoscape.add(element);
 };
 
 

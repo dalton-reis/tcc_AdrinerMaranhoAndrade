@@ -2,13 +2,15 @@ import { ScriptEngine } from '../scritp-engine';
 import { GraphicEngine } from '../../../graphic/engine/graphic-engine';
 import { CompiledScript } from '../../compilers/compiled-script';
 import { SmalgJavascriptContext } from './smalg-javascript-context';
+import { v4 as uuidV4 } from 'uuid';
 
 export class SmalgJavascriptScriptEngine implements ScriptEngine {
 
   private currentStep = 0;
   private actions: ExecutionAction[] = [];
-  private executing: boolean = false;
+  private resumeContext: string = null;
   private timeoutId: NodeJS.Timeout;
+  private resumeSpeed = 1000;
 
   constructor(
     private script: CompiledScript,
@@ -21,47 +23,47 @@ export class SmalgJavascriptScriptEngine implements ScriptEngine {
     this.script.execute(new SmalgJavascriptContext(this.actions));
   }
 
-  execute(): void {
-    if (!this.executing) {
-      this.executing = true;
-      this.startExecution();
+  resume(): void {
+    if (!this.resumeContext) {
+      this.resumeContext = uuidV4();
+      this.executeResumeAction(this.resumeContext);
     }
   }
 
-  private async startExecution(): Promise<void> {
-    await this.forward();
-    this.scheduleExecution(1000);
-  }
+  private async executeResumeAction(resumeContext: string) {
+    if (this.resumeContext !== resumeContext) return;
 
-  private async scheduleExecution(time: number): Promise<void> {
-    this.timeoutId = setTimeout(async () => {
-      if (this.currentStep >= this.actions.length) {
-        this.stop();
-      } else {
-        await this.forward();
-        this.scheduleExecution(time);
-      }
-    }, time);
+    const executed = await this.forward();
+    if (executed) {
+      this.timeoutId = setTimeout(() => this.executeResumeAction(resumeContext), this.resumeSpeed);
+    }
   }
 
   stop(): void {
     clearTimeout(this.timeoutId);
-    this.executing = false;
+    this.resumeContext = null;
   }
 
-  async forward(): Promise<void> {
+  async forward(): Promise<boolean> {
     if (this.currentStep < this.actions.length) {
       await this.graphicEngine.execute(this.actions[this.currentStep++]);
+      return true;
     }
+    return false;
   }
 
-  async previous(): Promise<void> {
+  async previous(): Promise<boolean> {
+    if (this.currentStep < this.actions.length) {
       this.currentStep--;
-      this.graphicEngine.undo();
+      await this.graphicEngine.undo();
+      return true;
+    }
+    return false;
   }
 
   abort() {
     this.stop();
+    this.currentStep = 0;
     this.graphicEngine.clear();
   }
 
