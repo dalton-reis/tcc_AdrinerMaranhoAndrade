@@ -1,12 +1,7 @@
 ### Engine
 
-* Organização dos elementos.
-	- Criar um layout para objetos.
-	- Criar um layout para vetores.
-	- Definir um layout para o grafo completo.
-* Tratativa de referência. Tipos primitivos são passados por cópia, enquanto objetos e vetores são passados por referência.
+* Tratar elementos nulos.
 * Tratar erros de execução, como ponteiros nulos.
-* Highlight ao obter elementos.
 * Coletar elementos que não possuem mais referência (uma espécie de Garbage Collector).
 
 ### Professor
