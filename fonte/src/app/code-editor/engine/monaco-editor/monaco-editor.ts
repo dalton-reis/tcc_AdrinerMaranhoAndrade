@@ -30,15 +30,15 @@ const string_3 = context.newPrimitive('teste 3');
 const boolean_1 = context.newPrimitive(false);
 const boolean_2 = context.newPrimitive(true);
 
-object_1.setAttribute('id', int_1);
-object_1.setAttribute('valor', double_1);
-object_1.setAttribute('descrição', string_2);
-object_1.setAttribute('descrição', string_3);
-object_1.setAttribute('container1', container_2);
-object_1.setAttribute('container1', container_1);
-object_1.setAttribute('container2', container_2);
-object_1.getAttribute('id');
-object_1.getAttribute('valor');
+object_1.set('id', int_1);
+object_1.set('valor', double_1);
+object_1.set('descrição', string_2);
+object_1.set('descrição', string_3);
+object_1.set('container1', container_2);
+object_1.set('container1', container_1);
+object_1.set('container2', container_2);
+object_1.get('id');
+object_1.get('valor');
 container_1.set(0, boolean_1);
 container_1.set(0, boolean_2);
 container_1.set(1, string_1);
@@ -53,6 +53,31 @@ container_1.get(3);
 
     });
   }
+
+/**
+const object_1 = context.newObject();
+const container_1 = context.newContainer(6);
+
+object_1.set('id', container_1);
+object_1.get('id');
+
+container_1.set(0, object_1);
+container_1.get(0);
+
+const b = context.newPrimitive(true);
+const s = context.newPrimitive('true');
+const n = context.newPrimitive(2.5);
+
+object_1.set('number', n);
+object_1.set('string', s);
+object_1.get('number');
+object_1.get('string');
+
+container_1.set(1, b);
+container_1.set(2, s);
+container_1.get(1);
+container_1.get(2);
+ */
 
   getToolbar() {
     return MonacoEditorToolbar.create(() => this.editor);

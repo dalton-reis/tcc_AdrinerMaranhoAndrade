@@ -14,10 +14,12 @@ export class GetObjAttrAction implements CytoscapeActionHandler {
     const value: string = action.params.value;
     const objectAttr = $id(cytoscape, `${id}_${name}_value`);
     if (objectAttr) {
+      const valueElement = value && $id(cytoscape, value);
       objectAttr.addClass('selected');
+      valueElement.addClass('selected');
       await new Promise(resolve => setTimeout(() => resolve(), 1500));
       objectAttr.removeClass('selected');
-      const valueElement = value && $id(cytoscape, value);
+      valueElement.removeClass('selected');
       if (valueElement.data('type') === ElementTypes.PRIMITIVE) {
         await this.primitiveLayoutHandler.moveToPrimitivesContainer(cytoscape, valueElement);
       }

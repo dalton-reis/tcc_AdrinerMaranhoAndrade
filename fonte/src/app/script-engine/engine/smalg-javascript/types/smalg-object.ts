@@ -13,7 +13,7 @@ export class SmalgObject extends SmalgType {
     this.actions.push({ type: DataStructureAction.CREATE_OBJECT, params: { id: this.__getId__() } });
   }
 
-  setAttribute(name: string, value: SmalgType) {
+  set(name: string, value: SmalgType) {
     value = value.__reference__();
 
     this.actions.push({
@@ -23,7 +23,7 @@ export class SmalgObject extends SmalgType {
     this.obj[name] = value;
   }
 
-  getAttribute(name: string) {
+  get(name: string) {
     const value = this.obj[name].__reference__();
     const params = { id: this.__getId__(), name, value: value.__getId__() };
     this.actions.push({ type: DataStructureAction.GET_OBJ_ATTR, params });

@@ -56,6 +56,12 @@ const stylesheet = [
       'background-color': '#b0b0b0',
     },
   }, {
+    selector: `node[type = "${ElementTypes.OBJECT}"].selected`,
+    style: {
+      'border-width': '2px',
+      'border-color': 'red',
+    },
+  }, {
     selector: `node.entry`,
     style: {
       'background-color': '#b0b0b0',
@@ -86,12 +92,23 @@ const stylesheet = [
     style: {
       'shape': 'rectangle',
       'background-color': '#b0b0b0',
-      'border-width': '0px',
+    },
+  }, {
+    selector: `node[type = "${ElementTypes.CONTAINER}"].selected`,
+    style: {
+      'border-width': '2px',
+      'border-color': 'red',
     },
   }, {
     selector: `node[type = "${ElementTypes.PRIMITIVE}"]`,
     style: {
       'shape': 'round-rectangle',
+    },
+  }, {
+    selector: `node[type = "${ElementTypes.PRIMITIVE}"].selected`,
+    style: {
+      'border-width': '2px',
+      'border-color': 'red',
     },
   }, {
     selector: 'node.number',

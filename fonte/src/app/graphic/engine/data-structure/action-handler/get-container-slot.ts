@@ -13,11 +13,13 @@ export class GetContainerSlotAction implements CytoscapeActionHandler {
     const id: string = action.params.id;
     const index: number = action.params.index;
     const value: string = action.params.value;
+    const valueElement = $id(cytoscape, value);
     const containerSlot = $id(cytoscape, `${id}_${index}`);
     containerSlot.addClass('selected');
+    valueElement.addClass('selected');
     await new Promise(resolve => setTimeout(() => resolve(), 1500));
     containerSlot.removeClass('selected');
-    const valueElement = value && $id(cytoscape, value);
+    valueElement.removeClass('selected');
     if (valueElement.data('type') === ElementTypes.PRIMITIVE) {
       await this.primitiveLayoutHandler.moveToPrimitivesContainer(cytoscape, valueElement);
     }
