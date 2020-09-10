@@ -28,9 +28,7 @@ export class CreatePrimitiveAction implements CytoscapeActionHandler {
     if (copiedFrom) {
       this.layoutHandler.moveToPrimitive($id(cytoscape, copiedFrom), newPrimitive);
     } else {
-      const primitivesContainer = $id(cytoscape, PrimitivesContainer.id);
-      newPrimitive.move({ parent: primitivesContainer.id() });
-      this.layoutHandler.adjustPrimitives(primitivesContainer);
+      await this.layoutHandler.moveToPrimitivesContainer(cytoscape, newPrimitive, { animate: false });
     }
   }
 

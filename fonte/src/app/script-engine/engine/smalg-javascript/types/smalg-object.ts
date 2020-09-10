@@ -24,8 +24,10 @@ export class SmalgObject extends SmalgType {
   }
 
   getAttribute(name: string) {
-    this.actions.push({ type: DataStructureAction.GET_OBJ_ATTR, params: { id: this.__getId__(), name } });
-    return this.obj[name].__reference__();
+    const value = this.obj[name].__reference__();
+    const params = { id: this.__getId__(), name, value: value.__getId__() };
+    this.actions.push({ type: DataStructureAction.GET_OBJ_ATTR, params });
+    return value;
   }
 
   typeDescriptor(): string {

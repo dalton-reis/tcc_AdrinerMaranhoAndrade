@@ -20,7 +20,7 @@ const stylesheet = [
       'border-color': '#b0b0b0',
     },
   }, {
-    selector: `edges.relation`,
+    selector: `edge.relation`,
     style: {
       'line-style': 'dashed',
       'line-color': '#707070',
@@ -62,12 +62,6 @@ const stylesheet = [
       'border-width': '0px',
     },
   }, {
-    selector: `node.entry.selected`,
-    style: {
-      'border-width': '2px',
-      'border-color': 'red',
-    },
-  }, {
     selector: `node.entry-key`,
     style: {
       'shape': 'round-rectangle',
@@ -79,6 +73,7 @@ const stylesheet = [
       'shape': 'rectangle',
       'background-color': '#dedede',
       'border-width': '0px',
+      'padding': '1px',
     },
   }, {
     selector: 'node.slot.selected',
