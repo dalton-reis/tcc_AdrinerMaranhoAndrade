@@ -28,13 +28,13 @@ export class SmalgContainer extends SmalgType {
     }
   }
 
-  set(index: number, value: SmalgType) {
+  set(index: number, value?: SmalgType) {
     this.validateIndex(index);
 
-    value = value.__reference__();
+    value = value?.__reference__();
     this.actions.push({
       type: DataStructureAction.SET_CONTAINER_SLOT,
-      params: { id: this.__getId__(), index, value: value.__getId__() },
+      params: { id: this.__getId__(), index, value: value?.__getId__() },
     });
     this.container[index] = value;
   }
@@ -42,8 +42,8 @@ export class SmalgContainer extends SmalgType {
   get(index: number) {
     this.validateIndex(index);
 
-    const value = this.container[index].__reference__();
-    const params = { id: this.__getId__(), index, value: value.__getId__() };
+    const value = (this.container[index])?.__reference__();
+    const params = { id: this.__getId__(), index, value: value?.__getId__() };
     this.actions.push({ type: DataStructureAction.GET_CONTAINER_SLOT, params });
 
     return value;

@@ -12,11 +12,13 @@ export class SetContainerSlotAction implements CytoscapeActionHandler {
     const id: string = action.params.id;
     const index: number = action.params.index;
     const value: string = action.params.value;
-    const valueElement = $id(cytoscape, value);
+    const valueElement = value ? $id(cytoscape, value) : null;
     const slotElement = $id(cytoscape, `${id}_${index}`);
 
     this.clearCurrentValue(cytoscape, slotElement);
-    await this.setValue(cytoscape, slotElement, valueElement);
+    if (valueElement) {
+      await this.setValue(cytoscape, slotElement, valueElement);
+    }
 
     await this.layoutHandler.run($id(cytoscape, id));
   }

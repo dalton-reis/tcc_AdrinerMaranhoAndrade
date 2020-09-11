@@ -14,12 +14,14 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
     const id: string = action.params.id;
     const name: string = action.params.name;
     const value: string = action.params.value;
-    const valueElement = $id(cytoscape, value);
+    const valueElement = value ? $id(cytoscape, value) : null;
     const objectElement = $id(cytoscape, id);
     const attributeEntryValueElement = await this.getAttrValueElement(cytoscape, objectElement, name);
 
     this.clearCurrentValue(cytoscape, attributeEntryValueElement);
-    await this.setValue(cytoscape, attributeEntryValueElement, valueElement);
+    if (valueElement) {
+      await this.setValue(cytoscape, attributeEntryValueElement, valueElement);
+    }
 
     await this.layoutHandler.run($id(cytoscape, id));
   }

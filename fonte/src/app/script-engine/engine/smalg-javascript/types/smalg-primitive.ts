@@ -22,7 +22,7 @@ export class SmalgPrimitive extends SmalgType {
         id: this.__getId__(),
         type: this.type,
         value: this.value,
-        copiedFrom: copiedFrom ? copiedFrom.__getId__() : undefined,
+        copiedFrom: copiedFrom?.__getId__(),
       },
     });
   }
