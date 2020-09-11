@@ -1,5 +1,4 @@
 ### Engine
-* Tratar elementos nulos. *(In progress)*
 * Tratar erros de execução, como ponteiros nulos.
 * Coletar elementos que não possuem mais referência (uma espécie de Garbage Collector). (v2)
 
