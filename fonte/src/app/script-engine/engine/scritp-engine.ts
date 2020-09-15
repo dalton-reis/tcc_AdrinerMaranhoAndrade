@@ -1,5 +1,7 @@
 export interface ScriptEngine {
 
+  prepare(): Promise<void>;
+
   resume(): void;
 
   stop(): void;

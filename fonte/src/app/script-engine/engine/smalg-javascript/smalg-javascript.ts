@@ -11,16 +11,24 @@ export class SmalgJavascriptScriptEngine implements ScriptEngine {
   private resumeContext: string = null;
   private timeoutId: NodeJS.Timeout;
   private resumeSpeed = 1000;
+  private whenPrepared: Promise<void>;
 
   constructor(
     private script: CompiledScript,
     private graphicEngine: GraphicEngine,
   ) {
-    this.prepare();
+    this.whenPrepared = new Promise((resolve, reject) => {
+      try {
+        this.script.execute(new SmalgJavascriptContext(this.actions));
+        resolve();
+      } catch (err) {
+        reject(err);
+      }
+    });
   }
 
-  private prepare() {
-    this.script.execute(new SmalgJavascriptContext(this.actions));
+  prepare(): Promise<void> {
+    return this.whenPrepared;
   }
 
   resume(): void {
