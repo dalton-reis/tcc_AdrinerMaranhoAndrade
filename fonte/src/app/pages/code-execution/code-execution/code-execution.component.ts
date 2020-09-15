@@ -34,13 +34,9 @@ export class CodeExecutionComponent implements OnInit {
       }
       this.scriptEngine = ScriptEngineProvider.create(compiledScript, this.graphicEngine);
       this.scriptEngine.prepare()
-        .then(() => {
-          console.log('ffdsfsddf');
-          this.scriptEngine.resume();
-        })
+        .then(() => this.scriptEngine.resume())
         .catch(err => {
-          console.log('ERRRRROUU!!!');
-          console.log(err);
+          console.error('error.on.execute');
         });
     }
   }
