@@ -1,6 +1,15 @@
-<app-toolbar [items]="codeEditorToolbar" (action)="doToolbarAction($event)"></app-toolbar>
+<div class="toolbar-container row">
+  <div class="col-lg-12">
+  <app-toolbar [collapse]="true" [items]="codeEditorToolbar" (action)="doToolbarAction($event)"></app-toolbar>
+  <nb-icon *ngIf="hasError" class="error" icon="exclamation-circle" pack="fa" (click)="openErrorsWindow()"></nb-icon>
+  </div>
+</div>
 <div class="code-editor-container row">
   <div class="col-lg-12">
     <div #codeEditorContainer></div>
   </div>
 </div>
+
+<ng-template #errorWindow let-data>
+  <p>{{ errorContext.message }}</p>
+</ng-template>

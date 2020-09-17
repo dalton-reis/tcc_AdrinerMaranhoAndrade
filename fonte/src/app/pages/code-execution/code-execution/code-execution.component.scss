@@ -7,7 +7,19 @@
   }
 }
 
-.graphic-container .code-editor-container {
+.graphic-container {
   height: 100%;
   width: 100%;
+  padding: 0;
+}
+
+.code-editor-container {
+  height: 100%;
+  width: 100%;
+  padding: 0 10px 0 0;
+}
+
+.code-execution-wrapper {
+  padding: 0;
+  margin: 0;
 }

@@ -1,5 +1,6 @@
 ### Engine
 * Tratar erros de execução, como ponteiros nulos.
+* Criar botões de controle.
 * Coletar elementos que não possuem mais referência (uma espécie de Garbage Collector). (v2)
 
 ### Professor

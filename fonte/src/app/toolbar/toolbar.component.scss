@@ -1,9 +1,21 @@
 :host {
   width: 100%;
   & .toolbar {
-    width: 100%;
+    padding: 0;
+    margin: 0;
+    &.collapse {
+      display: inline-block;
+    }
+    &.expand {
+      width: 100%;
+    }
     > div {
+      padding: 0;
       display: flex;
     }
   }
+}
+
+.toolbar-button {
+  margin-right: 5px;
 }

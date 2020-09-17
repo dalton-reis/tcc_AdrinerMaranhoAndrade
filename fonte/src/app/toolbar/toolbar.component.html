@@ -1,6 +1,6 @@
-<div class="row toolbar">
-  <div class="col-lg-12">
-    <div *ngFor="let item of items; trackBy: itemId">
+<div [ngClass]="collapse ? 'collapse' : 'row expand'" class="toolbar">
+  <div [ngClass]="collapse ? '' : 'col-lg-12'">
+    <div class="toolbar-button" *ngFor="let item of items; trackBy: itemId">
       <button nbButton status="info" size="small" (click)="executeItem(item)">{{item.label}}</button>
     </div>
   </div>

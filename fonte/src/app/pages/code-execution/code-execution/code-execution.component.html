@@ -1,6 +1,11 @@
-<div class="row">
+<div class="row code-execution-wrapper">
   <div class="col-sm-12 col-lg-6 code-editor-container">
-    <app-code-editor [type]="codeType" (action)="executeCodeEditorAction($event)"></app-code-editor>
+    <app-code-editor
+      [type]="codeType"
+      [hasError]="hasError"
+      [errorContext]="errorContext"
+      (action)="executeCodeEditorAction($event)"
+    ></app-code-editor>
   </div>
   <div class="col-sm-12 col-lg-6 graphic-container">
     <app-graphic (onLoad)="setGraphicEngine($event)"></app-graphic>

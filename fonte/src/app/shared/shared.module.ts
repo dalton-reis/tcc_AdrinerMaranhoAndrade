@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbButtonModule } from '@nebular/theme';
+import { NbButtonModule, NbIconModule } from '@nebular/theme';
 
 @NgModule({
   declarations: [],
@@ -8,7 +8,8 @@ import { NbButtonModule } from '@nebular/theme';
     CommonModule,
   ],
   exports: [
+    NbIconModule,
     NbButtonModule,
-  ]
+  ],
 })
 export class SharedModule { }

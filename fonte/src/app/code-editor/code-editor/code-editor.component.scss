@@ -1,8 +1,26 @@
 :host {
   width: 100%;
   height: 100%;
+  & .toolbar-container {
+    height: 40px;
+    padding: 0;
+    margin: 0;
+    > div {
+      padding: 0;
+      margin: 0;
+    }
+  }
   & .code-editor-container {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 50px);
+    margin: 0;
+    & > div {
+      padding: 0;
+    }
   }
+}
+
+.error {
+  color: #e42525;
+  cursor: pointer;
 }

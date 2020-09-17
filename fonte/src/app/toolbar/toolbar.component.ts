@@ -9,6 +9,7 @@ import { Action } from '../models/toolbar-action';
 export class ToolbarComponent implements OnInit {
 
   @Input() items: ToolbarItem[] = [];
+  @Input() collapse: boolean = false;
   @Output() action = new EventEmitter<Action>();
 
   constructor() { }
