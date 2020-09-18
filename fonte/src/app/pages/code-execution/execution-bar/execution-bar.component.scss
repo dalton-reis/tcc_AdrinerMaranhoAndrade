@@ -1,0 +1,55 @@
+$width: 300px;
+
+.execution-bar {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  width: $width;
+  top: calc(100% - 200px);
+  left: calc(50% - #{$width / 2});
+  border: 1px solid #d0d0d0;
+  background: #e6e6e6;
+  padding: 10px;
+  box-shadow: 3px 3px 9px 0px rgba(0,0,0,0.75);
+  .execution-button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+  }
+  .execution-button[disabled] {
+    & .execution-icon {
+      color: #82828266;
+      cursor: not-allowed;
+    }
+  }
+  .execution-icon {
+    color: #828282;
+    &.stop {
+      &:hover,&.active {
+        color: #d42b2b;
+      }
+    }
+    &.step-backward {
+      &:hover,&.active {
+        color: #3e3e3e;
+      }
+    }
+    &.play {
+      &:hover,&.active {
+        color: #4ea04e;
+      }
+    }
+    &.pause {
+      &:hover,&.active {
+        color: #ef7a42;
+      }
+    }
+    &.step-forward {
+      &:hover,&.active {
+        color: #3e3e3e;
+      }
+    }
+  }
+}

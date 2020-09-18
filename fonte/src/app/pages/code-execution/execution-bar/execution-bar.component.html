@@ -1,0 +1,14 @@
+<div class="execution-bar">
+  <button
+    class="execution-button"
+    *ngFor="let button of BUTTONS; trackBy: buttonId"
+    (click)="changeState(button.state)">
+    <nb-icon
+      class="execution-icon"
+      [ngClass]="button.icon"
+      [icon]="button.icon"
+      [class.active]="button.state === currentState"
+      pack="fa"
+    ></nb-icon>
+  </button>
+</div>
