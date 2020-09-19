@@ -2,7 +2,7 @@ export interface ScriptEngine {
 
   prepare(): Promise<void>;
 
-  resume(): void;
+  resume(): Promise<boolean>;
 
   stop(): void;
 

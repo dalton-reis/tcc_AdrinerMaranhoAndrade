@@ -4,12 +4,18 @@ import { CompiledScript } from '../../compilers/compiled-script';
 import { SmalgJavascriptContext } from './smalg-javascript-context';
 import { v4 as uuidV4 } from 'uuid';
 
+interface ResumeContext {
+  id: string;
+  timeoutId?: NodeJS.Timeout;
+  complete: (completed) => void;
+  completeExceptionally: (err: Error) => void;
+}
+
 export class SmalgJavascriptScriptEngine implements ScriptEngine {
 
   private currentStep = 0;
   private actions: ExecutionAction[] = [];
-  private resumeContext: string = null;
-  private timeoutId: NodeJS.Timeout;
+  private resumeContext: ResumeContext = null;
   private resumeSpeed = 1000;
   private whenPrepared: Promise<void>;
 
@@ -31,25 +37,41 @@ export class SmalgJavascriptScriptEngine implements ScriptEngine {
     return this.whenPrepared;
   }
 
-  resume(): void {
+  resume(): Promise<boolean> {
     if (!this.resumeContext) {
-      this.resumeContext = uuidV4();
-      this.executeResumeAction(this.resumeContext);
+      return new Promise((resolve, reject) => {
+        this.resumeContext = {
+          id: uuidV4(),
+          complete: (completed) => resolve(completed),
+          completeExceptionally: (err) => reject(err),
+        };
+        this.executeResumeAction(this.resumeContext);
+      });
     }
   }
 
-  private async executeResumeAction(resumeContext: string) {
-    if (this.resumeContext !== resumeContext) return;
-
-    const executed = await this.forward();
-    if (executed) {
-      this.timeoutId = setTimeout(() => this.executeResumeAction(resumeContext), this.resumeSpeed);
+  private async executeResumeAction(resumeContext: ResumeContext) {
+    if (!this.resumeContext || (this.resumeContext.id !== resumeContext.id)) {
+      resumeContext.complete(false);
+      return;
+    }
+    try {
+      const executed = await this.forward();
+      if (executed) {
+        resumeContext.timeoutId = setTimeout(() => this.executeResumeAction(resumeContext), this.resumeSpeed);
+      } else {
+        resumeContext.complete(true);
+      }
+    } catch (err) {
+      resumeContext.completeExceptionally(err);
     }
   }
 
   stop(): void {
-    clearTimeout(this.timeoutId);
-    this.resumeContext = null;
+    if (this.resumeContext) {
+      clearTimeout(this.resumeContext.timeoutId);
+      this.resumeContext = null;
+    }
   }
 
   async forward(): Promise<boolean> {
@@ -61,7 +83,7 @@ export class SmalgJavascriptScriptEngine implements ScriptEngine {
   }
 
   async previous(): Promise<boolean> {
-    if (this.currentStep < this.actions.length) {
+    if (this.currentStep > 0) {
       this.currentStep--;
       await this.graphicEngine.undo();
       return true;

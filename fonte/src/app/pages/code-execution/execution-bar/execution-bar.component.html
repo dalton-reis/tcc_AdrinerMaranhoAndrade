@@ -2,7 +2,9 @@
   <button
     class="execution-button"
     *ngFor="let button of BUTTONS; trackBy: buttonId"
-    (click)="changeState(button.state)">
+    (click)="changeState(button.state)"
+    [disabled]="!button.enabled"
+    [nbTooltip]="button.tooltip">
     <nb-icon
       class="execution-icon"
       [ngClass]="button.icon"
@@ -11,4 +13,7 @@
       pack="fa"
     ></nb-icon>
   </button>
+  <div *ngIf="message" class="message-container">
+    <span class="message">{{message}}</span>
+  </div>
 </div>
