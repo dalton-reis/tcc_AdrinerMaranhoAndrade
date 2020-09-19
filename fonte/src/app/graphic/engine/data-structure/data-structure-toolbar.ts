@@ -10,10 +10,6 @@ export class DataScrutureEngineToolbar {
       id: 'center',
       label: 'Centralizar',
       action: () => engine.center(),
-    }, {
-      id: 'organize',
-      label: 'Organizar',
-      action: () => engine.organize(),
     }];
   }
 
