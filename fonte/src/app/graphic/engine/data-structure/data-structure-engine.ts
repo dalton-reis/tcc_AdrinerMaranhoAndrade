@@ -13,12 +13,14 @@ import { SetObjAttrAction } from './action-handler/set-obj-attr-action';
 import { DataScrutureEngineToolbar } from './data-structure-toolbar';
 import { stylesheet } from './data-structure-stylesheet';
 import { PrimitivesContainer } from './global/primitives-container';
+import { DataStructureEngineStates } from './data-structure-engine-states';
 
 export class DataStructureEngine implements GraphicEngine {
 
   cy = null;
   toolbar: ToolbarItem[] = [];
   actionHandlers: { [type: string]: CytoscapeActionHandler } = {};
+  state = new DataStructureEngineStates();
   executing = false;
 
   constructor(parent) {
@@ -66,25 +68,30 @@ export class DataStructureEngine implements GraphicEngine {
     if (!this.executing) {
       this.cy.add(this.globalElements());
       this.executing = true;
+      this.state.saveState(this.cy.elements());
     }
     await actionHandler.handle(this.cy, action);
+    this.state.saveState(this.cy.elements());
   }
 
-  async undo(): Promise<void> {
-    console.log('undo');
+  async undo(): Promise<boolean> {
+    const previousState = this.state.backwardState();
+    if (previousState) {
+      this.cy.remove(this.cy.elements());
+      this.cy.add(previousState);
+      return true;
+    }
+    return false;
   }
 
   async clear(): Promise<void> {
     this.executing = false;
+    this.state.reset();
     this.cy.remove(this.cy.elements());
   }
 
   center() {
     this.cy.fit();
-  }
-
-  organize() {
-
   }
 
   getToolbar() {

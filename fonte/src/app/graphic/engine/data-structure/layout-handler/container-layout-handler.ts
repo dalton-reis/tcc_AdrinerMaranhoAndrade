@@ -33,6 +33,10 @@ export class ContainerLayoutHandler {
       boundingBox: containerBoundingBox(containerElement),
       rows: notCompoundChildren.length,
       cols: 1,
+      position: (node) => {
+        node = node.data('type') === 'container_slot' ? node : node.parent();
+        return { row: node.data('index'), col: 1 };
+      },
       spacingFactor: 1.5,
     });
   }

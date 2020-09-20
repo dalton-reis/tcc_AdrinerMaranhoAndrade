@@ -21,6 +21,7 @@ export class CreateContainerAction implements CytoscapeActionHandler {
       const slotElement = await $add(cytoscape, {
         data: {
           id: `${id}_${i}`,
+          type: 'container_slot',
           index: i,
         },
         classes: ['slot'],

@@ -44,11 +44,13 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
 
     const labelValue = `${name}:`;
     const nodeWidth = labelValue.length * 10;
+    const index = objectElement.children().length * 2;
     cytoscape.add({
       data: {
         id: `${attrElement.id()}_key`,
+        type: 'object-entry-element',
         labelValue,
-        index: 0,
+        index: index,
         parent: attrElement.id(),
         nodeWidth: nodeWidth < MIN_WIDTH ? MIN_WIDTH : nodeWidth,
       },
@@ -58,7 +60,8 @@ export class SetObjAttrAction implements CytoscapeActionHandler {
     const attrElementValue = cytoscape.add({
       data: {
         id: `${attrElement.id()}_value`,
-        index: 1,
+        type: 'object-entry-element',
+        index: index + 1,
         parent: attrElement.id(),
       },
       classes: ['slot'],

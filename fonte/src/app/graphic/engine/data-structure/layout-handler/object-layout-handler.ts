@@ -20,7 +20,11 @@ export class ObjectLayoutHandler {
   async onCreateAttr(objectElement: any, attrElement: any) {
     const notCompoundChildren = attrElement.descendants(element => element.children().length === 0);
 
-    return await this.coreLayoutHandler.moveToPosition(objectBoundingBox(objectElement), notCompoundChildren);
+    return await this.coreLayoutHandler.moveToPosition(
+      objectBoundingBox(objectElement),
+      notCompoundChildren,
+      { animate: false },
+    );
   }
 
   async run(objectElement: any) {
@@ -37,6 +41,11 @@ export class ObjectLayoutHandler {
       condense: true,
       cols: 2,
       boundingBox: objectBoundingBox(objectElement),
+      position: function( node ) {
+        node = node.data('type') === 'object-entry-element' ? node : node.parent();
+        const index = node.data('index');
+        return { row: Math.trunc(index / 2), col: index % 2};
+      },
     });
   }
 

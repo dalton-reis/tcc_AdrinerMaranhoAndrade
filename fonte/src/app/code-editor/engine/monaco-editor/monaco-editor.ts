@@ -41,8 +41,7 @@ container_1.set(1, null);`,
     });
   }
 
-/**
- * const object_1 = context.newObject();
+/**const object_1 = context.newObject();
 const container_1 = context.newContainer(6);
 const container_2 = context.newContainer(2);
 const int_1 = context.newPrimitive(1);
