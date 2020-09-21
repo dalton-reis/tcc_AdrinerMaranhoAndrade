@@ -1,0 +1,55 @@
+<nb-card class="col-md-12 col-lg-12 col-xxxl-12">
+  <nb-card-body>
+    <nb-stepper orientation="vertical">
+      <nb-step label="Descrição">
+        <form [formGroup]="descriptionForm">
+          <div class="form-group">
+            <label for="problem-name" class="label">Defina um título para o seu problema</label>
+            <input id="problem-name" formControlName="name" required fullWidth nbInput placeholder="Título"/>
+          </div>
+          <div class="form-group">
+            <label for="problem-name" class="label">Defina a descrição</label>
+            <quill-editor formControlName="description" required></quill-editor>
+          </div>
+          <button type="button" nbButton nbStepperNext (click)="saveProblemDefinition(descriptionForm.value)">Próximo</button>
+        </form>
+      </nb-step>
+      <nb-step label="Contrato">
+        <h3>Step content #2</h3>
+        <p class="lorem">
+          Curabitur luctus mattis risus nec condimentum. Donec at dui turpis. Sed vehicula fringilla rutrum. Nullam
+          sed ornare magna. Mauris vitae laoreet diam. Mauris fermentum ligula at lacinia semper. Nulla placerat dui
+          eu sapien pellentesque, eu placerat leo luctus. Cras pharetra blandit fermentum.
+        </p>
+        <button nbButton nbStepperPrevious>prev</button>
+        <button nbButton nbStepperNext>next</button>
+      </nb-step>
+      <nb-step label="Cenários">
+        <h3>Step content #3</h3>
+        <p class="lorem">
+          Proin varius accumsan semper. Praesent consequat tincidunt sagittis. Curabitur egestas sem a ipsum bibendum,
+          sit amet fringilla orci efficitur. Nam bibendum lectus ut viverra tristique. Fusce eu pulvinar magna, quis
+          viverra ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent metus turpis, commodo vel
+          placerat quis, lobortis in ligula.
+        </p>
+        <p class="lorem">
+          Curabitur luctus mattis risus nec condimentum. Donec at dui turpis. Sed vehicula fringilla rutrum. Nullam
+          sed ornare magna. Mauris vitae laoreet diam. Mauris fermentum ligula at lacinia semper. Nulla placerat dui
+          eu sapien pellentesque, eu placerat leo luctus. Cras pharetra blandit fermentum.
+        </p>
+        <button nbButton nbStepperPrevious>prev</button>
+        <button nbButton nbStepperNext>next</button>
+      </nb-step>
+      <nb-step label="Solução">
+        <h3>Step content #4</h3>
+        <p class="lorem">
+          Proin varius accumsan semper. Praesent consequat tincidunt sagittis. Curabitur egestas sem a ipsum bibendum,
+          sit amet fringilla orci efficitur. Nam bibendum lectus ut viverra tristique. Fusce eu pulvinar magna, quis
+          viverra ex.
+        </p>
+        <button nbButton nbStepperPrevious>prev</button>
+        <button nbButton disabled nbStepperNext>next</button>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>

@@ -19,6 +19,11 @@ const routes: Routes = [{
       component: DashboardComponent,
     },
     {
+      path: 'problems',
+      loadChildren: () => import('./problems/problems.module')
+        .then(m => m.ProblemsModule),
+    },
+    {
       path: 'code-execution',
       loadChildren: () => import('./code-execution/code-execution.module')
         .then(m => m.CodeExecutionModule),

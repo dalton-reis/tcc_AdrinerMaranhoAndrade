@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NbButtonModule, NbIconModule, NbInputModule } from '@nebular/theme';
+import { ThemeModule } from '../@theme/theme.module';
 
 @NgModule({
   declarations: [],
@@ -8,6 +9,7 @@ import { NbButtonModule, NbIconModule, NbInputModule } from '@nebular/theme';
     CommonModule,
   ],
   exports: [
+    ThemeModule,
     NbIconModule,
     NbButtonModule,
     NbInputModule,

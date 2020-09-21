@@ -17,9 +17,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
     group: true,
   },
   {
-    title: 'Code Execution',
+    title: 'Problemas',
     icon: 'code',
-    link: '/pages/code-execution',
+    children: [
+      {
+        title: 'Novo problema',
+        link: '/pages/problems/problem-definition',
+      }, {
+        title: 'Executar',
+        link: '/pages/code-execution',
+      },
+    ],
   },
   {
     title: 'Layout',
