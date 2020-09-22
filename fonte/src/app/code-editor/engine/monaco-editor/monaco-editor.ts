@@ -11,12 +11,22 @@ export class MonacoEditor implements CodeEditor {
   editor: any;
 
   constructor(parent: HTMLDivElement, config: MonacoEditorConfig) {
-    MonacoLoader.loadIfNeeded(() => this.create(parent, config));
+    MonacoLoader.loadIfNeeded(
+      () =>
+        monaco.languages.typescript.javascriptDefaults.setCompilerOptions({ noLib: true, allowNonTsExtensions: true }),
+      () => this.create(parent, config),
+    );
   }
 
   private create(parent: HTMLDivElement, config: MonacoEditorConfig) {
     parent.style.height = '100%';
     parent.style.width = '100%';
+
+    monaco.languages.typescript.javascriptDefaults.setExtraLibs({});
+
+    config?.context.forEach(declaration =>
+      monaco.languages.typescript.javascriptDefaults.addExtraLib(declaration.code, declaration.name));
+
     this.editor = monaco.editor.create(parent, {
       value:
 `const object_1 = context.newObject();

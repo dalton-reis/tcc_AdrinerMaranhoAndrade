@@ -1,8 +1,3 @@
-### Engine
-* Tratar erros de execução, como ponteiros nulos.
-* Criar botões de controle.
-* Coletar elementos que não possuem mais referência (uma espécie de Garbage Collector). (v2)
-
 ### Professor
 * Ambiente para definição de problemas.
 	- Criação de uma assinatura que o aluno deve seguir.
@@ -20,4 +15,5 @@
 * Fazer deploy da aplicação na nuvem.
 
 ### Sobrando tempo
+* Coletar elementos que não possuem mais referência (uma espécie de Garbage Collector). (v2)
 * Criar uma linguagem que transpile para a sdk da engine.

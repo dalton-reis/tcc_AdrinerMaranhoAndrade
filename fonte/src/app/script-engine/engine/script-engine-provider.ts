@@ -1,4 +1,4 @@
-import { ScriptEngine } from './scritp-engine';
+import { ScriptEngine } from './script-engine';
 import { CompiledScript } from '../compilers/compiled-script';
 import { GraphicEngine } from '../../graphic/engine/graphic-engine';
 import { SmalgJavascriptScriptEngine } from './smalg-javascript/smalg-javascript';

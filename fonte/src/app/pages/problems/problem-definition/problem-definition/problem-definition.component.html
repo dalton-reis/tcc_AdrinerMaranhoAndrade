@@ -1,28 +1,35 @@
 <nb-card class="col-md-12 col-lg-12 col-xxxl-12">
   <nb-card-body>
-    <nb-stepper orientation="vertical">
+    <nb-stepper #stepper orientation="vertical" [disableStepNavigation]="true">
       <nb-step label="Descrição">
-        <form [formGroup]="descriptionForm">
-          <div class="form-group">
-            <label for="problem-name" class="label">Defina um título para o seu problema</label>
+        <form [formGroup]="descriptionForm" (ngSubmit)="saveForm(descriptionForm)">
+          <div class="form-group" >
+            <label for="problem-name" class="label required">Defina um título para o seu problema</label>
             <input id="problem-name" formControlName="name" required fullWidth nbInput placeholder="Título"/>
+            <span class="caption status-danger" *ngIf="name.errors?.required && (name.dirty || name.touched)">
+              Informe um título.
+            </span>
           </div>
           <div class="form-group">
-            <label for="problem-name" class="label">Defina a descrição</label>
+            <label class="label">Defina a descrição</label>
             <quill-editor formControlName="description" required></quill-editor>
+            <span class="caption status-danger" *ngIf="description.errors?.required && (description.dirty || description.touched)">
+              Informe uma descrição.
+            </span>
           </div>
-          <button type="button" nbButton nbStepperNext (click)="saveProblemDefinition(descriptionForm.value)">Próximo</button>
+          <button type="submit" nbButton>Próximo</button>
         </form>
       </nb-step>
       <nb-step label="Contrato">
-        <h3>Step content #2</h3>
-        <p class="lorem">
-          Curabitur luctus mattis risus nec condimentum. Donec at dui turpis. Sed vehicula fringilla rutrum. Nullam
-          sed ornare magna. Mauris vitae laoreet diam. Mauris fermentum ligula at lacinia semper. Nulla placerat dui
-          eu sapien pellentesque, eu placerat leo luctus. Cras pharetra blandit fermentum.
-        </p>
-        <button nbButton nbStepperPrevious>prev</button>
-        <button nbButton nbStepperNext>next</button>
+        <form [formGroup]="contractForm" (ngSubmit)="saveForm(contractForm)">
+          <div class="form-group">
+            <label class="label required">Defina os campos</label>
+            <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
+            </ng2-smart-table>
+          </div>
+          <button nbButton nbStepperPrevious>Anterior</button>
+          <button type="submit" nbButton>Próximo</button>
+        </form>
       </nb-step>
       <nb-step label="Cenários">
         <h3>Step content #3</h3>

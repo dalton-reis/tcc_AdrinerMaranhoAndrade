@@ -3,14 +3,18 @@ export class MonacoLoader {
 
   private static loaded = false;
 
-  static loadIfNeeded(callback: () => void) {
-    if (this.loaded) {
+  static loadIfNeeded(setup: () => void, callback: () => void) {
+    if (MonacoLoader.loaded) {
       callback();
       return;
     }
 
     const onGotAmdLoader = () => {
-      (window).require(['vs/editor/editor.main'], () => callback());
+      (window).require(['vs/editor/editor.main'], () => {
+        setup();
+        MonacoLoader.loaded = true;
+        callback();
+      });
     };
 
     // Load AMD loader if necessary

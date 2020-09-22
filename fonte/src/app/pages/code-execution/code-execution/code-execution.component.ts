@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { ScriptCompilerProvider } from '../../../script-engine/compilers/script-compiler-provider';
 import { ScriptEngineProvider } from '../../../script-engine/engine/script-engine-provider';
 import { GraphicEngine } from '../../../graphic/engine/graphic-engine';
-import { ScriptEngine } from '../../../script-engine/engine/scritp-engine';
+import { ScriptEngine } from '../../../script-engine/engine/script-engine';
 import { Action } from '../../../models/toolbar-action';
 import { ErrorContext, ErrorType } from '../../../models/error-context';
 import { ExecutionBarEvent } from '../../../models/execution-bar-event/execution-bar-event';
