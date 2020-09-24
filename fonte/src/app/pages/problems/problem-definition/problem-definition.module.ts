@@ -7,7 +7,7 @@ import { NbStepperModule, NbCardModule } from '@nebular/theme';
 import { SharedModule } from '../../../shared/shared.module';
 import { FormsModule as ngFormsModule , ReactiveFormsModule as ngReactiveFormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { ContractDefinitionModule } from '../contract-definition/contract-definition.module';
 
 @NgModule({
   declarations: [ ProblemDefinitionComponent ],
@@ -17,7 +17,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     QuillModule.forRoot(),
     ngFormsModule,
     ngReactiveFormsModule,
-    Ng2SmartTableModule,
+    ContractDefinitionModule,
     SharedModule,
     NbCardModule,
     NbStepperModule,

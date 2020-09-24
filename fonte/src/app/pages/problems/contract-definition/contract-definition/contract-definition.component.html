@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-sm-12 contract-wrapper">
+    <label class="label optional-value">Defina os campos</label>
+    <ng2-smart-table [settings]="fieldsSettings"
+      [source]="source"
+      (createConfirm)="validateField($event)"
+      (editConfirm)="validateField($event)">
+    </ng2-smart-table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 contract-wrapper">
+    <label class="label">Defina os métodos</label>
+    <ng2-smart-table class="contract-table"
+      [settings]="methodsSettings"
+      [source]="source"
+      (createConfirm)="validateMethod($event)"
+      (editConfirm)="validateMethod($event)">
+    </ng2-smart-table>
+  </div>
+</div>

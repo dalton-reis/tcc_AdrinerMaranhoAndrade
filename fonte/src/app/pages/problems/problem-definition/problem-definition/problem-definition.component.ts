@@ -14,50 +14,6 @@ export class ProblemDefinitionComponent implements OnInit {
   descriptionForm: FormGroup;
   contractForm: FormGroup;
 
-  source = [];
-  settings = {
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
-    },
-    columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
-      firstName: {
-        title: 'First Name',
-        type: 'string',
-      },
-      lastName: {
-        title: 'Last Name',
-        type: 'string',
-      },
-      username: {
-        title: 'Username',
-        type: 'string',
-      },
-      email: {
-        title: 'E-mail',
-        type: 'string',
-      },
-      age: {
-        title: 'Age',
-        type: 'number',
-      },
-    },
-  };
-
   constructor(private formBuilder: FormBuilder) {
     this.descriptionForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -70,10 +26,6 @@ export class ProblemDefinitionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  onDeleteConfirm(x) {
-
   }
 
   saveForm(form: FormGroup) {

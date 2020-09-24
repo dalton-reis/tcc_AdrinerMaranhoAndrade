@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { ProblemsRoutingModule } from './problems-routing.module';
 
-
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    ProblemsRoutingModule
-  ]
+    ProblemsRoutingModule,
+  ],
 })
 export class ProblemsModule { }

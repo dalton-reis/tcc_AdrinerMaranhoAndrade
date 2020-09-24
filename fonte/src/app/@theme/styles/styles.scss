@@ -35,3 +35,9 @@
 
   @include nb-overrides();
 };
+
+.optional-value::after {
+  content: '(?)';
+  margin-left: 3px;
+}
+
