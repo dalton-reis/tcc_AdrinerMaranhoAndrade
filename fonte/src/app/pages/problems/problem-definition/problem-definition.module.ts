@@ -8,6 +8,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { FormsModule as ngFormsModule , ReactiveFormsModule as ngReactiveFormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill';
 import { ContractDefinitionModule } from '../contract-definition/contract-definition.module';
+import { ProblemScenariosModule } from '../problem-scenarios/problem-scenarios.module';
 
 @NgModule({
   declarations: [ ProblemDefinitionComponent ],
@@ -17,8 +18,9 @@ import { ContractDefinitionModule } from '../contract-definition/contract-defini
     QuillModule.forRoot(),
     ngFormsModule,
     ngReactiveFormsModule,
-    ContractDefinitionModule,
     SharedModule,
+    ContractDefinitionModule,
+    ProblemScenariosModule,
     NbCardModule,
     NbStepperModule,
   ],
