@@ -2,9 +2,10 @@
   <div class="col-sm-12 contract-wrapper">
     <label class="label optional-value">Defina os campos</label>
     <ng2-smart-table [settings]="fieldsSettings"
-      [source]="source"
+      [source]="fields"
       (createConfirm)="validateField($event)"
-      (editConfirm)="validateField($event)">
+      (editConfirm)="validateField($event)"
+      #fieldsContractTable>
     </ng2-smart-table>
   </div>
 </div>
@@ -13,9 +14,10 @@
     <label class="label">Defina os métodos</label>
     <ng2-smart-table class="contract-table"
       [settings]="methodsSettings"
-      [source]="source"
+      [source]="methods"
       (createConfirm)="validateMethod($event)"
-      (editConfirm)="validateMethod($event)">
+      (editConfirm)="validateMethod($event)"
+      #methodsContractTable>
     </ng2-smart-table>
   </div>
 </div>

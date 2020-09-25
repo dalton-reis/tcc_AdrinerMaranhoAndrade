@@ -21,9 +21,12 @@
         </form>
       </nb-step>
       <nb-step label="Contrato">
-        <form [formGroup]="contractForm" (ngSubmit)="saveForm(contractForm)">
+        <form (ngSubmit)="saveProblemContract(contractDefinition)">
           <div class="form-group">
-            <app-contract-definition></app-contract-definition>
+            <app-contract-definition [fields]="classContract.fields" [methods]="classContract.methods" #contractDefinition></app-contract-definition>
+            <span class="caption status-danger" *ngIf="classContractError">
+              Informe ao menos um método.
+            </span>
           </div>
           <button nbButton nbStepperPrevious>Anterior</button>
           <button type="submit" nbButton>Próximo</button>

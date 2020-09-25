@@ -1,5 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { NbToastrService, NbGlobalPhysicalPosition, NbComponentStatus } from '@nebular/theme';
+import { FieldContract, MethodContract, ClassContract } from '../../../../models/problem/problem-contract';
+import { Ng2SmartTableComponent } from 'ng2-smart-table';
 
 @Component({
   selector: 'app-contract-definition',
@@ -10,7 +12,11 @@ export class ContractDefinitionComponent implements OnInit {
 
   constructor(private toastrService: NbToastrService) { }
 
-  @Input() source: any = [];
+  @Input() fields: FieldContract[];
+  @Input() methods: MethodContract[];
+
+  @ViewChild('fieldsContractTable') fieldsContractTable: Ng2SmartTableComponent;
+  @ViewChild('methodsContractTable') methodsContractTable: Ng2SmartTableComponent;
 
   fieldsSettings = {
     add: {
@@ -100,7 +106,6 @@ export class ContractDefinitionComponent implements OnInit {
     }
   }
 
-
   validateMethod(event) {
     const { name } = event.newData;
     if (!name)  {
@@ -109,6 +114,12 @@ export class ContractDefinitionComponent implements OnInit {
     } else {
       event.confirm.resolve();
     }
+  }
+
+  getData(): Promise<ClassContract> {
+    return Promise.all([this.fieldsContractTable.source.getAll(), this.methodsContractTable.source.getAll()])
+      .then(([ fields, methods ]) => ({ fields, methods }),
+    );
   }
 
   private warnValidationError(title: string, message: string) {

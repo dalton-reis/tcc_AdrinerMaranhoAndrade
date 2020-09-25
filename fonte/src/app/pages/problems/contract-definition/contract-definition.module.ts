@@ -5,8 +5,6 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SharedModule } from '../../../shared/shared.module';
 import { NbToastrModule } from '@nebular/theme';
 
-
-
 @NgModule({
   declarations: [
     ContractDefinitionComponent,
