@@ -1,7 +1,8 @@
-<button nbButton (click)="addScenario()">Adicionar cenário</button>
-<button nbButton (click)="removeScenario()">Remover cenário</button>
-<nb-tabset>
-  <nb-tab *ngFor="let scenario of scenarios" [tabTitle]="scenario.name">
-    Tab content
-  </nb-tab>
-</nb-tabset>
+<div class="problem-scenarios">
+  <button nbButton (click)="addScenario()">Adicionar cenário</button>
+  <button nbButton (click)="removeScenario()">Remover cenário</button>
+  <nb-tabset>
+    <nb-tab *ngFor="let scenario of scenarios" [tabTitle]="scenario.name">
+    </nb-tab>
+  </nb-tabset>
+</div>

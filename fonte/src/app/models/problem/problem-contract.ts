@@ -15,6 +15,7 @@ export interface MethodContract {
 
 export interface ClassContract {
 
+  name: string;
   fields: FieldContract[];
   methods: MethodContract[];
 

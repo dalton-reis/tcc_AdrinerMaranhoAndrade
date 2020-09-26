@@ -1,6 +1,7 @@
 <nb-card class="col-md-12 col-lg-12 col-xxxl-12">
   <nb-card-body>
-    <nb-stepper #stepper orientation="vertical" [disableStepNavigation]="true">
+    <!-- <nb-stepper #stepper orientation="vertical" [disableStepNavigation]="true"> -->
+      <nb-stepper #stepper orientation="vertical">
       <nb-step label="Descrição">
         <form [formGroup]="descriptionForm" (ngSubmit)="saveForm(descriptionForm)">
           <div class="form-group" >
@@ -24,9 +25,6 @@
         <form (ngSubmit)="saveProblemContract(contractDefinition)">
           <div class="form-group">
             <app-contract-definition [fields]="classContract.fields" [methods]="classContract.methods" #contractDefinition></app-contract-definition>
-            <span class="caption status-danger" *ngIf="classContractError">
-              Informe ao menos um método.
-            </span>
           </div>
           <button nbButton nbStepperPrevious>Anterior</button>
           <button type="submit" nbButton>Próximo</button>

@@ -17,7 +17,6 @@ export class ProblemDefinitionComponent implements OnInit {
 
   descriptionForm: FormGroup;
   classContract: ClassContract;
-  classContractError: boolean;
 
   constructor(private formBuilder: FormBuilder) {
     this.descriptionForm = this.formBuilder.group({
@@ -25,6 +24,7 @@ export class ProblemDefinitionComponent implements OnInit {
       description: ['', Validators.required],
     });
     this.classContract = {
+      name: '',
       fields: [],
       methods: [],
     };
@@ -43,13 +43,8 @@ export class ProblemDefinitionComponent implements OnInit {
 
   saveProblemContract(contractDefinition: ContractDefinitionComponent) {
     contractDefinition.getData().then(contract => {
-      if (contract.methods.length === 0) {
-        this.classContractError = true;
-      } else {
-        this.classContractError = false;
-        this.classContract = contract;
-        this.stepper.next();
-      }
+      this.classContract = contract;
+      this.stepper.next();
     });
   }
 

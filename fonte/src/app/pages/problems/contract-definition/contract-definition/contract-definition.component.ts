@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { NbToastrService, NbGlobalPhysicalPosition, NbComponentStatus } from '@nebular/theme';
 import { FieldContract, MethodContract, ClassContract } from '../../../../models/problem/problem-contract';
 import { Ng2SmartTableComponent } from 'ng2-smart-table';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-contract-definition',
@@ -10,13 +11,17 @@ import { Ng2SmartTableComponent } from 'ng2-smart-table';
 })
 export class ContractDefinitionComponent implements OnInit {
 
-  constructor(private toastrService: NbToastrService) { }
-
   @Input() fields: FieldContract[];
   @Input() methods: MethodContract[];
 
   @ViewChild('fieldsContractTable') fieldsContractTable: Ng2SmartTableComponent;
   @ViewChild('methodsContractTable') methodsContractTable: Ng2SmartTableComponent;
+
+  contractDefinitionForm: FormGroup;
+  tableErrors = {
+    methods: {} as { [key: string]: boolean },
+    fields: {} as { [key: string]: boolean },
+  };
 
   fieldsSettings = {
     add: {
@@ -93,6 +98,15 @@ export class ContractDefinitionComponent implements OnInit {
     noDataMessage: 'Nenhum método configurado',
   };
 
+  constructor(
+    private toastrService: NbToastrService,
+    private formBuilder: FormBuilder,
+  ) {
+    this.contractDefinitionForm = this.formBuilder.group({
+      name: ['', Validators.required],
+    });
+  }
+
   ngOnInit(): void {
   }
 
@@ -113,13 +127,27 @@ export class ContractDefinitionComponent implements OnInit {
       this.warnValidationError('Atenção', 'O nome do método é obrigatório.');
     } else {
       event.confirm.resolve();
+      this.tableErrors.methods.required = false;
     }
   }
 
   getData(): Promise<ClassContract> {
-    return Promise.all([this.fieldsContractTable.source.getAll(), this.methodsContractTable.source.getAll()])
-      .then(([ fields, methods ]) => ({ fields, methods }),
-    );
+    if (this.contractDefinitionForm.valid) {
+      return Promise.all([this.fieldsContractTable.source.getAll(), this.methodsContractTable.source.getAll()])
+        .then(([ fields, methods ]) => {
+          if (methods.length === 0) {
+            this.tableErrors.methods.required = true;
+            throw Error('Form is invalid');
+          }
+          this.tableErrors = {
+            methods: {},
+            fields: {},
+          };
+          return { name: this.name.value, fields, methods };
+        });
+    }
+    Object.values(this.contractDefinitionForm.controls).forEach(control => control.markAsDirty());
+    return Promise.reject(new Error('Form is invalid'));
   }
 
   private warnValidationError(title: string, message: string) {
@@ -133,6 +161,10 @@ export class ContractDefinitionComponent implements OnInit {
       preventDuplicates: true,
     };
     this.toastrService.show(message, title, config);
+  }
+
+  get name() {
+    return this.contractDefinitionForm.get('name');
   }
 
 }

@@ -1,7 +1,19 @@
 <div class="row">
   <div class="col-sm-12 contract-wrapper">
+    <form [formGroup]="contractDefinitionForm">
+      <label for="contract-name" class="label">Defina o nome do contrato</label>
+      <input id="contract-name" formControlName="name" required fullWidth nbInput placeholder="Nome"/>
+      <span class="caption status-danger" *ngIf="name.errors?.required && (name.dirty || name.touched)">
+        Informe um nome para o contrato.
+      </span>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 contract-wrapper">
     <label class="label optional-value">Defina os campos</label>
-    <ng2-smart-table [settings]="fieldsSettings"
+    <ng2-smart-table
+      [settings]="fieldsSettings"
       [source]="fields"
       (createConfirm)="validateField($event)"
       (editConfirm)="validateField($event)"
@@ -19,5 +31,8 @@
       (editConfirm)="validateMethod($event)"
       #methodsContractTable>
     </ng2-smart-table>
+    <span class="caption status-danger" *ngIf="tableErrors.methods.required">
+      Informe ao menos um método.
+    </span>
   </div>
 </div>

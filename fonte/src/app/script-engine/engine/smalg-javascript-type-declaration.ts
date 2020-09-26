@@ -1,4 +1,6 @@
-const SmalgJavascriptTypeDeclaration = `
+import { ClassContract, MethodContract, FieldContract } from '../../models/problem/problem-contract';
+
+const SmalgJavascriptExecutionDeclaration = `
 interface Context {
   newObject(): void;
 }
@@ -6,4 +8,20 @@ interface Context {
 declare const context: Context;
 `;
 
-export { SmalgJavascriptTypeDeclaration };
+export { SmalgJavascriptExecutionDeclaration };
+
+
+export class AssertionDeclaration {
+
+  for(classContract: ClassContract) {
+
+  }
+
+  private createFieldSignature(field: FieldContract) {
+  }
+
+  private createMethodSignature(method: MethodContract) {
+
+  }
+
+}

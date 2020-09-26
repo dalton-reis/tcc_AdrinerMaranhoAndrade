@@ -9,7 +9,7 @@ export class ProblemScenariosComponent implements OnInit {
 
   constructor() { }
 
-  scenarios = [ { name: 'Cenário 1' } ];
+  scenarios = [];
 
   ngOnInit(): void {
   }
@@ -21,6 +21,5 @@ export class ProblemScenariosComponent implements OnInit {
   removeScenario() {
     this.scenarios = this.scenarios.slice(0, this.scenarios.length - 1);
   }
-
 
 }
