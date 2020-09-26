@@ -1,8 +1,21 @@
 <div class="problem-scenarios">
+  <input type="string" nbInput fullWidth/>
   <button nbButton (click)="addScenario()">Adicionar cenário</button>
   <button nbButton (click)="removeScenario()">Remover cenário</button>
   <nb-tabset>
-    <nb-tab *ngFor="let scenario of scenarios" [tabTitle]="scenario.name">
+    <nb-tab
+      *ngFor="let scenario of scenarios"
+      [tabTitle]="scenario.name"
+      class="cenario-tab"
+      [lazyLoad]="true">
+      <div class="row">
+        <div class="col-sm-12">
+          <app-code-editor
+            type="smalg-javascript-assertion"
+            [config]="contract"
+          ></app-code-editor>
+        </div>
+      </div>
     </nb-tab>
   </nb-tabset>
 </div>

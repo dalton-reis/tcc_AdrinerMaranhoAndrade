@@ -18,7 +18,7 @@ export class CodeExecutionComponent implements OnInit {
 
   constructor() {}
 
-  @Input() codeType: string = 'smalg-javascript';
+  @Input() codeType: string = 'smalg-javascript-execution';
   @ViewChild('executionBar') executionBar: ExecutionBarComponent;
 
   private graphicEngine: GraphicEngine;

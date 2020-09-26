@@ -8,7 +8,7 @@ interface ScriptTypes {
 export class ScriptCompilerProvider {
 
   private static TYPES: ScriptTypes = {
-    'smalg-javascript': new SmalgJavascriptCompiler(),
+    'smalg-javascript-execution': new SmalgJavascriptCompiler(),
   };
 
   private constructor() {}

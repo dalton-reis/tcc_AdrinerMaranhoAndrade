@@ -27,28 +27,29 @@ export class MonacoEditor implements CodeEditor {
     config?.context.forEach(declaration =>
       monaco.languages.typescript.javascriptDefaults.addExtraLib(declaration.code, declaration.name));
 
-    this.editor = monaco.editor.create(parent, {
-      value:
-`const object_1 = context.newObject();
-const container_1 = context.newContainer(3);
-const int_1 = context.newPrimitive(1);
-const string_1 = context.newPrimitive('teste');
+    setTimeout(() => {
+      this.editor = monaco.editor.create(parent, {
+        value:
+  `const object_1 = context.newObject();
+  const container_1 = context.newContainer(3);
+  const int_1 = context.newPrimitive(1);
+  const string_1 = context.newPrimitive('teste');
 
-object_1.set('id', int_1);
-object_1.set('id', null);
+  object_1.set('id', int_1);
+  object_1.set('id', null);
 
-container_1.set(0, string_1);
-container_1.set(0, null);
+  container_1.set(0, string_1);
+  container_1.set(0, null);
 
-object_1.set('container', container_1);
-container_1.set(1, object_1);
+  object_1.set('container', container_1);
+  container_1.set(1, object_1);
 
-object_1.set('container', null);
-container_1.set(1, null);`,
-      language: config.language,
-      automaticLayout: true,
-
-    });
+  object_1.set('container', null);
+  container_1.set(1, null);`,
+        language: config.language,
+        automaticLayout: true,
+      });
+    }, 10000);
   }
 
 /**const object_1 = context.newObject();

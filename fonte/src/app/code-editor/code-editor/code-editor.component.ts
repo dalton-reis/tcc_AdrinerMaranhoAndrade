@@ -10,6 +10,7 @@ import {
   OnDestroy,
   OnChanges,
   SimpleChanges,
+  OnInit,
 } from '@angular/core';
 import { CodeEditorProvider } from '../engine/code-editor-provider';
 import { CodeEditor } from '../engine/code-editor';
@@ -23,16 +24,17 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'app-code-editor',
   templateUrl: './code-editor.component.html',
-  styleUrls: ['./code-editor.component.scss']
+  styleUrls: ['./code-editor.component.scss'],
 })
-export class CodeEditorComponent implements AfterViewInit, OnDestroy, OnChanges {
+export class CodeEditorComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   private unsubscribe$ = new Subject<void>();
 
   @Input() type: string = CodeEditorProvider.default();
   @Input() hasError: boolean = false;
   @Input() errorContext: ErrorContext = null;
-  @Input() config: any;
+  @Input() config: any = null;
+  @Input() showToolbar: boolean = false;
   @Output() action = new EventEmitter<Action>();
 
   @ViewChild('codeEditorContainer') codeEditorContainer: ElementRef;
@@ -43,6 +45,10 @@ export class CodeEditorComponent implements AfterViewInit, OnDestroy, OnChanges 
   errorsWindowRef: NbWindowRef = null;
 
   constructor(private windowService: NbWindowService) {}
+
+  ngOnInit(): void {
+    console.log(this.config);
+  }
 
   ngAfterViewInit(): void {
     this.codeEditor = CodeEditorProvider.create(this.type, this.codeEditorContainer.nativeElement, this.config);
@@ -55,7 +61,7 @@ export class CodeEditorComponent implements AfterViewInit, OnDestroy, OnChanges 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.hasError.currentValue) {
+    if (changes.hasError?.currentValue) {
       this.openErrorsWindow();
     } else {
       this.closeErrorsWindow();

@@ -13,15 +13,69 @@ export { SmalgJavascriptExecutionDeclaration };
 
 export class AssertionDeclaration {
 
-  for(classContract: ClassContract) {
+  static for(classContract: ClassContract) {
+    const ret = `
+    interface SmalgObjectReadOnly {
 
+      get(name: string);
+
+    }
+
+    interface SmalgContainerReadOnly {
+
+      get(index: number);
+
+    }
+
+    interface Context {
+
+      getObjects(): SmalgObject[];
+
+      getContainers(): SmalgContainerReadOnly[];
+
+      assertEquals(expected: any, actual: any, message: string): void;
+
+      assertTrue(actual: any, message: string): void;
+
+      assertFalse(actual: any, message: string): void;
+
+    }
+
+    declare const context: Context;
+
+    ${this.createClassContractDeclaration(classContract)}
+  `;
+  console.log(ret);
+    return ret;
   }
 
-  private createFieldSignature(field: FieldContract) {
+  private static createClassContractDeclaration(classContract: ClassContract) {
+    return `
+    interface ${classContract.name} {
+
+      ${this.createFieldsSignature(classContract.fields)}
+
+      ${this.createMethodsSignature(classContract.methods)}
+
+    }
+
+    declare const ${this.uncapitalizeFirstLetter(classContract.name)}: ${classContract.name};
+    `;
   }
 
-  private createMethodSignature(method: MethodContract) {
+  private static createFieldsSignature(fields: FieldContract[]) {
+    return fields
+      .map(field => `/** ${field.description || ''} */${field.name}: any;`)
+      .join('\n');
+  }
 
+  private static createMethodsSignature(methods: MethodContract[]) {
+    return methods
+      .map(method => `/** ${method.description || ''} */${method.name}(${method.parameters || ''}): any;`)
+      .join('\n');
+  }
+  private static uncapitalizeFirstLetter(string: string) {
+    return string.charAt(0).toLowerCase() + string.slice(1);
   }
 
 }

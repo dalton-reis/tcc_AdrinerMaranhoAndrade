@@ -44,7 +44,7 @@ export class ProblemDefinitionComponent implements OnInit {
   saveProblemContract(contractDefinition: ContractDefinitionComponent) {
     contractDefinition.getData().then(contract => {
       this.classContract = contract;
-      this.stepper.next();
+      setTimeout(() => this.stepper.next(), 0);
     });
   }
 
