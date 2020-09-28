@@ -29,9 +29,19 @@ export class AssertionDeclaration {
 
     interface Context {
 
-      getObjects(): SmalgObject[];
+      newObject(): SmalgObjectReadOnly;
+
+      newContainer(): SmalgContainerReadOnly;
+
+      getObjects(): SmalgObjectReadOnly[];
 
       getContainers(): SmalgContainerReadOnly[];
+
+    }
+
+    declare const context: Context;
+
+    interface Assertion {
 
       assertEquals(expected: any, actual: any, message: string): void;
 
@@ -41,7 +51,7 @@ export class AssertionDeclaration {
 
     }
 
-    declare const context: Context;
+    declare const assertion: Assertion;
 
     ${this.createClassContractDeclaration(classContract)}
   `;

@@ -68,6 +68,15 @@ export class CodeEditorComponent implements OnInit, AfterViewInit, OnDestroy, On
     }
   }
 
+  updateConfig(config: any) {
+    this.config = config;
+    this.codeEditor?.updateConfig(config);
+  }
+
+  resize() {
+    this.codeEditor?.resize();
+  }
+
   openErrorsWindow() {
     if (this.errorsWindowRef) {
       return;

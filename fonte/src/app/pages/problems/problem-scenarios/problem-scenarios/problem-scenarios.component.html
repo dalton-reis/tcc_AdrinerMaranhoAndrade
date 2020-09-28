@@ -2,9 +2,9 @@
   <input type="string" nbInput fullWidth/>
   <button nbButton (click)="addScenario()">Adicionar cenário</button>
   <button nbButton (click)="removeScenario()">Remover cenário</button>
-  <nb-tabset>
+  <nb-tabset (changeTab)="resizeCodeEditor()">
     <nb-tab
-      *ngFor="let scenario of scenarios"
+      *ngFor="let scenario of scenarios; trackBy: scenarioId"
       [tabTitle]="scenario.name"
       class="cenario-tab"
       [lazyLoad]="true">
@@ -13,6 +13,7 @@
           <app-code-editor
             type="smalg-javascript-assertion"
             [config]="contract"
+            #codeEditor
           ></app-code-editor>
         </div>
       </div>
