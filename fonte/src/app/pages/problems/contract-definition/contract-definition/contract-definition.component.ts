@@ -44,11 +44,13 @@ export class ContractDefinitionComponent implements OnInit {
         title: 'Nome',
         type: 'string',
         filter: false,
+        width: '30%',
       },
       description: {
         title: 'Descrição (?)',
         type: 'string',
         filter: false,
+        width: '60%',
       },
     },
     noDataMessage: 'Nenhum campo configurado',
@@ -79,16 +81,19 @@ export class ContractDefinitionComponent implements OnInit {
         title: 'Nome',
         type: 'string',
         filter: false,
+        width: '30%',
       },
       parameters: {
         title: 'Parâmetros (?)',
         type: 'string',
         filter: false,
+        width: '30%',
       },
       description: {
         title: 'Descrição (?)',
         type: 'string',
         filter: false,
+        width: '30%',
       },
     },
     actions: {
@@ -114,7 +119,7 @@ export class ContractDefinitionComponent implements OnInit {
     const { name } = event.newData;
     if (!name)  {
       event.confirm.reject();
-      this.warnValidationError('Atenção', 'O nome do campo é obrigatório.');
+      this.showValidationMessage('Atenção', 'O nome do campo é obrigatório.');
     } else {
       event.confirm.resolve();
     }
@@ -124,7 +129,7 @@ export class ContractDefinitionComponent implements OnInit {
     const { name } = event.newData;
     if (!name)  {
       event.confirm.reject();
-      this.warnValidationError('Atenção', 'O nome do método é obrigatório.');
+      this.showValidationMessage('Atenção', 'O nome do método é obrigatório.');
     } else {
       event.confirm.resolve();
       this.tableErrors.methods.required = false;
@@ -150,7 +155,7 @@ export class ContractDefinitionComponent implements OnInit {
     return Promise.reject(new Error('Form is invalid'));
   }
 
-  private warnValidationError(title: string, message: string) {
+  private showValidationMessage(title: string, message: string) {
     const type: NbComponentStatus = 'warning';
     const config = {
       status: type,

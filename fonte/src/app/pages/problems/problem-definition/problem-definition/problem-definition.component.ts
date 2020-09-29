@@ -5,6 +5,7 @@ import { ClassContract } from '../../../../models/problem/problem-contract';
 import {
   ContractDefinitionComponent,
 } from '../../contract-definition/contract-definition/contract-definition.component';
+import { ProblemScenariosComponent } from '../../problem-scenarios/problem-scenarios/problem-scenarios.component';
 
 @Component({
   selector: 'app-problem-definition',
@@ -17,6 +18,7 @@ export class ProblemDefinitionComponent implements OnInit {
 
   descriptionForm: FormGroup;
   classContract: ClassContract;
+  problemScenarios: ProblemScenario[];
 
   constructor(private formBuilder: FormBuilder) {
     this.descriptionForm = this.formBuilder.group({
@@ -28,6 +30,7 @@ export class ProblemDefinitionComponent implements OnInit {
       fields: [],
       methods: [],
     };
+    this.problemScenarios = [];
   }
 
   ngOnInit(): void {
@@ -44,7 +47,14 @@ export class ProblemDefinitionComponent implements OnInit {
   saveProblemContract(contractDefinition: ContractDefinitionComponent) {
     contractDefinition.getData().then(contract => {
       this.classContract = contract;
-      setTimeout(() => this.stepper.next(), 0);
+      setTimeout(() => this.stepper.next());
+    });
+  }
+
+  saveProblemScenarios(problemScenarios: ProblemScenariosComponent) {
+    problemScenarios.getScenarios().then(scenarios => {
+      this.problemScenarios = scenarios;
+      setTimeout(() => this.stepper.next());
     });
   }
 

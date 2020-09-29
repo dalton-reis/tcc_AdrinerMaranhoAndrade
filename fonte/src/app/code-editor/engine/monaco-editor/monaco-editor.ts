@@ -52,7 +52,7 @@ container_1.set(1, null);`,
   }
 
   resize(): void {
-    this.editor.layout();
+    this.editor?.layout();
   }
 
   updateConfig(config) {
@@ -60,6 +60,10 @@ container_1.set(1, null);`,
     const context = (this.contextSupplier && this.contextSupplier(config)) || null;
     context?.forEach(declaration =>
     monaco.languages.typescript.javascriptDefaults.addExtraLib(declaration.code, declaration.name));
+  }
+
+  getValue(): string {
+    return this.editor?.getValue();
   }
 
 /**const object_1 = context.newObject();
@@ -116,6 +120,20 @@ container_1.set(2, s);
 container_1.get(1);
 container_1.get(2);
  */
+
+ /**
+  *
+const object = context.newObject();
+
+listaEncadeada.adicionar(object);
+assertion.assertEquals(1, context.getContainers().length, 'Deveria haver somente um objeto no cenário');
+
+const cabeca = listaEncadeada.cabeca();
+assertion.assertEquals(cabeca, object, 'A cabeca da lista deveria ser o objeto adicionado');
+
+listaEncadeada.remover(object);
+assertion.assertEquals(0, listaEncadeada.tamanho(), 'O tamanho da lista deveria ser 0.');
+  */
 
   getToolbar() {
     return MonacoEditorToolbar.create(() => this.editor);

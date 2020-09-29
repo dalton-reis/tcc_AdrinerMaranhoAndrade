@@ -1,5 +1,4 @@
 <div class="problem-scenarios">
-  <input type="string" nbInput fullWidth/>
   <button nbButton (click)="addScenario()">Adicionar cenário</button>
   <button nbButton (click)="removeScenario()">Remover cenário</button>
   <nb-tabset (changeTab)="resizeCodeEditor()">
@@ -10,7 +9,32 @@
       [lazyLoad]="true">
       <div class="row">
         <div class="col-sm-12">
+          <div class="form-group">
+            <label for="scenario-name" class="label">Defina um nome para o cenário</label>
+            <input
+              id="scenario-name"
+              type="string"
+              nbInput
+              fullWidth
+              placeholder="Nome"
+              [(ngModel)]="scenario.name"/>
+          </div>
+          <div class="form-group">
+            <label for="scenario-description" class="label optional-value">Defina uma descrição para o cenário</label>
+            <input
+              id="scenario-description"
+              type="string"
+              nbInput
+              fullWidth
+              placeholder="Descrição"
+              [(ngModel)]="scenario.description"/>
+          </div>
+        </div>
+      </div>
+      <div class="row editor-container">
+        <div class="col-sm-12">
           <app-code-editor
+            [uuid]="scenario.id"
             type="smalg-javascript-assertion"
             [config]="contract"
             #codeEditor

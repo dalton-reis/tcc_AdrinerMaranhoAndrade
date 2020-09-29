@@ -30,6 +30,7 @@ export class CodeEditorComponent implements OnInit, AfterViewInit, OnDestroy, On
 
   private unsubscribe$ = new Subject<void>();
 
+  @Input() uuid: string;
   @Input() type: string = CodeEditorProvider.default();
   @Input() hasError: boolean = false;
   @Input() errorContext: ErrorContext = null;
@@ -47,7 +48,6 @@ export class CodeEditorComponent implements OnInit, AfterViewInit, OnDestroy, On
   constructor(private windowService: NbWindowService) {}
 
   ngOnInit(): void {
-    console.log(this.config);
   }
 
   ngAfterViewInit(): void {
@@ -75,6 +75,10 @@ export class CodeEditorComponent implements OnInit, AfterViewInit, OnDestroy, On
 
   resize() {
     this.codeEditor?.resize();
+  }
+
+  getValue(): string {
+    return this.codeEditor.getValue();
   }
 
   openErrorsWindow() {
