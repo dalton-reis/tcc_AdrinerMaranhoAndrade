@@ -1,19 +1,53 @@
-<div class="row code-execution-wrapper">
-  <div class="col-sm-12 col-lg-6 code-editor-container">
-    <app-code-editor
-      [type]="codeType"
-      [hasError]="hasError"
-      [errorContext]="errorContext"
-      [showToolbar]="true"
-      (action)="executeCodeEditorAction($event)"
-    ></app-code-editor>
+<div class="code-execution-wrapper">
+  <div class="row scenario-selection-container">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label for="selected-scenario" class="label">Selecione um cenário para executar</label>
+        <div class="select-scenario-container">
+          <nb-select
+            id="selected-scenario"
+            class="select-scenario"
+            [(selected)]="selectedScenario">
+            <nb-option
+              *ngFor="let scenario of scenarios; trackBy: scenarioId"
+              [value]="scenario"
+            >{{ scenario.name }}</nb-option>
+          </nb-select>
+          <button
+            nbButton
+            *ngIf="selectedScenario && selectedScenario.description"
+            class="scenario-detail"
+            (click)="open(scenarioDescriptionDialog)"
+          >Descrição</button>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="col-sm-12 col-lg-6 graphic-container">
-    <app-graphic (onLoad)="setGraphicEngine($event)"></app-graphic>
+  <div class="row components-wrapper" *ngIf="selectedScenario">
+    <div class="col-sm-12 col-lg-6 code-editor-container">
+      <app-code-editor
+        [type]="codeType"
+        [hasError]="hasError"
+        [errorContext]="errorContext"
+        [showToolbar]="true"
+        (action)="executeCodeEditorAction($event)"
+      ></app-code-editor>
+    </div>
+    <div class="col-sm-12 col-lg-6 graphic-container">
+      <app-graphic
+        (onLoad)="setGraphicEngine($event)"
+      ></app-graphic>
+    </div>
+    <app-execution-bar
+      [hidden]="!isExecuting"
+      (stateChanged)="onExecutionBarStateChanged($event)"
+      #executionBar
+    ></app-execution-bar>
   </div>
-  <app-execution-bar
-    [hidden]="!isExecuting"
-    (stateChanged)="onExecutionBarStateChanged($event)"
-    #executionBar
-  ></app-execution-bar>
 </div>
+
+<ng-template #scenarioDescriptionDialog let-data let-ref="dialogRef">
+  <pre>
+    {{ selectedScenario.description }}
+  </pre>
+</ng-template>

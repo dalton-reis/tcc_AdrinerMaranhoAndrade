@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit, TemplateRef } from '@angular/core';
 import { ScriptCompilerProvider } from '../../../script-engine/compilers/script-compiler-provider';
 import { ScriptEngineProvider } from '../../../script-engine/engine/script-engine-provider';
 import { GraphicEngine } from '../../../graphic/engine/graphic-engine';
@@ -8,6 +8,9 @@ import { ErrorContext, ErrorType } from '../../../models/error-context';
 import { ExecutionBarEvent } from '../../../models/execution-bar-event/execution-bar-event';
 import { ExecutionBarState } from '../../../models/execution-bar-event/execution-bar-state';
 import { ExecutionBarComponent } from '../execution-bar/execution-bar.component';
+import { ClassContract } from '../../../models/problem/problem-contract';
+import { CodeEditorComponent } from '../../../code-editor/code-editor/code-editor.component';
+import { NbWindowService, NbWindowState } from '@nebular/theme';
 
 @Component({
   selector: 'app-code-execution',
@@ -16,10 +19,14 @@ import { ExecutionBarComponent } from '../execution-bar/execution-bar.component'
 })
 export class CodeExecutionComponent implements OnInit {
 
-  constructor() {}
+  constructor(private windowService: NbWindowService) {}
 
   @Input() codeType: string = 'smalg-javascript-execution';
+  @Input() contract: ClassContract;
+  @Input() scenarios: ProblemScenario[] = [];
+
   @ViewChild('executionBar') executionBar: ExecutionBarComponent;
+  @ViewChild(CodeEditorComponent) codeEditor: CodeEditorComponent;
 
   private graphicEngine: GraphicEngine;
   private scriptEngine: ScriptEngine;
@@ -27,6 +34,7 @@ export class CodeExecutionComponent implements OnInit {
   hasError: boolean = false;
   errorContext: ErrorContext = null;
   isExecuting: boolean = false;
+  selectedScenario: ProblemScenario;
 
   ngOnInit(): void {
   }
@@ -103,6 +111,19 @@ export class CodeExecutionComponent implements OnInit {
 
   setGraphicEngine(graphicEngine: GraphicEngine) {
     this.graphicEngine = graphicEngine;
+  }
+
+  open(window: TemplateRef<any>) {
+    this.windowService.open(window, {
+      title: 'Detalhes do cenário',
+      hasBackdrop: false,
+      closeOnEsc: false,
+      initialState: NbWindowState.MAXIMIZED,
+    });
+  }
+
+  scenarioId(_, scenario) {
+    return scenario.id;
   }
 
 }

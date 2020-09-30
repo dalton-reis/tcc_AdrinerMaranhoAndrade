@@ -41,22 +41,14 @@
         <button nbButton (click)="saveProblemScenarios(problemScenarios)">Próximo</button>
       </nb-step>
       <nb-step label="Solução">
-        <h3>Step content #4</h3>
-        <p class="lorem">
-          Proin varius accumsan semper. Praesent consequat tincidunt sagittis. Curabitur egestas sem a ipsum bibendum,
-          sit amet fringilla orci efficitur. Nam bibendum lectus ut viverra tristique. Fusce eu pulvinar magna, quis
-          viverra ex.
-        </p>
+        <app-code-execution
+          [contract]="classContract"
+          [scenarios]="scenarios"
+        ></app-code-execution>
         <button nbButton nbStepperPrevious>Anterior</button>
-        <button nbButton disabled nbStepperNext>Próximo</button>
+        <button nbButton nbStepperNext>Próximo</button>
       </nb-step>
       <nb-step label="Preview">
-        <h3>Step content #4</h3>
-        <p class="lorem">
-          Proin varius accumsan semper. Praesent consequat tincidunt sagittis. Curabitur egestas sem a ipsum bibendum,
-          sit amet fringilla orci efficitur. Nam bibendum lectus ut viverra tristique. Fusce eu pulvinar magna, quis
-          viverra ex.
-        </p>
         <button nbButton nbStepperPrevious>Anterior</button>
         <button nbButton disabled nbStepperNext>Próximo</button>
       </nb-step>

@@ -29,23 +29,7 @@ export class MonacoEditor implements CodeEditor {
     this.updateConfig(config.config);
 
     this.editor = monaco.editor.create(parent, {
-      value:
-`const object_1 = context.newObject();
-const container_1 = context.newContainer(3);
-const int_1 = context.newPrimitive(1);
-const string_1 = context.newPrimitive('teste');
-
-object_1.set('id', int_1);
-object_1.set('id', null);
-
-container_1.set(0, string_1);
-container_1.set(0, null);
-
-object_1.set('container', container_1);
-container_1.set(1, object_1);
-
-object_1.set('container', null);
-container_1.set(1, null);`,
+      value: '',
       language: config.language,
       automaticLayout: true,
     });
@@ -65,6 +49,25 @@ container_1.set(1, null);`,
   getValue(): string {
     return this.editor?.getValue();
   }
+
+/**
+ * const object_1 = context.newObject();
+const container_1 = context.newContainer(3);
+const int_1 = context.newPrimitive(1);
+const string_1 = context.newPrimitive('teste');
+
+object_1.set('id', int_1);
+object_1.set('id', null);
+
+container_1.set(0, string_1);
+container_1.set(0, null);
+
+object_1.set('container', container_1);
+container_1.set(1, object_1);
+
+object_1.set('container', null);
+container_1.set(1, null);
+ */
 
 /**const object_1 = context.newObject();
 const container_1 = context.newContainer(6);

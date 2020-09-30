@@ -46,13 +46,21 @@ export class ProblemScenariosComponent implements OnInit, OnChanges {
   getScenarios(): Promise<ProblemScenario[]> {
     const scenarios = this.scenarios.map(({ id, name, description }) => {
       const code = this.codeEditors.find(codeEditor => codeEditor.uuid === id).getValue();
-      return { name, description, code };
+      return { id, name, description, code };
     });
+
+    if (!scenarios || scenarios.length === 0) {
+      this.showValidationMessage(
+        'Atenção',
+        'Informe ao menos um cenário.',
+      );
+      return Promise.reject(new Error('Scenarios invalid.'));
+    }
 
     if (scenarios.find(scenario => !scenario.name || !scenario.code)) {
       this.showValidationMessage(
         'Atenção',
-        'Alguns cenários estão inválidos. Verifique se todos possuem um nome e um código.'
+        'Alguns cenários estão inválidos. Verifique se todos possuem um nome e um código.',
       );
       return Promise.reject(new Error('Scenarios invalid.'));
     }

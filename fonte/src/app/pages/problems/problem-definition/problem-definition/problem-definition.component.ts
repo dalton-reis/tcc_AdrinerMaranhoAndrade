@@ -18,7 +18,7 @@ export class ProblemDefinitionComponent implements OnInit {
 
   descriptionForm: FormGroup;
   classContract: ClassContract;
-  problemScenarios: ProblemScenario[];
+  scenarios: ProblemScenario[];
 
   constructor(private formBuilder: FormBuilder) {
     this.descriptionForm = this.formBuilder.group({
@@ -30,7 +30,7 @@ export class ProblemDefinitionComponent implements OnInit {
       fields: [],
       methods: [],
     };
-    this.problemScenarios = [];
+    this.scenarios = [];
   }
 
   ngOnInit(): void {
@@ -53,7 +53,7 @@ export class ProblemDefinitionComponent implements OnInit {
 
   saveProblemScenarios(problemScenarios: ProblemScenariosComponent) {
     problemScenarios.getScenarios().then(scenarios => {
-      this.problemScenarios = scenarios;
+      this.scenarios = scenarios;
       setTimeout(() => this.stepper.next());
     });
   }

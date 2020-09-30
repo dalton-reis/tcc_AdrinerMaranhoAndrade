@@ -7,10 +7,13 @@ import { GraphicModule } from '../../graphic/graphic.module';
 import { CodeEditorModule } from '../../code-editor/code-editor.module';
 import { ExecutionBarComponent } from './execution-bar/execution-bar.component';
 import { SharedModule } from '../../shared/shared.module';
-import { NbTooltipModule } from '@nebular/theme';
+import { NbTooltipModule, NbSelectModule, NbDialogModule, NbCardModule, NbWindowModule } from '@nebular/theme';
 
 @NgModule({
-  declarations: [CodeExecutionComponent, ExecutionBarComponent],
+  declarations: [
+    CodeExecutionComponent,
+    ExecutionBarComponent,
+  ],
   imports: [
     CommonModule,
     CodeExecutionRoutingModule,
@@ -18,6 +21,11 @@ import { NbTooltipModule } from '@nebular/theme';
     GraphicModule,
     NbTooltipModule,
     CodeEditorModule,
+    NbSelectModule,
+    NbWindowModule,
+  ],
+  exports: [
+    CodeExecutionComponent,
   ],
 })
 export class CodeExecutionModule { }
