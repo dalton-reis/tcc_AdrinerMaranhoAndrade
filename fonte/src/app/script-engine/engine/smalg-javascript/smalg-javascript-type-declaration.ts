@@ -1,4 +1,4 @@
-import { ClassContract, MethodContract, FieldContract } from '../../models/problem/problem-contract';
+import { ClassContract, MethodContract, FieldContract } from '../../../models/problem/problem-contract';
 
 const SmalgJavascriptExecutionDeclaration = `
 interface Context {
@@ -10,11 +10,32 @@ declare const context: Context;
 
 export { SmalgJavascriptExecutionDeclaration };
 
+export class ExecutionDeclaration {
+
+  static for(classContract: ClassContract) {
+    return `class ${classContract.name} {\n\n${this.generateFields(classContract.fields)}\n\n${this.generateMethods(classContract.methods)}\n\n}`;
+  }
+
+  private static generateFields(fields: FieldContract[]) {
+    return fields.map(field =>
+      `\t${this.generateDocumentation(field.description)}${field.name};`).join('\n');
+  }
+
+  private static generateMethods(methods: MethodContract[]): string {
+    return methods.map(method =>
+      `\t${this.generateDocumentation(method.description)}${method.name}(${method.parameters}) {\n\t\t\n\t}`).join('\n');
+  }
+
+  private static generateDocumentation(description: string) {
+    return description ? `/**\n\t * ${description}\n\t */\n\t` : '';
+  }
+
+}
 
 export class AssertionDeclaration {
 
   static for(classContract: ClassContract) {
-    const ret = `
+    return `
     interface SmalgObjectReadOnly {
 
       get(name: string);
@@ -54,9 +75,7 @@ export class AssertionDeclaration {
     declare const assertion: Assertion;
 
     ${this.createClassContractDeclaration(classContract)}
-  `;
-  console.log(ret);
-    return ret;
+    `;
   }
 
   private static createClassContractDeclaration(classContract: ClassContract) {

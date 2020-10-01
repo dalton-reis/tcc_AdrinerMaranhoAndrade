@@ -1,19 +1,21 @@
 import { CodeEditor } from './code-editor';
 import { MonacoEditor } from './monaco-editor/monaco-editor';
+import { ClassContract } from '../../models/problem/problem-contract';
+import { v4 as uuidV4 } from 'uuid';
 import {
   SmalgJavascriptExecutionDeclaration,
   AssertionDeclaration,
-} from '../../script-engine/engine/smalg-javascript-type-declaration';
-import { ClassContract } from '../../models/problem/problem-contract';
-import { v4 as uuidV4 } from 'uuid';
+  ExecutionDeclaration,
+} from '../../script-engine/engine/smalg-javascript/smalg-javascript-type-declaration';
 
 export class CodeEditorProvider {
 
   private constructor() {}
 
   private static TYPES = {
-    'smalg-javascript-execution': (parent: HTMLDivElement) => new MonacoEditor(parent, {
+    'smalg-javascript-execution': (parent: HTMLDivElement, classContract: ClassContract) => new MonacoEditor(parent, {
       language: 'javascript',
+      code: ExecutionDeclaration.for(classContract),
       contextSupplier: () => [{ name: 'smalg-javascript-execution.d.ts', code: SmalgJavascriptExecutionDeclaration }],
     }),
     'smalg-javascript-assertion': (parent: HTMLDivElement, classContract: ClassContract) => new MonacoEditor(parent, {

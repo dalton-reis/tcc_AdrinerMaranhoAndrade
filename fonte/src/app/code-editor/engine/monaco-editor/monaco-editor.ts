@@ -29,7 +29,7 @@ export class MonacoEditor implements CodeEditor {
     this.updateConfig(config.config);
 
     this.editor = monaco.editor.create(parent, {
-      value: '',
+      value: (config && config.code) || '',
       language: config.language,
       automaticLayout: true,
     });
