@@ -10,10 +10,15 @@ declare const context: Context;
 
 export { SmalgJavascriptExecutionDeclaration };
 
+const uncapitalizeFirstLetter = (string: string) => {
+  return string.charAt(0).toLowerCase() + string.slice(1);
+};
+export { uncapitalizeFirstLetter };
+
 export class ExecutionDeclaration {
 
   static for(classContract: ClassContract) {
-    return `class ${classContract.name} {\n\n${this.generateFields(classContract.fields)}\n\n${this.generateMethods(classContract.methods)}\n\n}`;
+    return `class ${classContract.name} {\n\n\tconstructor() {}\n\n${this.generateFields(classContract.fields)}\n\n${this.generateMethods(classContract.methods)}\n\n}`;
   }
 
   private static generateFields(fields: FieldContract[]) {
@@ -88,7 +93,7 @@ export class AssertionDeclaration {
 
     }
 
-    declare const ${this.uncapitalizeFirstLetter(classContract.name)}: ${classContract.name};
+    declare const ${uncapitalizeFirstLetter(classContract.name)}: ${classContract.name};
     `;
   }
 
@@ -102,9 +107,6 @@ export class AssertionDeclaration {
     return methods
       .map(method => `/** ${method.description || ''} */${method.name}(${method.parameters || ''}): any;`)
       .join('\n');
-  }
-  private static uncapitalizeFirstLetter(string: string) {
-    return string.charAt(0).toLowerCase() + string.slice(1);
   }
 
 }

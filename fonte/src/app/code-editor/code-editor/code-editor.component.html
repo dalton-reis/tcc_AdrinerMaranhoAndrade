@@ -11,6 +11,7 @@
 </div>
 
 <ng-template #errorWindow let-data>
-  <p>O seu código apresenta erros:</p>
+  <p *ngIf="errorContext.type === 'RUNTIME'">O seu código apresenta erros de execução:</p>
+  <p *ngIf="errorContext.type === 'COMPILE_TIME'">O seu código apresenta erros estruturais:</p>
   <p>{{ errorContext.message }}</p>
 </ng-template>

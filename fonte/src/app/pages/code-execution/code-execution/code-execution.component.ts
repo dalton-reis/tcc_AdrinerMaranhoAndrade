@@ -56,7 +56,7 @@ export class CodeExecutionComponent implements OnInit {
       const scriptCompiler = ScriptCompilerProvider.get(this.codeType);
       let compiledScript;
       try {
-        compiledScript = scriptCompiler.compile(action.params.code);
+        compiledScript = scriptCompiler.compile(this.contract, this.selectedScenario, action.params.code);
       } catch (err) {
         this.hasError = true;
         this.errorContext = { type: ErrorType.COMPILE_TIME, message: err.message };
@@ -65,15 +65,18 @@ export class CodeExecutionComponent implements OnInit {
 
       this.scriptEngine = ScriptEngineProvider.create(compiledScript, this.graphicEngine);
       this.scriptEngine.prepare()
-        .then(() => {
-          this.isExecuting = true;
-          this.executionBar.changeState(ExecutionBarState.PLAY);
-        })
+        .then(() => this.startExecution())
         .catch(err => {
           this.hasError = true;
           this.errorContext = { type: ErrorType.RUNTIME, message: err.message };
+          this.startExecution();
         });
     }
+  }
+
+  private startExecution() {
+    this.isExecuting = true;
+    this.executionBar.changeState(ExecutionBarState.PLAY);
   }
 
   onExecutionBarStateChanged(event: ExecutionBarEvent) {
