@@ -105,6 +105,10 @@ export class CodeExecutionComponent implements OnInit {
     }
   }
 
+  getCode(): Promise<string> {
+    return Promise.resolve(this.codeEditor.getValue());
+  }
+
   private onStepExecution(hasNext: boolean) {
     this.executionBar.changeState(ExecutionBarState.PAUSE);
     if (!hasNext) {

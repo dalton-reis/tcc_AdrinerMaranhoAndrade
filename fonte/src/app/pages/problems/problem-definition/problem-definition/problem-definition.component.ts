@@ -1,11 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NbStepperComponent } from '@nebular/theme';
+import { NbStepperComponent, NbToastrService } from '@nebular/theme';
 import { ClassContract } from '../../../../models/problem/problem-contract';
 import {
   ContractDefinitionComponent,
 } from '../../contract-definition/contract-definition/contract-definition.component';
 import { ProblemScenariosComponent } from '../../problem-scenarios/problem-scenarios/problem-scenarios.component';
+import { CodeExecutionComponent } from '../../../code-execution/code-execution/code-execution.component';
+import { ProblemStorageService } from '../../problem-storage.service';
+import { v4 as uuidV4 } from 'uuid';
 
 @Component({
   selector: 'app-problem-definition',
@@ -19,8 +22,13 @@ export class ProblemDefinitionComponent implements OnInit {
   descriptionForm: FormGroup;
   classContract: ClassContract;
   scenarios: ProblemScenario[];
+  solution: string;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private problemStorageService: ProblemStorageService,
+    private toastrService: NbToastrService,
+  ) {
     this.descriptionForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
@@ -31,6 +39,7 @@ export class ProblemDefinitionComponent implements OnInit {
       methods: [],
     };
     this.scenarios = [];
+    this.solution = '';
   }
 
   ngOnInit(): void {
@@ -56,6 +65,27 @@ export class ProblemDefinitionComponent implements OnInit {
       this.scenarios = scenarios;
       setTimeout(() => this.stepper.next());
     });
+  }
+
+  saveProblemSolution(codeExecution: CodeExecutionComponent) {
+    codeExecution.getCode().then(code => {
+      this.solution = code;
+      this.saveProblem();
+    });
+  }
+
+  saveProblem() {
+    const problem = {
+      id: uuidV4(),
+      name: this.name.value,
+      description: this.description.value,
+      classContract: this.classContract,
+      scenarios: this.scenarios,
+      solution: this.solution,
+    };
+    this.problemStorageService.save(problem)
+      .then(() => this.toastrService.success('Salvo com sucesso.'))
+      .catch(() => this.toastrService.danger('Erro ao salvar.'));
   }
 
   get name() {

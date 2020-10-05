@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ProblemDefinitionRoutingModule } from './problem-definition-routing.module';
 import { ProblemDefinitionComponent } from './problem-definition/problem-definition.component';
-import { NbStepperModule, NbCardModule } from '@nebular/theme';
+import { NbStepperModule, NbCardModule, NbToastrModule } from '@nebular/theme';
 import { SharedModule } from '../../../shared/shared.module';
 import { FormsModule as ngFormsModule , ReactiveFormsModule as ngReactiveFormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill';
@@ -22,6 +22,7 @@ import { CodeExecutionModule } from '../../code-execution/code-execution.module'
     SharedModule,
     ContractDefinitionModule,
     ProblemScenariosModule,
+    NbToastrModule,
     NbCardModule,
     NbStepperModule,
     CodeExecutionModule,

@@ -9,6 +9,11 @@
   "bugs": {
     "url": "https://github.com/akveo/ngx-admin/issues"
   },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
+  },
   "scripts": {
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",
@@ -63,6 +68,7 @@
     "nebular-icons": "1.1.0",
     "ng2-ckeditor": "^1.2.2",
     "ng2-smart-table": "^1.6.0",
+    "ngx-cookie-service": "^10.1.1",
     "ngx-echarts": "^4.2.2",
     "ngx-quill": "^12.0.1",
     "node-sass": "^4.12.0",

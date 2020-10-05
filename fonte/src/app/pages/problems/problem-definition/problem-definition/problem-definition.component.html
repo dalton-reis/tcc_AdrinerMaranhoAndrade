@@ -1,7 +1,6 @@
 <nb-card class="col-md-12 col-lg-12 col-xxxl-12 problem-definition-container">
   <nb-card-body>
-    <!-- <nb-stepper #stepper orientation="vertical" [disableStepNavigation]="true"> -->
-      <nb-stepper #stepper orientation="vertical">
+    <nb-stepper #stepper orientation="vertical" [disableStepNavigation]="true">
       <nb-step label="Descrição">
         <form [formGroup]="descriptionForm" (ngSubmit)="saveForm(descriptionForm)">
           <div class="form-group">
@@ -44,13 +43,10 @@
         <app-code-execution
           [contract]="classContract"
           [scenarios]="scenarios"
+          #problemSolution
         ></app-code-execution>
         <button nbButton nbStepperPrevious>Anterior</button>
-        <button nbButton nbStepperNext>Próximo</button>
-      </nb-step>
-      <nb-step label="Preview">
-        <button nbButton nbStepperPrevious>Anterior</button>
-        <button nbButton disabled nbStepperNext>Próximo</button>
+        <button nbButton (click)="saveProblemSolution(problemSolution)">Criar problema</button>
       </nb-step>
     </nb-stepper>
   </nb-card-body>

@@ -20,9 +20,10 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+import { AuthComponent } from './auth/auth/auth.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AuthComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
