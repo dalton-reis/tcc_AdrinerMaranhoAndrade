@@ -1,24 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Problem } from '../../models/problem/problem';
 import { ProblemInfo } from '../../models/problem/problem-info';
+import { AuthService } from '../../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProblemStorageService {
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   async save(problem: Problem): Promise<string> {
-    throw Error('not implemented');
+    const authData = this.authService.getData();
+    if (!authData) {
+      throw Error('Not authenticated');
+    }
+    return ;
   }
 
   async load(url: string): Promise<Problem> {
-    throw Error('not implemented');
+    const authData = this.authService.getData();
+    if (!authData) {
+      throw Error('Not authenticated');
+    }
+    return ;
   }
 
   async list(): Promise<ProblemInfo[]> {
-    throw Error('not implemented');
+    const authData = this.authService.getData();
+    if (!authData) {
+      throw Error('Not authenticated');
+    }
+    return [];
   }
 
 }
