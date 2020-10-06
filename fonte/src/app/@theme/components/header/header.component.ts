@@ -27,8 +27,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  loggedUserMenu = [ { title: 'Log out' } ];
-  anonymousUserMeny = [ { title: 'Log in' } ];
+  loggedUserMenu = [ { title: 'Log out', icon: 'log-out-outline' } ];
+  anonymousUserMeny = [ { title: 'Log in', icon: 'github-outline' } ];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
