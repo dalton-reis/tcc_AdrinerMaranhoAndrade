@@ -31,13 +31,9 @@ export class GithubAuthService {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-      }
+      },
     })
     .toPromise();
-  }
-
-  logout() {
-
   }
 
 }

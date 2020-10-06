@@ -2,6 +2,12 @@ import { Injectable } from '@angular/core';
 import { GithubAuthService } from './github-auth.service';
 import { CookieService } from 'ngx-cookie-service';
 
+export interface AuthData {
+
+  token: string;
+
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -15,8 +21,15 @@ export class AuthService {
   static AUTH_REDIRECT_KEY = 'smalg.platform.auth.redirect.url';
   private static AUTH_DATA_KEY = 'smal.platform.auth.data';
 
-  getData(): {} | void {
-    return JSON.parse(this.cookieService.get(AuthService.AUTH_DATA_KEY));
+  getData(): AuthData | undefined {
+    const cookieValue = this.cookieService.get(AuthService.AUTH_DATA_KEY);
+    if (!cookieValue) {
+      return;
+    }
+    const data = JSON.parse(cookieValue);
+    return {
+      token: data.access_token,
+    };
   }
 
   requestAuthorization() {
@@ -30,12 +43,12 @@ export class AuthService {
         AuthService.AUTH_DATA_KEY,
         JSON.stringify(data),
         // expires da lib ta bugado
-        { expires: data.expires_in },
+        { expires: data.expires_in, path: '/' },
       ));
   }
 
   logout() {
-
+    this.cookieService.delete(AuthService.AUTH_DATA_KEY, '/');
   }
 
 }

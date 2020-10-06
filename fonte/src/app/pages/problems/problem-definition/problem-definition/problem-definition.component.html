@@ -18,7 +18,7 @@
             </span>
           </div>
           <button nbButton disabled nbStepperPrevious>Anterior</button>
-          <button type="submit" nbButton>Próximo</button>
+          <button type="submit" class="margin-left-5" nbButton>Próximo</button>
         </form>
       </nb-step>
       <nb-step label="Contrato">
@@ -31,13 +31,13 @@
             ></app-contract-definition>
           </div>
           <button nbButton nbStepperPrevious>Anterior</button>
-          <button type="submit" nbButton>Próximo</button>
+          <button type="submit" class="margin-left-5" nbButton>Próximo</button>
         </form>
       </nb-step>
       <nb-step label="Cenários">
         <app-problem-scenarios [contract]="classContract" #problemScenarios></app-problem-scenarios>
         <button nbButton nbStepperPrevious>Anterior</button>
-        <button nbButton (click)="saveProblemScenarios(problemScenarios)">Próximo</button>
+        <button nbButton class="margin-left-5" (click)="saveProblemScenarios(problemScenarios)">Próximo</button>
       </nb-step>
       <nb-step label="Solução">
         <app-code-execution
@@ -46,7 +46,7 @@
           #problemSolution
         ></app-code-execution>
         <button nbButton nbStepperPrevious>Anterior</button>
-        <button nbButton (click)="saveProblemSolution(problemSolution)">Criar problema</button>
+        <button nbButton class="margin-left-5" (click)="saveProblemSolution(problemSolution)">Criar problema</button>
       </nb-step>
     </nb-stepper>
   </nb-card-body>

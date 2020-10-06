@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-auth',
@@ -11,7 +11,7 @@ export class AuthComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -21,6 +21,7 @@ export class AuthComponent implements OnInit {
         if (redirectUrl) {
           window.location.replace(redirectUrl);
         } else {
+          this.router.navigate(['']);
         }
       })
       .catch(err => console.error(err));

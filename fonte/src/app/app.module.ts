@@ -23,7 +23,12 @@ import {
 import { AuthComponent } from './auth/auth/auth.component';
 
 @NgModule({
-  declarations: [AppComponent, AuthComponent],
+  providers: [
+  ],
+  declarations: [
+    AppComponent,
+    AuthComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -35,9 +40,6 @@ import { AuthComponent } from './auth/auth/auth.component';
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
     NbToastrModule.forRoot(),
-    NbChatModule.forRoot({
-      messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
-    }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
   ],

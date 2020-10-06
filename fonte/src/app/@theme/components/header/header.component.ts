@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 
-import { map, takeUntil } from 'rxjs/operators';
+import { map, takeUntil, filter } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { LayoutService } from '../../../@core/utils/layout.service';
+import { UserService } from '../../../user/user.service';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'ngx-header',
@@ -21,37 +23,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
       value: 'default',
       name: 'Light',
     },
-    {
-      value: 'dark',
-      name: 'Dark',
-    },
-    {
-      value: 'cosmic',
-      name: 'Cosmic',
-    },
-    {
-      value: 'corporate',
-      name: 'Corporate',
-    },
   ];
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  loggedUserMenu = [ { title: 'Log out' } ];
+  anonymousUserMeny = [ { title: 'Log in' } ];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private themeService: NbThemeService,
               private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService) {
+              private breakpointService: NbMediaBreakpointsService,
+              private authService: AuthService,
+              private userService: UserService) {
   }
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
 
-    // this.userService.getUsers()
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe((users: any) => this.user = users.nick);
+    this.setupUserMenu();
+    this.updateUser();
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
@@ -67,6 +59,33 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+  }
+
+  private async updateUser() {
+    this.userService.getUser().then(data => this.user = data);
+  }
+
+  private setupUserMenu() {
+    this.menuService.onItemClick()
+      .pipe(
+        filter(({ tag }) => tag === 'logged-context-menu'),
+        map(({ item: { title } }) => title),
+      ).subscribe(title => {
+        if (title === 'Log out') {
+          this.authService.logout();
+          this.user = null;
+        }
+      });
+
+    this.menuService.onItemClick()
+      .pipe(
+        filter(({ tag }) => tag === 'not-logged-context-menu'),
+        map(({ item: { title } }) => title),
+      ).subscribe(title => {
+        if (title === 'Log in') {
+          this.authService.requestAuthorization();
+        }
+      });
   }
 
   ngOnDestroy() {

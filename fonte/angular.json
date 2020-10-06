@@ -21,8 +21,6 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
-              "src/favicon.ico",
-              "src/favicon.png",
               {
                 "glob": "**/*",
                 "input": "./node_modules/monaco-editor/min/vs/",
@@ -101,7 +99,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
-              "node_modules/pace-js/pace.min.js",
+              "node_modules/pace-js/pace.min.js"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",
@@ -115,9 +113,7 @@
               "src/app/@theme/styles/styles.scss"
             ],
             "assets": [
-              "src/assets",
-              "src/favicon.ico",
-              "src/favicon.png",
+              "src/assets"
             ]
           }
         },
