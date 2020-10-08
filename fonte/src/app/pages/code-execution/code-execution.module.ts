@@ -7,12 +7,24 @@ import { GraphicModule } from '../../graphic/graphic.module';
 import { CodeEditorModule } from '../../code-editor/code-editor.module';
 import { ExecutionBarComponent } from './execution-bar/execution-bar.component';
 import { SharedModule } from '../../shared/shared.module';
-import { NbTooltipModule, NbSelectModule, NbWindowModule } from '@nebular/theme';
+import {
+  NbTooltipModule,
+  NbSelectModule,
+  NbWindowModule,
+  NbCardModule,
+  NbListModule,
+  NbFormFieldModule,
+} from '@nebular/theme';
+import { ProblemsListComponent } from './problems-list/problems-list.component';
+import { ProblemItemComponent } from './problems-list/problem-item/problem-item.component';
+import { FormsModule as ngFormsModule , ReactiveFormsModule as ngReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     CodeExecutionComponent,
     ExecutionBarComponent,
+    ProblemsListComponent,
+    ProblemItemComponent,
   ],
   imports: [
     CommonModule,
@@ -23,6 +35,11 @@ import { NbTooltipModule, NbSelectModule, NbWindowModule } from '@nebular/theme'
     CodeEditorModule,
     NbSelectModule,
     NbWindowModule,
+    NbCardModule,
+    NbListModule,
+    NbFormFieldModule,
+    ngFormsModule,
+    ngReactiveFormsModule,
   ],
   exports: [
     CodeExecutionComponent,

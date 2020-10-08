@@ -1,21 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Problem } from '../../models/problem/problem';
-import { ProblemInfo } from '../../models/problem/problem-info';
-import { AuthService } from '../../auth/auth.service';
+import { ProblemInfo } from '../models/problem/problem-info';
+import { Problem } from '../models/problem/problem';
+import { AuthService } from '../auth/auth.service';
+import { GithubStorageService } from './github-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProblemStorageService {
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private githubStorageService: GithubStorageService,
+  ) { }
 
   async save(problem: Problem): Promise<string> {
     const authData = this.authService.getData();
     if (!authData) {
       throw Error('Not authenticated');
     }
-    return ;
+    return this.githubStorageService.save(authData, problem);
   }
 
   async load(url: string): Promise<Problem> {
@@ -26,12 +30,12 @@ export class ProblemStorageService {
     return ;
   }
 
-  async list(): Promise<ProblemInfo[]> {
+  async list(username?: string): Promise<ProblemInfo[]> {
     const authData = this.authService.getData();
     if (!authData) {
       throw Error('Not authenticated');
     }
-    return [];
+    return this.githubStorageService.list(authData, username);
   }
 
 }

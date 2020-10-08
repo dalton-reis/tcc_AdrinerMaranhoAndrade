@@ -7,8 +7,10 @@ import {
 } from '../../contract-definition/contract-definition/contract-definition.component';
 import { ProblemScenariosComponent } from '../../problem-scenarios/problem-scenarios/problem-scenarios.component';
 import { CodeExecutionComponent } from '../../../code-execution/code-execution/code-execution.component';
-import { ProblemStorageService } from '../../problem-storage.service';
 import { v4 as uuidV4 } from 'uuid';
+import { ProblemStorageService } from '../../../../storage/problem-storage.service';
+import { UserService } from '../../../../user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-problem-definition',
@@ -23,11 +25,15 @@ export class ProblemDefinitionComponent implements OnInit {
   classContract: ClassContract;
   scenarios: ProblemScenario[];
   solution: string;
+  loading = true;
+  loggedIn = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private problemStorageService: ProblemStorageService,
     private toastrService: NbToastrService,
+    private userService: UserService,
+    private router: Router,
   ) {
     this.descriptionForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -43,6 +49,10 @@ export class ProblemDefinitionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userService.getUser()
+      .then(user => this.loggedIn = Boolean(user))
+      .catch(() => this.loggedIn = false)
+      .finally(() => this.loading = false);
   }
 
   saveForm(form: FormGroup) {
@@ -84,7 +94,10 @@ export class ProblemDefinitionComponent implements OnInit {
       solution: this.solution,
     };
     this.problemStorageService.save(problem)
-      .then(() => this.toastrService.success('Salvo com sucesso.'))
+      .then(() => {
+        this.toastrService.success('Salvo com sucesso.');
+        this.router.navigate(['pages', 'code-execution']);
+      })
       .catch(() => this.toastrService.danger('Erro ao salvar.'));
   }
 

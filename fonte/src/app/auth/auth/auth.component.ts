@@ -16,15 +16,15 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.login()
-      .then(() => {
+      .catch(err => console.error(err))
+      .finally(() => {
         const redirectUrl = localStorage.getItem(AuthService.AUTH_REDIRECT_KEY);
         if (redirectUrl) {
           window.location.replace(redirectUrl);
         } else {
           this.router.navigate(['']);
         }
-      })
-      .catch(err => console.error(err));
+      });
   }
 
 }

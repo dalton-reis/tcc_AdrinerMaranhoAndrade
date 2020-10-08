@@ -1,6 +1,7 @@
 <nb-card class="col-md-12 col-lg-12 col-xxxl-12 problem-definition-container">
-  <nb-card-body>
-    <nb-stepper #stepper orientation="vertical" [disableStepNavigation]="true">
+  <nb-card-body [nbSpinner]="loading">
+    <app-login *ngIf="!loading && !loggedIn"></app-login>
+    <nb-stepper #stepper orientation="vertical" [disableStepNavigation]="true" *ngIf="!loading && loggedIn">
       <nb-step label="Descrição">
         <form [formGroup]="descriptionForm" (ngSubmit)="saveForm(descriptionForm)">
           <div class="form-group">

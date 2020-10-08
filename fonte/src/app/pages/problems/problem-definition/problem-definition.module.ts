@@ -10,6 +10,7 @@ import { QuillModule } from 'ngx-quill';
 import { ContractDefinitionModule } from '../contract-definition/contract-definition.module';
 import { ProblemScenariosModule } from '../problem-scenarios/problem-scenarios.module';
 import { CodeExecutionModule } from '../../code-execution/code-execution.module';
+import { LoginModule } from '../../../auth/login.module';
 
 @NgModule({
   declarations: [ ProblemDefinitionComponent ],
@@ -26,6 +27,7 @@ import { CodeExecutionModule } from '../../code-execution/code-execution.module'
     NbCardModule,
     NbStepperModule,
     CodeExecutionModule,
+    LoginModule,
   ],
 })
 export class ProblemDefinitionModule { }

@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { GithubAuthService } from './github-auth.service';
 import { CookieService } from 'ngx-cookie-service';
+import { UserService } from '../user/user.service';
+
+const AUTHENTICATED_ROUTES = [
+
+];
 
 export interface AuthData {
 
@@ -16,6 +21,7 @@ export class AuthService {
   constructor(
     private githubAuth: GithubAuthService,
     private cookieService: CookieService,
+    private userService: UserService,
   ) {}
 
   static AUTH_REDIRECT_KEY = 'smalg.platform.auth.redirect.url';
@@ -49,6 +55,8 @@ export class AuthService {
 
   logout() {
     this.cookieService.delete(AuthService.AUTH_DATA_KEY, '/');
+    this.userService.clearUser();
+    window.location.reload();
   }
 
 }
