@@ -1,40 +1,49 @@
-<nb-card *ngIf="loggedIn && currentUserProblems?.length > 0" class="problemsCard">
-  <nb-card-header>
-    Meus problemas criados:
-  </nb-card-header>
-  <nb-list [nbSpinner]="loadingCurrentUser">
-    <nb-list-item *ngFor="let problem of currentUserProblems">
-      <app-problem-item [problemInfo]="problem"></app-problem-item>
-    </nb-list-item>
-  </nb-list>
-</nb-card>
-<nb-card *ngIf="loggedIn" class="problemsCard">
-  <nb-card-header>
-    <form [formGroup]="searchSpecificUserForm" (ngSubmit)="searchSpecificUserProblems()">
-      <label for="specificUserSearch">Listar de um usuário do github:</label>
-      <nb-form-field>
-        <input formControlName="username" id="specificUserSearch" type="text" fullWidth nbInput placeholder="username"/>
-        <button type="submit" nbSuffix nbButton ghost>
-          <nb-icon icon="search-outline" pack="eva"></nb-icon>
-        </button>
-      </nb-form-field>
-    </form>
-  </nb-card-header>
-  <nb-card-body *ngIf="specificUserProblems?.length === 0">
-    <span>Nenhum problema encontrado.</span>
-  </nb-card-body>
-  <nb-list *ngIf="specificUserProblems?.length > 0" [nbSpinner]="loadingSpecificUser">
-    <nb-list-item *ngFor="let problem of specificUserProblems">
-      <app-problem-item [problemInfo]="problem"></app-problem-item>
-    </nb-list-item>
-  </nb-list>
-</nb-card>
-<nb-card class="problemsCard">
-  <nb-card-body>
-    <form [formGroup]="importFileForm">
-      <label for="importFromFile" class="import-label">Importar a partir de um arquivo:</label>
-      <input id="importFromFile" formControlName="file" type="file" accept=".smgplt"/>
-    </form>
-  </nb-card-body>
-</nb-card>
+<nb-accordion>
+  <nb-accordion-item *ngIf="loggedIn && currentUserProblems?.length > 0">
+    <nb-accordion-item-header>
+      Meus problemas criados:
+    </nb-accordion-item-header>
+    <nb-accordion-item-body [nbSpinner]="loadingCurrentUser">
+      <nb-list>
+        <nb-list-item *ngFor="let problem of currentUserProblems">
+          <app-problem-item [problemInfo]="problem"></app-problem-item>
+        </nb-list-item>
+      </nb-list>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+  <nb-accordion-item *ngIf="loggedIn">
+    <nb-accordion-item-header>
+      Listar de um usuário do github:
+    </nb-accordion-item-header>
+    <nb-accordion-item-body [nbSpinner]="loadingSpecificUser">
+      <form [formGroup]="searchSpecificUserForm" (ngSubmit)="searchSpecificUserProblems()">
+        <nb-form-field>
+          <input formControlName="username" id="specificUserSearch" type="text" fullWidth nbInput placeholder="username"/>
+          <button type="submit" nbSuffix nbButton ghost>
+            <nb-icon icon="search-outline" pack="eva"></nb-icon>
+          </button>
+        </nb-form-field>
+      </form>
+      <div class="no-item-found" *ngIf="!loadingSpecificUser && specificUserProblems?.length === 0 && lastUsernameSearched">
+        <span><i>Nenhum problema encontrado.</i></span>
+      </div>
+      <nb-list *ngIf="specificUserProblems?.length > 0">
+        <nb-list-item *ngFor="let problem of specificUserProblems">
+          <app-problem-item [problemInfo]="problem"></app-problem-item>
+        </nb-list-item>
+      </nb-list>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+  <nb-accordion-item *ngIf="loggedIn && currentUserProblems?.length > 0">
+    <nb-accordion-item-header>
+      Executar a partir de um arquivo:
+    </nb-accordion-item-header>
+    <nb-accordion-item-body>
+      <div class="import-from-file-container">
+        <label for="importFromFile" class="import-label-btn-mock">Selecione um arquivo</label>
+        <input id="importFromFile" type="file" accept=".smgplt" (change)="fileSelected($event.target.files[0])"/>
+      </div>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+</nb-accordion>
 

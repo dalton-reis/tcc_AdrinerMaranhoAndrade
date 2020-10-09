@@ -67,7 +67,7 @@ export class GithubStorageService {
       .filter(content => content.type === 'file' && content.name.endsWith(`.${this.EXTENSION_TYPE}`))
       .map(content => ({
         name: content.name.substring(0, content.name.length - (this.EXTENSION_TYPE.length + 1)),
-        downloadUrl: content.downloadUrl,
+        downloadUrl: content.download_url,
       }));
   }
 

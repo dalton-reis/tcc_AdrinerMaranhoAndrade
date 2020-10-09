@@ -19,7 +19,8 @@ export class ProblemsListComponent implements OnInit {
   loggedIn = false;
 
   searchSpecificUserForm: FormGroup;
-  importFileForm: FormGroup;
+
+  lastUsernameSearched: string;
 
   constructor(
     private problemsStorageService: ProblemStorageService,
@@ -30,9 +31,6 @@ export class ProblemsListComponent implements OnInit {
   ngOnInit(): void {
     this.searchSpecificUserForm = this.formBuilder.group({
       username: '',
-    });
-    this.importFileForm = this.formBuilder.group({
-      file: '',
     });
     this.userService.getUser()
       .then(user => this.loggedIn = Boolean(user))
@@ -57,15 +55,14 @@ export class ProblemsListComponent implements OnInit {
   }
 
   searchSpecificUserProblems() {
-    const username = this.searchSpecificUserForm.get('username').value;
-    if (!username) {
+    this.lastUsernameSearched = this.username;
+    if (!this.username) {
       this.specificUserProblems = [];
       return;
     }
 
     this.loadingSpecificUser = true;
-    this.problemsStorageService.list(username)
-      .then(problemsInfo => this.specificUserProblems = problemsInfo)
+    this.problemsStorageService.list(this.username)
       .catch(err => {
         if (err.status === 404) {
           return [];
@@ -73,7 +70,16 @@ export class ProblemsListComponent implements OnInit {
         console.error(err);
         throw err;
       })
+      .then(problemsInfo => this.specificUserProblems = problemsInfo)
       .finally(() => this.loadingSpecificUser = false);
+  }
+
+  fileSelected(file: File) {
+    this.problemsStorageService.load(file);
+  }
+
+  get username() {
+    return this.searchSpecificUserForm.get('username').value;
   }
 
 }

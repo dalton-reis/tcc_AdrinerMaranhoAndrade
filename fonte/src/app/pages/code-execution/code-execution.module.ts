@@ -11,9 +11,9 @@ import {
   NbTooltipModule,
   NbSelectModule,
   NbWindowModule,
-  NbCardModule,
   NbListModule,
   NbFormFieldModule,
+  NbAccordionModule,
 } from '@nebular/theme';
 import { ProblemsListComponent } from './problems-list/problems-list.component';
 import { ProblemItemComponent } from './problems-list/problem-item/problem-item.component';
@@ -35,11 +35,11 @@ import { FormsModule as ngFormsModule , ReactiveFormsModule as ngReactiveFormsMo
     CodeEditorModule,
     NbSelectModule,
     NbWindowModule,
-    NbCardModule,
     NbListModule,
     NbFormFieldModule,
     ngFormsModule,
     ngReactiveFormsModule,
+    NbAccordionModule,
   ],
   exports: [
     CodeExecutionComponent,
