@@ -21,6 +21,7 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
+              "src/_redirects",
               {
                 "glob": "**/*",
                 "input": "./node_modules/monaco-editor/min/vs/",
