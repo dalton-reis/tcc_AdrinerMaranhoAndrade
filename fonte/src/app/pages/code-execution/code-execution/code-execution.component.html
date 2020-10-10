@@ -1,18 +1,81 @@
-<div class="row code-execution-wrapper">
-  <div class="col-sm-12 col-lg-6 code-editor-container">
-    <app-code-editor
-      [type]="codeType"
-      [hasError]="hasError"
-      [errorContext]="errorContext"
-      (action)="executeCodeEditorAction($event)"
-    ></app-code-editor>
+<div class="code-execution-wrapper">
+  <div class="row scenario-selection-container">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label for="selected-scenario" class="label">Selecione um cenário para executar</label>
+        <div class="select-scenario-container">
+          <nb-select
+            id="selected-scenario"
+            class="select-scenario"
+            [(selected)]="selectedScenario">
+            <nb-option
+              *ngFor="let scenario of scenarios; trackBy: scenarioId"
+              [value]="scenario"
+            >{{ scenario.name }}</nb-option>
+          </nb-select>
+          <button
+            nbButton
+            *ngIf="selectedScenario && selectedScenario.description"
+            class="top-button"
+            (click)="open(scenarioDescriptionDialog)"
+          >Descrição do cenário</button>
+          <button
+            nbButton
+            *ngIf="selectedScenario && solution"
+            class="top-button"
+            (click)="showSolution(solutionDialog)"
+          >Solução</button>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="col-sm-12 col-lg-6 graphic-container">
-    <app-graphic (onLoad)="setGraphicEngine($event)"></app-graphic>
+  <div class="row components-wrapper" *ngIf="selectedScenario">
+    <div class="col-sm-12 col-lg-6 code-editor-container">
+      <app-code-editor
+        [type]="codeType"
+        [hasError]="hasError"
+        [errorContext]="errorContext"
+        [showToolbar]="true"
+        [config]="contract"
+        (action)="executeCodeEditorAction($event)"
+      ></app-code-editor>
+    </div>
+    <div class="col-sm-12 col-lg-6 graphic-container">
+      <app-graphic
+        (onLoad)="setGraphicEngine($event)"
+      ></app-graphic>
+    </div>
+    <app-execution-bar
+      [hidden]="!isExecuting"
+      (stateChanged)="onExecutionBarStateChanged($event)"
+      #executionBar
+    ></app-execution-bar>
   </div>
-  <app-execution-bar
-    [hidden]="!isExecuting"
-    (stateChanged)="onExecutionBarStateChanged($event)"
-    #executionBar
-  ></app-execution-bar>
 </div>
+
+<ng-template #scenarioDescriptionDialog let-data>
+  <pre>
+    {{ selectedScenario.description }}
+  </pre>
+</ng-template>
+
+<ng-template #solutionDialog let-data let-solutionRef="dialogRef">
+  <nb-card>
+    <nb-card-header>
+      Solução do problema
+      <button nbButton
+        tabindex="-1"
+        nbTooltip="Copiar"
+        (click)="copySolution(solutionTextArea)"
+        size="small">
+        <nb-icon icon="copy-outline" pack="eva"></nb-icon>
+      </button>
+    </nb-card-header>
+    <nb-card-body>
+      <textarea class="solution-area" nbInput readonly #solutionTextArea>{{ solution }}</textarea>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton (click)="solutionRef.close()">Fechar</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

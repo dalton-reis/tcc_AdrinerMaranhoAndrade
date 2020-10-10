@@ -1,7 +1,7 @@
 export enum ErrorType {
 
   COMPILE_TIME = 'COMPILE_TIME',
-  RUNTIME = 'COMPILE_TIME',
+  RUNTIME = 'RUNTIME',
 
 }
 

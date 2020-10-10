@@ -1,0 +1,27 @@
+<nb-card *ngIf="problem">
+  <nb-card-header>
+    <h5>{{ problem.name }}</h5>
+  </nb-card-header>
+  <nb-accordion [multi]="true">
+    <nb-accordion-item [expanded]="true">
+      <nb-accordion-item-header>
+        Descrição
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <div [innerHTML]="problem.description"></div>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+    <nb-accordion-item [expanded]="true">
+      <nb-accordion-item-header>
+        Código
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <app-code-execution
+          [contract]="problem.classContract"
+          [scenarios]="problem.scenarios"
+          [solution]="problem.solution"
+        ></app-code-execution>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+</nb-card>

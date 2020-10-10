@@ -7,10 +7,29 @@ import { GraphicModule } from '../../graphic/graphic.module';
 import { CodeEditorModule } from '../../code-editor/code-editor.module';
 import { ExecutionBarComponent } from './execution-bar/execution-bar.component';
 import { SharedModule } from '../../shared/shared.module';
-import { NbTooltipModule } from '@nebular/theme';
+import {
+  NbTooltipModule,
+  NbSelectModule,
+  NbWindowModule,
+  NbListModule,
+  NbFormFieldModule,
+  NbAccordionModule,
+  NbCardModule,
+  NbDialogModule,
+} from '@nebular/theme';
+import { ProblemsListComponent } from './problems-list/problems-list.component';
+import { ProblemItemComponent } from './problems-list/problem-item/problem-item.component';
+import { FormsModule as ngFormsModule , ReactiveFormsModule as ngReactiveFormsModule } from '@angular/forms';
+import { ProblemExecutionComponent } from './problem-execution/problem-execution.component';
 
 @NgModule({
-  declarations: [CodeExecutionComponent, ExecutionBarComponent],
+  declarations: [
+    CodeExecutionComponent,
+    ExecutionBarComponent,
+    ProblemsListComponent,
+    ProblemItemComponent,
+    ProblemExecutionComponent,
+  ],
   imports: [
     CommonModule,
     CodeExecutionRoutingModule,
@@ -18,6 +37,18 @@ import { NbTooltipModule } from '@nebular/theme';
     GraphicModule,
     NbTooltipModule,
     CodeEditorModule,
+    NbSelectModule,
+    NbWindowModule,
+    NbListModule,
+    NbFormFieldModule,
+    ngFormsModule,
+    ngReactiveFormsModule,
+    NbAccordionModule,
+    NbCardModule,
+    NbDialogModule,
+  ],
+  exports: [
+    CodeExecutionComponent,
   ],
 })
 export class CodeExecutionModule { }

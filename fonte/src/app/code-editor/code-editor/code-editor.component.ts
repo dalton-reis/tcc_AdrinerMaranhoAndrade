@@ -1,4 +1,17 @@
-import { Component, Input, AfterViewInit, ViewChild, ElementRef, Output, EventEmitter, TemplateRef, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  Output,
+  EventEmitter,
+  TemplateRef,
+  OnDestroy,
+  OnChanges,
+  SimpleChanges,
+  OnInit,
+} from '@angular/core';
 import { CodeEditorProvider } from '../engine/code-editor-provider';
 import { CodeEditor } from '../engine/code-editor';
 import { Action } from '../../models/toolbar-action';
@@ -11,15 +24,18 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'app-code-editor',
   templateUrl: './code-editor.component.html',
-  styleUrls: ['./code-editor.component.scss']
+  styleUrls: ['./code-editor.component.scss'],
 })
-export class CodeEditorComponent implements AfterViewInit, OnDestroy, OnChanges {
+export class CodeEditorComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   private unsubscribe$ = new Subject<void>();
 
+  @Input() uuid: string;
   @Input() type: string = CodeEditorProvider.default();
   @Input() hasError: boolean = false;
   @Input() errorContext: ErrorContext = null;
+  @Input() config: any = null;
+  @Input() showToolbar: boolean = false;
   @Output() action = new EventEmitter<Action>();
 
   @ViewChild('codeEditorContainer') codeEditorContainer: ElementRef;
@@ -31,8 +47,11 @@ export class CodeEditorComponent implements AfterViewInit, OnDestroy, OnChanges 
 
   constructor(private windowService: NbWindowService) {}
 
+  ngOnInit(): void {
+  }
+
   ngAfterViewInit(): void {
-    this.codeEditor = CodeEditorProvider.create(this.type, this.codeEditorContainer.nativeElement);
+    this.codeEditor = CodeEditorProvider.create(this.type, this.codeEditorContainer.nativeElement, this.config);
     // Avoid ExpressionChangedAfterItHasBeenCheckedError as the logic is relied on ngAfterViewInit
     setTimeout(() => this.init());
   }
@@ -42,11 +61,24 @@ export class CodeEditorComponent implements AfterViewInit, OnDestroy, OnChanges 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.hasError.currentValue) {
+    if (changes.hasError?.currentValue) {
       this.openErrorsWindow();
     } else {
       this.closeErrorsWindow();
     }
+  }
+
+  updateConfig(config: any) {
+    this.config = config;
+    this.codeEditor?.updateConfig(config);
+  }
+
+  resize() {
+    this.codeEditor?.resize();
+  }
+
+  getValue(): string {
+    return this.codeEditor.getValue();
   }
 
   openErrorsWindow() {

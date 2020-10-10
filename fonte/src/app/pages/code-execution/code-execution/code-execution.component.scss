@@ -1,9 +1,21 @@
+$scenarioSelectionContainer: 100px;
+$componentsHeight: calc(100% - #{$scenarioSelectionContainer});
+
 :host {
   width: 100%;
   height: 100%;
-  & > div {
+  & .scenario-selection-container {
+    height: $scenarioSelectionContainer;
+  }
+  & .code-execution-wrapper {
+    position: relative;
+    height: 500px;
+  }
+  & .components-wrapper {
     width: 100%;
-    height: 100%;
+    height: $componentsHeight;
+    padding: 0;
+    margin: 0;
   }
 }
 
@@ -19,8 +31,21 @@
   padding: 0 10px 0 0;
 }
 
-.code-execution-wrapper {
-  padding: 0;
-  margin: 0;
-  position: relative;
+$scenarioDetailWidth: 120px;
+.select-scenario-container {
+  width: 100%;
+  display: flex;
+  .select-scenario {
+    min-width: 200px;
+  }
+  .top-button {
+    margin-left: 10px;
+  }
+}
+
+.solution-area {
+  max-width: 100% !important;
+  width: 50vw;
+  height: 50vh;
+  resize: none;
 }

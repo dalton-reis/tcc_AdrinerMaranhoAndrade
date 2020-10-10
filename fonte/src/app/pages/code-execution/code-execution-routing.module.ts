@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CodeExecutionComponent } from './code-execution/code-execution.component';
-
+import { ProblemsListComponent } from './problems-list/problems-list.component';
+import { ProblemExecutionComponent } from './problem-execution/problem-execution.component';
 
 const routes: Routes = [{
   path: '',
-  component: CodeExecutionComponent,
+  component: ProblemsListComponent,
+}, {
+  path: 'execute',
+  component: ProblemExecutionComponent,
 }];
 
 @NgModule({

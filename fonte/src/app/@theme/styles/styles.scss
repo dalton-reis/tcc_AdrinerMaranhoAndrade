@@ -5,7 +5,6 @@
 
 // framework component themes (styles tied to theme variables)
 @import '~@nebular/theme/styles/globals';
-@import '~@nebular/auth/styles/all';
 
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
@@ -18,12 +17,15 @@
 @import './layout';
 @import './overrides';
 
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~quill/dist/quill.snow.css';
+
 // install the framework and custom global styles
 @include nb-install() {
 
   // framework global styles
   @include nb-theme-global();
-  @include nb-auth-global();
 
   @include ngx-layout();
   // loading progress bar
@@ -31,3 +33,39 @@
 
   @include nb-overrides();
 };
+
+.optional-value::after {
+  content: '(?)';
+  margin-left: 3px;
+}
+
+.problem-scenarios nb-tabset .tabset {
+  flex-wrap: wrap;
+}
+
+.margin-left-5 {
+  margin-left: 5px;
+}
+
+.import-label-btn-mock {
+  cursor: pointer;
+  font-family: Open Sans, sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1rem;
+  background-color: #edf1f7;
+  border-color: #edf1f7;
+  color: #222b45;
+  padding: 0.6875rem 1.125rem;
+  border-style: solid;
+  border-width: 0.0625rem;
+  text-transform: uppercase;
+  border-radius: 0.25rem;
+  transition-duration: 0.15s;
+  transition-property: background-color,border-color,box-shadow,color;
+  transition-timing-function: ease-in;
+  &:hover {
+    background-color: #f7f9fc;
+    border-color: #f7f9fc;
+  }
+}

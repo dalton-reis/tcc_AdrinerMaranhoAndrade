@@ -1,13 +1,16 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit, TemplateRef } from '@angular/core';
 import { ScriptCompilerProvider } from '../../../script-engine/compilers/script-compiler-provider';
 import { ScriptEngineProvider } from '../../../script-engine/engine/script-engine-provider';
 import { GraphicEngine } from '../../../graphic/engine/graphic-engine';
-import { ScriptEngine } from '../../../script-engine/engine/scritp-engine';
+import { ScriptEngine } from '../../../script-engine/engine/script-engine';
 import { Action } from '../../../models/toolbar-action';
 import { ErrorContext, ErrorType } from '../../../models/error-context';
 import { ExecutionBarEvent } from '../../../models/execution-bar-event/execution-bar-event';
 import { ExecutionBarState } from '../../../models/execution-bar-event/execution-bar-state';
 import { ExecutionBarComponent } from '../execution-bar/execution-bar.component';
+import { ClassContract } from '../../../models/problem/problem-contract';
+import { CodeEditorComponent } from '../../../code-editor/code-editor/code-editor.component';
+import { NbWindowService, NbWindowState, NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'app-code-execution',
@@ -16,10 +19,18 @@ import { ExecutionBarComponent } from '../execution-bar/execution-bar.component'
 })
 export class CodeExecutionComponent implements OnInit {
 
-  constructor() {}
+  constructor(
+    private windowService: NbWindowService,
+    private dialogService: NbDialogService,
+  ) {}
 
-  @Input() codeType: string = 'smalg-javascript';
+  @Input() codeType: string = 'smalg-javascript-execution';
+  @Input() contract: ClassContract;
+  @Input() scenarios: ProblemScenario[] = [];
+  @Input() solution: string;
+
   @ViewChild('executionBar') executionBar: ExecutionBarComponent;
+  @ViewChild(CodeEditorComponent) codeEditor: CodeEditorComponent;
 
   private graphicEngine: GraphicEngine;
   private scriptEngine: ScriptEngine;
@@ -27,6 +38,7 @@ export class CodeExecutionComponent implements OnInit {
   hasError: boolean = false;
   errorContext: ErrorContext = null;
   isExecuting: boolean = false;
+  selectedScenario: ProblemScenario;
 
   ngOnInit(): void {
   }
@@ -48,7 +60,7 @@ export class CodeExecutionComponent implements OnInit {
       const scriptCompiler = ScriptCompilerProvider.get(this.codeType);
       let compiledScript;
       try {
-        compiledScript = scriptCompiler.compile(action.params.code);
+        compiledScript = scriptCompiler.compile(this.contract, this.selectedScenario, action.params.code);
       } catch (err) {
         this.hasError = true;
         this.errorContext = { type: ErrorType.COMPILE_TIME, message: err.message };
@@ -57,15 +69,18 @@ export class CodeExecutionComponent implements OnInit {
 
       this.scriptEngine = ScriptEngineProvider.create(compiledScript, this.graphicEngine);
       this.scriptEngine.prepare()
-        .then(() => {
-          this.isExecuting = true;
-          this.executionBar.changeState(ExecutionBarState.PLAY);
-        })
+        .then(() => this.startExecution())
         .catch(err => {
           this.hasError = true;
           this.errorContext = { type: ErrorType.RUNTIME, message: err.message };
+          this.startExecution();
         });
     }
+  }
+
+  private startExecution() {
+    this.isExecuting = true;
+    this.executionBar.changeState(ExecutionBarState.PLAY);
   }
 
   onExecutionBarStateChanged(event: ExecutionBarEvent) {
@@ -94,6 +109,10 @@ export class CodeExecutionComponent implements OnInit {
     }
   }
 
+  getCode(): Promise<string> {
+    return Promise.resolve(this.codeEditor.getValue());
+  }
+
   private onStepExecution(hasNext: boolean) {
     this.executionBar.changeState(ExecutionBarState.PAUSE);
     if (!hasNext) {
@@ -101,8 +120,30 @@ export class CodeExecutionComponent implements OnInit {
     }
   }
 
+  showSolution(solutionDialog: TemplateRef<any>) {
+    this.dialogService.open(solutionDialog);
+  }
+
+  copySolution(solutionTextArea: HTMLTextAreaElement) {
+    solutionTextArea.select();
+    document.execCommand('copy');
+  }
+
   setGraphicEngine(graphicEngine: GraphicEngine) {
     this.graphicEngine = graphicEngine;
+  }
+
+  open(window: TemplateRef<any>) {
+    this.windowService.open(window, {
+      title: 'Descrição do cenário',
+      hasBackdrop: false,
+      closeOnEsc: false,
+      initialState: NbWindowState.MAXIMIZED,
+    });
+  }
+
+  scenarioId(_, scenario) {
+    return scenario.id;
   }
 
 }

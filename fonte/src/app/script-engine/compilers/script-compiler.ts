@@ -1,7 +1,8 @@
 import { CompiledScript } from './compiled-script';
+import { ClassContract } from '../../models/problem/problem-contract';
 
 export interface ScriptCompiler {
 
-  compile(code: string): CompiledScript;
+  compile(contract: ClassContract, problemScenario: ProblemScenario, code: string): CompiledScript;
 
 }

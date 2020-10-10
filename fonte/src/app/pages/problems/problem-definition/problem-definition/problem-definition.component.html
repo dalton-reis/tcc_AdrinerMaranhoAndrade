@@ -1,0 +1,54 @@
+<nb-card class="col-md-12 col-lg-12 col-xxxl-12 problem-definition-container">
+  <nb-card-body [nbSpinner]="loading">
+    <app-login *ngIf="!loading && !loggedIn"></app-login>
+    <nb-stepper #stepper orientation="vertical" [disableStepNavigation]="true" *ngIf="!loading && loggedIn">
+      <nb-step label="Descrição">
+        <form [formGroup]="descriptionForm" (ngSubmit)="saveForm(descriptionForm)">
+          <div class="form-group">
+            <label for="problem-name" class="label">Defina um título para o seu problema</label>
+            <input id="problem-name" formControlName="name" required fullWidth nbInput placeholder="Título"/>
+            <span class="caption status-danger" *ngIf="name.errors?.required && (name.dirty || name.touched)">
+              Informe um título.
+            </span>
+          </div>
+          <div class="form-group">
+            <label class="label">Defina a descrição</label>
+            <quill-editor formControlName="description" required></quill-editor>
+            <span class="caption status-danger" *ngIf="description.errors?.required && (description.dirty || description.touched)">
+              Informe uma descrição.
+            </span>
+          </div>
+          <button nbButton disabled nbStepperPrevious>Anterior</button>
+          <button type="submit" class="margin-left-5" nbButton>Próximo</button>
+        </form>
+      </nb-step>
+      <nb-step label="Contrato">
+        <form (ngSubmit)="saveProblemContract(contractDefinition)">
+          <div class="form-group">
+            <app-contract-definition
+              [fields]="classContract.fields"
+              [methods]="classContract.methods"
+              #contractDefinition
+            ></app-contract-definition>
+          </div>
+          <button nbButton nbStepperPrevious>Anterior</button>
+          <button type="submit" class="margin-left-5" nbButton>Próximo</button>
+        </form>
+      </nb-step>
+      <nb-step label="Cenários">
+        <app-problem-scenarios [contract]="classContract" #problemScenarios></app-problem-scenarios>
+        <button nbButton nbStepperPrevious>Anterior</button>
+        <button nbButton class="margin-left-5" (click)="saveProblemScenarios(problemScenarios)">Próximo</button>
+      </nb-step>
+      <nb-step label="Solução">
+        <app-code-execution
+          [contract]="classContract"
+          [scenarios]="scenarios"
+          #problemSolution
+        ></app-code-execution>
+        <button nbButton nbStepperPrevious>Anterior</button>
+        <button nbButton class="margin-left-5" (click)="saveProblemSolution(problemSolution)">Criar problema</button>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>

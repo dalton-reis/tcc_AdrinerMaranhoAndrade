@@ -2,6 +2,7 @@ import { MonacoEditorConfig } from './monaco-editor-config';
 import { MonacoLoader } from './monaco-loader';
 import { CodeEditor } from '../code-editor';
 import { MonacoEditorToolbar } from './monaco-editor-toolbar';
+import { MonacoEditorContext } from './monaco-editor-context';
 
 declare const monaco: any;
 
@@ -9,17 +10,48 @@ export class MonacoEditor implements CodeEditor {
 
   parent: HTMLDivElement;
   editor: any;
+  contextSupplier: (config?: any) => MonacoEditorContext[];
 
   constructor(parent: HTMLDivElement, config: MonacoEditorConfig) {
-    MonacoLoader.loadIfNeeded(() => this.create(parent, config));
+    MonacoLoader.loadIfNeeded(
+      () =>
+        monaco.languages.typescript.javascriptDefaults.setCompilerOptions({ noLib: true, allowNonTsExtensions: true }),
+      () => this.create(parent, config),
+    );
   }
 
   private create(parent: HTMLDivElement, config: MonacoEditorConfig) {
     parent.style.height = '100%';
     parent.style.width = '100%';
+
+    this.contextSupplier = config.contextSupplier;
+
+    this.updateConfig(config.config);
+
     this.editor = monaco.editor.create(parent, {
-      value:
-`const object_1 = context.newObject();
+      value: (config && config.code) || '',
+      language: config.language,
+      automaticLayout: true,
+    });
+  }
+
+  resize(): void {
+    this.editor?.layout();
+  }
+
+  updateConfig(config) {
+    monaco.languages.typescript.javascriptDefaults.setExtraLibs({});
+    const context = (this.contextSupplier && this.contextSupplier(config)) || null;
+    context?.forEach(declaration =>
+    monaco.languages.typescript.javascriptDefaults.addExtraLib(declaration.code, declaration.name));
+  }
+
+  getValue(): string {
+    return this.editor?.getValue();
+  }
+
+/**
+ * const object_1 = context.newObject();
 const container_1 = context.newContainer(3);
 const int_1 = context.newPrimitive(1);
 const string_1 = context.newPrimitive('teste');
@@ -34,12 +66,8 @@ object_1.set('container', container_1);
 container_1.set(1, object_1);
 
 object_1.set('container', null);
-container_1.set(1, null);`,
-      language: config.language,
-      automaticLayout: true,
-
-    });
-  }
+container_1.set(1, null);
+ */
 
 /**const object_1 = context.newObject();
 const container_1 = context.newContainer(6);
@@ -95,6 +123,20 @@ container_1.set(2, s);
 container_1.get(1);
 container_1.get(2);
  */
+
+ /**
+  *
+const object = context.newObject();
+
+listaEncadeada.adicionar(object);
+assertion.assertEquals(1, context.getContainers().length, 'Deveria haver somente um objeto no cenário');
+
+const cabeca = listaEncadeada.cabeca();
+assertion.assertEquals(cabeca, object, 'A cabeca da lista deveria ser o objeto adicionado');
+
+listaEncadeada.remover(object);
+assertion.assertEquals(0, listaEncadeada.tamanho(), 'O tamanho da lista deveria ser 0.');
+  */
 
   getToolbar() {
     return MonacoEditorToolbar.create(() => this.editor);

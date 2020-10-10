@@ -1,4 +1,4 @@
-<div class="toolbar-container row">
+<div *ngIf="showToolbar" class="toolbar-container row">
   <div class="col-lg-12">
   <app-toolbar [collapse]="true" [items]="codeEditorToolbar" (action)="doToolbarAction($event)"></app-toolbar>
   <nb-icon *ngIf="hasError" class="error" icon="exclamation-circle" pack="fa" (click)="openErrorsWindow()"></nb-icon>
@@ -11,6 +11,7 @@
 </div>
 
 <ng-template #errorWindow let-data>
-  <p>O seu código apresenta erros:</p>
+  <p *ngIf="errorContext.type === 'RUNTIME'">O seu código apresenta erros de execução:</p>
+  <p *ngIf="errorContext.type === 'COMPILE_TIME'">O seu código apresenta erros estruturais:</p>
   <p>{{ errorContext.message }}</p>
 </ng-template>
