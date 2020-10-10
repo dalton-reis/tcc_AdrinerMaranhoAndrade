@@ -21,7 +21,7 @@
           >Descrição do cenário</button>
           <button
             nbButton
-            *ngIf="solution"
+            *ngIf="selectedScenario && solution"
             class="top-button"
             (click)="showSolution(solutionDialog)"
           >Solução</button>
@@ -63,9 +63,16 @@
   <nb-card>
     <nb-card-header>
       Solução do problema
+      <button nbButton
+        tabindex="-1"
+        nbTooltip="Copiar"
+        (click)="copySolution(solutionTextArea)"
+        size="small">
+        <nb-icon icon="copy-outline" pack="eva"></nb-icon>
+      </button>
     </nb-card-header>
     <nb-card-body>
-      <textarea class="solution-area" nbInput readonly>{{ solution }}</textarea>
+      <textarea class="solution-area" nbInput readonly #solutionTextArea>{{ solution }}</textarea>
     </nb-card-body>
     <nb-card-footer>
       <button nbButton (click)="solutionRef.close()">Fechar</button>

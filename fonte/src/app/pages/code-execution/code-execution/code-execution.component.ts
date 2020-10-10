@@ -124,6 +124,11 @@ export class CodeExecutionComponent implements OnInit {
     this.dialogService.open(solutionDialog);
   }
 
+  copySolution(solutionTextArea: HTMLTextAreaElement) {
+    solutionTextArea.select();
+    document.execCommand('copy');
+  }
+
   setGraphicEngine(graphicEngine: GraphicEngine) {
     this.graphicEngine = graphicEngine;
   }
