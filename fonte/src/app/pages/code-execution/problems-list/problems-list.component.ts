@@ -3,6 +3,7 @@ import { ProblemStorageService } from '../../../storage/problem-storage.service'
 import { ProblemInfo } from '../../../models/problem/problem-info';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from '../../../user/user.service';
+import { ExecuteProblemService } from '../execute-problem.service';
 
 @Component({
   selector: 'app-problems-list',
@@ -26,6 +27,7 @@ export class ProblemsListComponent implements OnInit {
     private problemsStorageService: ProblemStorageService,
     private formBuilder: FormBuilder,
     private userService: UserService,
+    private problemExecutionService: ExecuteProblemService,
   ) { }
 
   ngOnInit(): void {
@@ -74,8 +76,9 @@ export class ProblemsListComponent implements OnInit {
       .finally(() => this.loadingSpecificUser = false);
   }
 
-  fileSelected(file: File) {
-    this.problemsStorageService.load(file);
+  async fileSelected(file: File) {
+    const problem = await this.problemsStorageService.load(file);
+    this.problemExecutionService.execute(problem);
   }
 
   get username() {

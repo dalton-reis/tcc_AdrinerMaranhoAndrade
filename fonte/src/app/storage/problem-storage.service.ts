@@ -53,6 +53,8 @@ export class ProblemStorageService {
         resolve(JSON.parse(contents as string));
       };
       reader.onerror = err => reject(err);
+      // github return file as utf8 encode but actually is ISO-8859-1.
+      // there is no way to set by api the enconding of the repository.
       reader.readAsText(problemFile, 'ISO-8859-1');
     });
   }

@@ -14,10 +14,13 @@ import {
   NbListModule,
   NbFormFieldModule,
   NbAccordionModule,
+  NbCardModule,
+  NbDialogModule,
 } from '@nebular/theme';
 import { ProblemsListComponent } from './problems-list/problems-list.component';
 import { ProblemItemComponent } from './problems-list/problem-item/problem-item.component';
 import { FormsModule as ngFormsModule , ReactiveFormsModule as ngReactiveFormsModule } from '@angular/forms';
+import { ProblemExecutionComponent } from './problem-execution/problem-execution.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import { FormsModule as ngFormsModule , ReactiveFormsModule as ngReactiveFormsMo
     ExecutionBarComponent,
     ProblemsListComponent,
     ProblemItemComponent,
+    ProblemExecutionComponent,
   ],
   imports: [
     CommonModule,
@@ -40,6 +44,8 @@ import { FormsModule as ngFormsModule , ReactiveFormsModule as ngReactiveFormsMo
     ngFormsModule,
     ngReactiveFormsModule,
     NbAccordionModule,
+    NbCardModule,
+    NbDialogModule,
   ],
   exports: [
     CodeExecutionComponent,

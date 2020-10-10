@@ -10,7 +10,7 @@ import { ExecutionBarState } from '../../../models/execution-bar-event/execution
 import { ExecutionBarComponent } from '../execution-bar/execution-bar.component';
 import { ClassContract } from '../../../models/problem/problem-contract';
 import { CodeEditorComponent } from '../../../code-editor/code-editor/code-editor.component';
-import { NbWindowService, NbWindowState } from '@nebular/theme';
+import { NbWindowService, NbWindowState, NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'app-code-execution',
@@ -19,11 +19,15 @@ import { NbWindowService, NbWindowState } from '@nebular/theme';
 })
 export class CodeExecutionComponent implements OnInit {
 
-  constructor(private windowService: NbWindowService) {}
+  constructor(
+    private windowService: NbWindowService,
+    private dialogService: NbDialogService,
+  ) {}
 
   @Input() codeType: string = 'smalg-javascript-execution';
   @Input() contract: ClassContract;
   @Input() scenarios: ProblemScenario[] = [];
+  @Input() solution: string;
 
   @ViewChild('executionBar') executionBar: ExecutionBarComponent;
   @ViewChild(CodeEditorComponent) codeEditor: CodeEditorComponent;
@@ -116,13 +120,17 @@ export class CodeExecutionComponent implements OnInit {
     }
   }
 
+  showSolution(solutionDialog: TemplateRef<any>) {
+    this.dialogService.open(solutionDialog);
+  }
+
   setGraphicEngine(graphicEngine: GraphicEngine) {
     this.graphicEngine = graphicEngine;
   }
 
   open(window: TemplateRef<any>) {
     this.windowService.open(window, {
-      title: 'Detalhes do cenário',
+      title: 'Descrição do cenário',
       hasBackdrop: false,
       closeOnEsc: false,
       initialState: NbWindowState.MAXIMIZED,

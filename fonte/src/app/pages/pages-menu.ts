@@ -2,17 +2,21 @@ import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
-    title: 'PROBLEMAS',
-    group: true,
-  },
-  {
     title: 'Novo problema',
     icon: 'plus-circle-outline',
     link: '/pages/problems/problem-definition',
   },
   {
-    title: 'Executar',
+    title: 'Executar problema',
     icon: 'code',
-    link: '/pages/code-execution',
+    children: [{
+      icon: 'list-outline',
+      title: 'Selecionar',
+      link: '/pages/code-execution',
+    }, {
+      icon: 'play-circle-outline',
+      title: 'Executar',
+      link: '/pages/code-execution/execute',
+    }],
   },
 ];

@@ -16,9 +16,15 @@
           <button
             nbButton
             *ngIf="selectedScenario && selectedScenario.description"
-            class="scenario-detail"
+            class="top-button"
             (click)="open(scenarioDescriptionDialog)"
-          >Descrição</button>
+          >Descrição do cenário</button>
+          <button
+            nbButton
+            *ngIf="solution"
+            class="top-button"
+            (click)="showSolution(solutionDialog)"
+          >Solução</button>
         </div>
       </div>
     </div>
@@ -47,8 +53,22 @@
   </div>
 </div>
 
-<ng-template #scenarioDescriptionDialog let-data let-ref="dialogRef">
+<ng-template #scenarioDescriptionDialog let-data>
   <pre>
     {{ selectedScenario.description }}
   </pre>
+</ng-template>
+
+<ng-template #solutionDialog let-data let-solutionRef="dialogRef">
+  <nb-card>
+    <nb-card-header>
+      Solução do problema
+    </nb-card-header>
+    <nb-card-body>
+      <textarea class="solution-area" nbInput readonly>{{ solution }}</textarea>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton (click)="solutionRef.close()">Fechar</button>
+    </nb-card-footer>
+  </nb-card>
 </ng-template>

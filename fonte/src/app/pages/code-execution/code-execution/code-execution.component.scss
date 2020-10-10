@@ -38,8 +38,14 @@ $scenarioDetailWidth: 120px;
   .select-scenario {
     min-width: 200px;
   }
-  .scenario-detail {
+  .top-button {
     margin-left: 10px;
-    width: $scenarioDetailWidth;
   }
+}
+
+.solution-area {
+  max-width: 100% !important;
+  width: 50vw;
+  height: 50vh;
+  resize: none;
 }
