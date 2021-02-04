@@ -11,6 +11,7 @@ export class DataStructureAction {
   static SET_CONTAINER_SLOT = DataStructureAction.action('SET_CONTAINER_SLOT');
   static GET_CONTAINER_SLOT = DataStructureAction.action('GET_CONTAINER_SLOT');
   static CREATE_PRIMITIVE = DataStructureAction.action('CREATE_PRIMITIVE');
+  static DELETE_ELEMENT = DataStructureAction.action('DELETE_ELEMENT');
 
   private static action(name: string): ExecutionActionType {
     return Object.freeze({ scope: ExecutionActionScope.GRAPHIC, name });

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, TemplateRef } from '@angular/core';
 import { ScriptCompilerProvider } from '../../../script-engine/compilers/script-compiler-provider';
 import { ScriptEngineProvider } from '../../../script-engine/engine/script-engine-provider';
 import { GraphicEngine } from '../../../graphic/engine/graphic-engine';
@@ -11,6 +11,7 @@ import { ExecutionBarComponent } from '../execution-bar/execution-bar.component'
 import { ClassContract } from '../../../models/problem/problem-contract';
 import { CodeEditorComponent } from '../../../code-editor/code-editor/code-editor.component';
 import { NbWindowService, NbWindowState, NbDialogService } from '@nebular/theme';
+import { PerspectiveType } from './perspective-type';
 
 @Component({
   selector: 'app-code-execution',
@@ -38,7 +39,8 @@ export class CodeExecutionComponent implements OnInit {
   hasError: boolean = false;
   errorContext: ErrorContext = null;
   isExecuting: boolean = false;
-  selectedScenario: ProblemScenario;
+  selectedScenarioId: string;
+  perspective: PerspectiveType = PerspectiveType.BOTH;
 
   ngOnInit(): void {
   }
@@ -83,6 +85,15 @@ export class CodeExecutionComponent implements OnInit {
     this.executionBar.changeState(ExecutionBarState.PLAY);
   }
 
+  get selectedScenario(): ProblemScenario {
+    return this.scenarios.find(({ id }) => id === this.selectedScenarioId);
+  }
+
+  updatePerspective(perspective: PerspectiveType) {
+    this.perspective = perspective;
+    this.codeEditor.resize();
+  }
+
   onExecutionBarStateChanged(event: ExecutionBarEvent) {
     if (!this.scriptEngine) {
       return;
@@ -110,7 +121,7 @@ export class CodeExecutionComponent implements OnInit {
   }
 
   getCode(): Promise<string> {
-    return Promise.resolve(this.codeEditor.getValue());
+    return this.codeEditor.getValue();
   }
 
   private onStepExecution(hasNext: boolean) {

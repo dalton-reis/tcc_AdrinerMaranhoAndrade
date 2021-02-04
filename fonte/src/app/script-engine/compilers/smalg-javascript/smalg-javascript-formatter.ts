@@ -7,14 +7,14 @@ export class SmalgJavascriptFormatter {
 
   static format(contract: ClassContract, problemScenario: ProblemScenario, code: string): string {
     return `
-    const clazzProvider = () => (${code});
+    const clazzProvider = (context) => (${code});
     const scenarioFunction = Function(\`
-    (function code(context, ${uncapitalizeFirstLetter(contract.name)}) {
+    (function code(context, ${uncapitalizeFirstLetter(contract.name)}, assertion) {
       ${problemScenario.code}
-    })(this.executionContext, this.clazz);\`)
+    })(this.executionContext, this.clazz, this.assertion);\`)
     .bind({
       executionContext: this.executionContext,
-      clazz: new (clazzProvider())(),
+      clazz: new (clazzProvider(this.executionContext))(),
       assertion: this.assertion,
     });
     scenarioFunction();

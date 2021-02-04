@@ -15,7 +15,7 @@ export const adjustBoundingBox =
 const INNER_CONTAINER_ELEMENT_PADDING = 10;
 export const containerBoundingBox = (containerElement: any) => adjustBoundingBox(
   containerElement.boundingBox(),
-  INNER_CONTAINER_ELEMENT_PADDING * 2,
+  (INNER_CONTAINER_ELEMENT_PADDING * 2) - 40,
   INNER_CONTAINER_ELEMENT_PADDING * (containerElement.children().length + 1),
 );
 
@@ -29,6 +29,6 @@ export const objectBoundingBox = (objectElement: any) => adjustBoundingBox(
 const INNER_PRIMITIVES_CONTAINER_ELEMENT_PADDING = 10;
 export const primitivesContainerBoundingBox = (primitivesContainerElement: any) => adjustBoundingBox(
   primitivesContainerElement.boundingBox(),
-  INNER_PRIMITIVES_CONTAINER_ELEMENT_PADDING * 2,
-  INNER_PRIMITIVES_CONTAINER_ELEMENT_PADDING * 2,
+  (INNER_PRIMITIVES_CONTAINER_ELEMENT_PADDING * 2) + 10,
+  (INNER_PRIMITIVES_CONTAINER_ELEMENT_PADDING * 2) - 10,
 );

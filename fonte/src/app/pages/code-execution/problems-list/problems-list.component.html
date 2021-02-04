@@ -6,32 +6,37 @@
     <nb-accordion-item-body [nbSpinner]="loadingCurrentUser">
       <nb-list>
         <nb-list-item *ngFor="let problem of currentUserProblems">
-          <app-problem-item [problemInfo]="problem"></app-problem-item>
+          <app-problem-item [problemInfo]="problem" (onSelect)=executeProblem($event)></app-problem-item>
         </nb-list-item>
       </nb-list>
     </nb-accordion-item-body>
   </nb-accordion-item>
-  <nb-accordion-item *ngIf="loggedIn">
+  <nb-accordion-item>
     <nb-accordion-item-header>
       Listar de um usuário do github:
     </nb-accordion-item-header>
     <nb-accordion-item-body [nbSpinner]="loadingSpecificUser">
-      <form [formGroup]="searchSpecificUserForm" (ngSubmit)="searchSpecificUserProblems()">
-        <nb-form-field>
-          <input formControlName="username" id="specificUserSearch" type="text" fullWidth nbInput placeholder="username"/>
-          <button type="submit" nbSuffix nbButton ghost>
-            <nb-icon icon="search-outline" pack="eva"></nb-icon>
-          </button>
-        </nb-form-field>
-      </form>
-      <div class="no-item-found" *ngIf="!loadingSpecificUser && specificUserProblems?.length === 0 && lastUsernameSearched">
-        <span><i>Nenhum problema encontrado.</i></span>
+      <div *ngIf="!loggedIn">
+        <app-login message="Para listar problemas de um usuário, autentique no Github:"></app-login>
       </div>
-      <nb-list *ngIf="specificUserProblems?.length > 0">
-        <nb-list-item *ngFor="let problem of specificUserProblems">
-          <app-problem-item [problemInfo]="problem"></app-problem-item>
-        </nb-list-item>
-      </nb-list>
+      <div *ngIf="loggedIn">
+        <form [formGroup]="searchSpecificUserForm" (ngSubmit)="searchSpecificUserProblems()">
+          <nb-form-field>
+            <input formControlName="username" id="specificUserSearch" type="text" fullWidth nbInput placeholder="username"/>
+            <button type="submit" nbSuffix nbButton ghost>
+              <nb-icon icon="search-outline" pack="eva"></nb-icon>
+            </button>
+          </nb-form-field>
+        </form>
+        <div class="no-item-found" *ngIf="!loadingSpecificUser && specificUserProblems?.length === 0 && lastUsernameSearched">
+          <span><i>Nenhum problema encontrado.</i></span>
+        </div>
+        <nb-list *ngIf="specificUserProblems?.length > 0">
+          <nb-list-item *ngFor="let problem of specificUserProblems">
+            <app-problem-item [problemInfo]="problem" (onSelect)=executeProblem($event)></app-problem-item>
+          </nb-list-item>
+        </nb-list>
+      </div>
     </nb-accordion-item-body>
   </nb-accordion-item>
   <nb-accordion-item [expanded]="!loggedIn">
@@ -39,10 +44,7 @@
       Executar a partir de um arquivo:
     </nb-accordion-item-header>
     <nb-accordion-item-body>
-      <div class="import-from-file-container">
-        <label for="importFromFile" class="import-label-btn-mock">Selecione um arquivo</label>
-        <input id="importFromFile" type="file" accept=".smgplt" (change)="fileSelected($event.target.files[0])"/>
-      </div>
+      <app-select-file (onSelect)="fileSelected($event)"></app-select-file>
     </nb-accordion-item-body>
   </nb-accordion-item>
 </nb-accordion>

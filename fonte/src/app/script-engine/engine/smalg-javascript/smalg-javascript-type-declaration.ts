@@ -1,8 +1,40 @@
 import { ClassContract, MethodContract, FieldContract } from '../../../models/problem/problem-contract';
 
 const SmalgJavascriptExecutionDeclaration = `
+interface SmalgObject {
+
+  get(name: string);
+
+  set(name: string, value: any);
+
+  equals(value: any);
+
+}
+
+interface SmalgContainer {
+
+  get(index: number);
+
+  set(index: number, value: any);
+
+  equals(value: any);
+
+}
+
+interface SmalgPrimitive {
+
+  getValue();
+
+  equals(value: any);
+
+}
+
 interface Context {
-  newObject(): void;
+
+  newObject(): SmalgObject;
+
+  newContainer(): SmalgContainer;
+
 }
 
 declare const context: Context;
@@ -18,7 +50,7 @@ export { uncapitalizeFirstLetter };
 export class ExecutionDeclaration {
 
   static for(classContract: ClassContract) {
-    return `class ${classContract.name} {\n\n\tconstructor() {}\n\n${this.generateFields(classContract.fields)}\n\n${this.generateMethods(classContract.methods)}\n\n}`;
+    return `class ${classContract.name} {\n\n${this.generateFields(classContract.fields)}\n\n\tconstructor() {}\n\n${this.generateMethods(classContract.methods)}\n\n}`;
   }
 
   private static generateFields(fields: FieldContract[]) {
@@ -53,15 +85,27 @@ export class AssertionDeclaration {
 
     }
 
+    interface SmalgPrimitiveReadOnly {
+
+      getValue();
+
+    }
+
     interface Context {
 
       newObject(): SmalgObjectReadOnly;
 
       newContainer(): SmalgContainerReadOnly;
 
+      newPrimitive(): SmalgPrimitiveReadOnly;
+
       getObjects(): SmalgObjectReadOnly[];
 
       getContainers(): SmalgContainerReadOnly[];
+
+      getPrimitives(): SmalgPrimitiveReadOnly[];
+
+      clear(value: any);
 
     }
 

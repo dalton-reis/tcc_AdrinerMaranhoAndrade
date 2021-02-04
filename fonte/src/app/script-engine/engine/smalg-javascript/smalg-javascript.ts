@@ -3,6 +3,7 @@ import { GraphicEngine } from '../../../graphic/engine/graphic-engine';
 import { CompiledScript } from '../../compilers/compiled-script';
 import { SmalgJavascriptContext } from './smalg-javascript-context';
 import { v4 as uuidV4 } from 'uuid';
+import { SpeedHandler } from '../../../graphic/engine/data-structure/speed-handler';
 
 interface ResumeContext {
   id: string;
@@ -16,7 +17,6 @@ export class SmalgJavascriptScriptEngine implements ScriptEngine {
   private currentStep = 0;
   private actions: ExecutionAction[] = [];
   private resumeContext: ResumeContext = null;
-  private resumeSpeed = 1000;
   private whenPrepared: Promise<void>;
 
   constructor(
@@ -58,7 +58,7 @@ export class SmalgJavascriptScriptEngine implements ScriptEngine {
     try {
       const executed = await this.forward();
       if (executed) {
-        resumeContext.timeoutId = setTimeout(() => this.executeResumeAction(resumeContext), this.resumeSpeed);
+        resumeContext.timeoutId = setTimeout(() => this.executeResumeAction(resumeContext), SpeedHandler.speed);
       } else {
         resumeContext.complete(true);
       }

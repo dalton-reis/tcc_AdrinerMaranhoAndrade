@@ -1,9 +1,9 @@
 <nb-card class="col-md-12 col-lg-12 col-xxxl-12 problem-definition-container">
   <nb-card-body [nbSpinner]="loading">
-    <app-login *ngIf="!loading && !loggedIn"></app-login>
-    <nb-stepper #stepper orientation="vertical" [disableStepNavigation]="true" *ngIf="!loading && loggedIn">
+    <nb-stepper #stepper orientation="vertical" [disableStepNavigation]="true" *ngIf="!loading">
       <nb-step label="Descrição">
-        <form [formGroup]="descriptionForm" (ngSubmit)="saveForm(descriptionForm)">
+        <app-help section="problemDescription" orientation="right"></app-help>
+        <form [formGroup]="descriptionForm" class="top-spacing" (ngSubmit)="saveForm(descriptionForm)">
           <div class="form-group">
             <label for="problem-name" class="label">Defina um título para o seu problema</label>
             <input id="problem-name" formControlName="name" required fullWidth nbInput placeholder="Título"/>
@@ -13,7 +13,7 @@
           </div>
           <div class="form-group">
             <label class="label">Defina a descrição</label>
-            <quill-editor formControlName="description" required></quill-editor>
+            <app-text-editor controlName="description" [required]="true"></app-text-editor>
             <span class="caption status-danger" *ngIf="description.errors?.required && (description.dirty || description.touched)">
               Informe uma descrição.
             </span>
@@ -23,32 +23,57 @@
         </form>
       </nb-step>
       <nb-step label="Contrato">
-        <form (ngSubmit)="saveProblemContract(contractDefinition)">
-          <div class="form-group">
-            <app-contract-definition
-              [fields]="classContract.fields"
-              [methods]="classContract.methods"
-              #contractDefinition
-            ></app-contract-definition>
-          </div>
-          <button nbButton nbStepperPrevious>Anterior</button>
-          <button type="submit" class="margin-left-5" nbButton>Próximo</button>
-        </form>
+        <div class="help-relative-wrapper">
+          <app-help section="problemContract" orientation="right" position="absolute"></app-help>
+          <form class="top-spacing" (ngSubmit)="saveProblemContract(contractDefinition)">
+            <div class="form-group">
+              <app-contract-definition
+                [contractName]="classContract.name"
+                [fields]="classContract.fields"
+                [methods]="classContract.methods"
+                #contractDefinition
+              ></app-contract-definition>
+            </div>
+            <button nbButton nbStepperPrevious>Anterior</button>
+            <button type="submit" class="margin-left-5" nbButton>Próximo</button>
+          </form>
+        </div>
       </nb-step>
       <nb-step label="Cenários">
-        <app-problem-scenarios [contract]="classContract" #problemScenarios></app-problem-scenarios>
+        <app-help section="problemScenarios" orientation="right"></app-help>
+        <app-problem-scenarios
+          [contract]="classContract"
+          [preloadedScenarios]="scenarios"
+          #problemScenarios>
+        </app-problem-scenarios>
         <button nbButton nbStepperPrevious>Anterior</button>
         <button nbButton class="margin-left-5" (click)="saveProblemScenarios(problemScenarios)">Próximo</button>
       </nb-step>
       <nb-step label="Solução">
-        <app-code-execution
-          [contract]="classContract"
-          [scenarios]="scenarios"
-          #problemSolution
-        ></app-code-execution>
+        <div class="help-relative-wrapper">
+          <app-help section="problemSolution" orientation="right" position="absolute"></app-help>
+          <app-code-execution
+            [contract]="classContract"
+            [scenarios]="scenarios"
+            [solution]="solution"
+            #problemSolution
+          ></app-code-execution>
+        </div>
         <button nbButton nbStepperPrevious>Anterior</button>
-        <button nbButton class="margin-left-5" (click)="saveProblemSolution(problemSolution)">Criar problema</button>
+        <button nbButton class="margin-left-5" (click)="confirmSaveProblem(createProblemDialog)">Criar problema</button>
       </nb-step>
     </nb-stepper>
   </nb-card-body>
 </nb-card>
+
+<ng-template #createProblemDialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Confirmar</nb-card-header>
+    <nb-card-body>Você realmente deseja criar o problema? Não esqueça de validar a execução de todos os cenários criados e a solução proposta.</nb-card-body>
+    <nb-card-footer>
+      <button nbButton (click)="ref.close()">Cancelar</button>
+      <button class="save-problem-button" nbButton status="primary" (click)="proceedSave('export'); ref.close()">Exportar em um arquivo</button>
+      <button *ngIf="loggedIn" class="save-problem-button" nbButton status="primary" (click)="proceedSave('persist'); ref.close()">Salvar no github</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

@@ -3,20 +3,34 @@ import { MonacoLoader } from './monaco-loader';
 import { CodeEditor } from '../code-editor';
 import { MonacoEditorToolbar } from './monaco-editor-toolbar';
 import { MonacoEditorContext } from './monaco-editor-context';
+import { v4 as uuidV4 } from 'uuid';
 
 declare const monaco: any;
 
 export class MonacoEditor implements CodeEditor {
 
+  id = uuidV4();
   parent: HTMLDivElement;
-  editor: any;
+  editorResolver;
+  editorRejector;
+  editorProvider: Promise<any> = new Promise((resolve, reject) => {
+    this.editorResolver = resolve;
+    this.editorRejector = reject;
+  });
   contextSupplier: (config?: any) => MonacoEditorContext[];
 
   constructor(parent: HTMLDivElement, config: MonacoEditorConfig) {
     MonacoLoader.loadIfNeeded(
       () =>
         monaco.languages.typescript.javascriptDefaults.setCompilerOptions({ noLib: true, allowNonTsExtensions: true }),
-      () => this.create(parent, config),
+      () => {
+        try {
+          this.create(parent, config);
+        } catch (err) {
+          console.error(err);
+          this.editorRejector(err);
+        }
+      },
     );
   }
 
@@ -28,15 +42,16 @@ export class MonacoEditor implements CodeEditor {
 
     this.updateConfig(config.config);
 
-    this.editor = monaco.editor.create(parent, {
+    const editorCreated = monaco.editor.create(parent, {
       value: (config && config.code) || '',
       language: config.language,
       automaticLayout: true,
     });
+    this.editorResolver(editorCreated);
   }
 
   resize(): void {
-    this.editor?.layout();
+    this.editorProvider.then(editor => editor.layout());
   }
 
   updateConfig(config) {
@@ -46,100 +61,16 @@ export class MonacoEditor implements CodeEditor {
     monaco.languages.typescript.javascriptDefaults.addExtraLib(declaration.code, declaration.name));
   }
 
-  getValue(): string {
-    return this.editor?.getValue();
+  getValue(): Promise<string> {
+    return this.editorProvider?.then(editor => editor.getValue());
   }
 
-/**
- * const object_1 = context.newObject();
-const container_1 = context.newContainer(3);
-const int_1 = context.newPrimitive(1);
-const string_1 = context.newPrimitive('teste');
-
-object_1.set('id', int_1);
-object_1.set('id', null);
-
-container_1.set(0, string_1);
-container_1.set(0, null);
-
-object_1.set('container', container_1);
-container_1.set(1, object_1);
-
-object_1.set('container', null);
-container_1.set(1, null);
- */
-
-/**const object_1 = context.newObject();
-const container_1 = context.newContainer(6);
-const container_2 = context.newContainer(2);
-const int_1 = context.newPrimitive(1);
-const double_1 = context.newPrimitive(2.5);
-const string_1 = context.newPrimitive('testando');
-const string_2 = context.newPrimitive('teste 2');
-const string_3 = context.newPrimitive('teste 3');
-const boolean_1 = context.newPrimitive(false);
-const boolean_2 = context.newPrimitive(true);
-
-object_1.set('id', int_1);
-object_1.set('valor', double_1);
-object_1.set('descrição', string_2);
-object_1.set('descrição', string_3);
-object_1.set('container1', container_2);
-object_1.set('container1', container_1);
-object_1.set('container2', container_2);
-object_1.get('id');
-object_1.get('valor');
-container_1.set(0, boolean_1);
-container_1.set(0, boolean_2);
-container_1.set(1, string_1);
-container_1.set(2, string_3);
-container_1.set(3, container_2);
-container_1.set(3, object_1);
-container_1.get(2);
-container_1.get(3);
- */
-
-/**
-const object_1 = context.newObject();
-const container_1 = context.newContainer(6);
-
-object_1.set('id', container_1);
-object_1.get('id');
-
-container_1.set(0, object_1);
-container_1.get(0);
-
-const b = context.newPrimitive(true);
-const s = context.newPrimitive('true');
-const n = context.newPrimitive(2.5);
-
-object_1.set('number', n);
-object_1.set('string', s);
-object_1.get('number');
-object_1.get('string');
-
-container_1.set(1, b);
-container_1.set(2, s);
-container_1.get(1);
-container_1.get(2);
- */
-
- /**
-  *
-const object = context.newObject();
-
-listaEncadeada.adicionar(object);
-assertion.assertEquals(1, context.getContainers().length, 'Deveria haver somente um objeto no cenário');
-
-const cabeca = listaEncadeada.cabeca();
-assertion.assertEquals(cabeca, object, 'A cabeca da lista deveria ser o objeto adicionado');
-
-listaEncadeada.remover(object);
-assertion.assertEquals(0, listaEncadeada.tamanho(), 'O tamanho da lista deveria ser 0.');
-  */
+  setValue(value: string) {
+    this.editorProvider.then(editor => editor.setValue(value || ''));
+  }
 
   getToolbar() {
-    return MonacoEditorToolbar.create(() => this.editor);
+    return MonacoEditorToolbar.create(() => this.editorProvider);
   }
 
 }

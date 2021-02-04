@@ -6,6 +6,9 @@
       <span class="caption status-danger" *ngIf="name.errors?.required && (name.dirty || name.touched)">
         Informe um nome para o contrato.
       </span>
+      <span class="caption status-danger" *ngIf="name.value && name.errors?.invalidFormat && (name.dirty || name.touched)">
+        O nome do contrato é inválido. Utilize pascal case.
+      </span>
     </form>
   </div>
 </div>

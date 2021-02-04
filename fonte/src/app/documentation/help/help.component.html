@@ -1,0 +1,10 @@
+<button nbButton
+  type="button"
+  *ngIf="url"
+  [ngClass]="{ 'absolute': position === 'absolute', 'right': orientation === 'right' }"
+  shape="round"
+  size="tiny"
+  (click)="openUrl()">
+  <nb-icon icon="question-mark-circle" pack="eva"></nb-icon>
+  Ajuda
+</button>

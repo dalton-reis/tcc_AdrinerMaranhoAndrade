@@ -17,7 +17,7 @@ class SmalgJavascriptCompiledScript implements CompiledScript {
   }
 
   execute(context: any): void {
-    this.executor.apply({ executionContext: context, aassertion: new SmalgJavascriptAssertion() });
+    this.executor.apply({ executionContext: context, assertion: new SmalgJavascriptAssertion() });
   }
 
 }

@@ -4,6 +4,7 @@ import { $id } from '../../core/cytoscape/cytoscape-utils';
 import { ElementTypes } from '../data-structure-types';
 import { ContainerLayoutHandler } from '../layout-handler/container-layout-handler';
 import { PrimitiveLayoutHandler } from '../layout-handler/primitive-layout-handler';
+import { SpeedHandler } from '../speed-handler';
 
 export class GetContainerSlotAction implements CytoscapeActionHandler {
 
@@ -17,7 +18,7 @@ export class GetContainerSlotAction implements CytoscapeActionHandler {
     const containerSlot = $id(cytoscape, `${id}_${index}`);
     containerSlot.addClass('selected');
     valueElement.addClass('selected');
-    await new Promise(resolve => setTimeout(() => resolve(), 1500));
+    await new Promise(resolve => setTimeout(() => resolve(), SpeedHandler.speed + 100));
     containerSlot.removeClass('selected');
     valueElement.removeClass('selected');
     if (valueElement.data('type') === ElementTypes.PRIMITIVE) {

@@ -1,5 +1,7 @@
 import { SmalgType } from './smalg-type';
 import { DataStructureAction } from '../../../../models/data-structure-action';
+import { SmalgPrimitive } from './smalg-primitive';
+import { isPrimitive } from '../../../../utils/js-utils';
 
 interface SmalgContainerProperties {
   size: number;
@@ -9,7 +11,7 @@ export class SmalgContainer extends SmalgType {
 
   static TYPE_DESCRIPTOR = 'smalg.js.container';
 
-  private container: SmalgType[] = [];
+  container: SmalgType[] = [];
 
   constructor(private properties: SmalgContainerProperties, private actions: ExecutionAction[]) {
     super();
@@ -28,8 +30,12 @@ export class SmalgContainer extends SmalgType {
     }
   }
 
-  set(index: number, value?: SmalgType) {
+  set(index: number, value?: SmalgType | string | boolean | number) {
     this.validateIndex(index);
+
+    if (isPrimitive(value)) {
+      value = new SmalgPrimitive(value, this.actions);
+    }
 
     value = value?.__reference__();
     this.actions.push({
@@ -46,7 +52,11 @@ export class SmalgContainer extends SmalgType {
     const params = { id: this.__getId__(), index, value: value?.__getId__() };
     this.actions.push({ type: DataStructureAction.GET_CONTAINER_SLOT, params });
 
-    return value;
+    return value?.__value__();
+  }
+
+  size() {
+    return this.properties.size;
   }
 
   private validateIndex(index: number) {
@@ -61,6 +71,41 @@ export class SmalgContainer extends SmalgType {
 
   __reference__(): SmalgType {
     return this;
+  }
+
+  __value__(): string | number | boolean | SmalgType {
+    return this;
+  }
+
+  toString(): string {
+    return JSON.stringify(this.container);
+  }
+
+  equals(another: any) {
+    if (!another) {
+      return false;
+    }
+    if (this === another) {
+      return true;
+    }
+    if (!another.typeDescriptor) {
+      return false;
+    }
+    if (this.typeDescriptor() !== another.typeDescriptor()) {
+      return false;
+    }
+    const anotherContainer = another as SmalgContainer;
+    if (this.container.length !== anotherContainer.container.length) {
+      return false;
+    }
+    for (let i = 0; i < this.container.length; i++) {
+      const element = this.container[i];
+      const anotherElement = anotherContainer.container[i];
+      if (!(element.equals ? element.equals(anotherElement) : element === anotherElement)) {
+        return false;
+      }
+    }
+    return true;
   }
 
 }

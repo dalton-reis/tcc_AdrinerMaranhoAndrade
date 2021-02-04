@@ -3,6 +3,7 @@ import { CytoscapeActionHandler } from '../../core/cytoscape/cytoscape-action-ha
 import { $id } from '../../core/cytoscape/cytoscape-utils';
 import { ElementTypes } from '../data-structure-types';
 import { PrimitiveLayoutHandler } from '../layout-handler/primitive-layout-handler';
+import { SpeedHandler } from '../speed-handler';
 
 export class GetObjAttrAction implements CytoscapeActionHandler {
 
@@ -17,7 +18,7 @@ export class GetObjAttrAction implements CytoscapeActionHandler {
       const valueElement = value && $id(cytoscape, value);
       objectAttr.addClass('selected');
       valueElement.addClass('selected');
-      await new Promise(resolve => setTimeout(() => resolve(), 1500));
+      await new Promise(resolve => setTimeout(() => resolve(), SpeedHandler.speed + 100));
       objectAttr.removeClass('selected');
       valueElement.removeClass('selected');
       if (valueElement.data('type') === ElementTypes.PRIMITIVE) {

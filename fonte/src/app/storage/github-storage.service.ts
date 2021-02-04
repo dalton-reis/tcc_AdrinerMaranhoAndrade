@@ -5,6 +5,7 @@ import { Problem } from '../models/problem/problem';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user';
 import { ProblemInfo } from '../models/problem/problem-info';
+import { NgControlStatus } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -22,14 +23,32 @@ export class GithubStorageService {
     const user = await this.userService.getUser();
     if (!user) throw Error('User not defined');
 
+    const owner = user.login;
+    const repo = this.SMALG_REPOSITORY_NAME;
+    const path = `smalg-problems/${problem.name}.${this.EXTENSION_TYPE}`;
+
     const githubApi = new Octokit({ auth: authData.token });
-    this.createRepositoryIfNotExists(user, githubApi);
+    let sha = null;
+    try {
+      const currentFileReponse = await githubApi.request('GET /repos/{owner}/{repo}/contents/{path}', {
+        owner,
+        repo,
+        path,
+      });
+      sha = currentFileReponse.data.sha;
+    } catch (err) {
+      sha = null;
+    }
+
+    await this.createRepositoryIfNotExists(user, githubApi);
+
     await githubApi.request('PUT /repos/{owner}/{repo}/contents/{path}', {
-      owner: user.login,
-      repo: this.SMALG_REPOSITORY_NAME,
-      path: `smalg-problems/${problem.name}.${this.EXTENSION_TYPE}`,
+      owner,
+      repo,
+      path,
       message: 'Smalg problem',
       content: btoa(JSON.stringify(problem)),
+      sha,
     });
 
     return null;
@@ -42,7 +61,9 @@ export class GithubStorageService {
         repo: this.SMALG_REPOSITORY_NAME,
       });
     } catch (err) {
-      if (err.status === 404) return await this.createRepository(githubApi);
+      if (err.status === 404) {
+        return await this.createRepository(githubApi);
+      }
       throw err;
     }
   }

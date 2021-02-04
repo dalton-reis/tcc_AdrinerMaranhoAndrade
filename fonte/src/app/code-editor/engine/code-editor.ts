@@ -8,6 +8,8 @@ export interface CodeEditor {
 
   getToolbar(): ToolbarItem[];
 
-  getValue(): string;
+  getValue(): Promise<string>;
+
+  setValue(value: string);
 
 }

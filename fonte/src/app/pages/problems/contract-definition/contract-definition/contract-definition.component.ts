@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NbToastrService, NbGlobalPhysicalPosition, NbComponentStatus } from '@nebular/theme';
 import { FieldContract, MethodContract, ClassContract } from '../../../../models/problem/problem-contract';
 import { Ng2SmartTableComponent } from 'ng2-smart-table';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { classValidator, validateMethodsAndFields, validateParameters } from '../../validators/problem-validators';
 
 @Component({
   selector: 'app-contract-definition',
@@ -11,6 +12,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 })
 export class ContractDefinitionComponent implements OnInit {
 
+  @Input() contractName: string;
   @Input() fields: FieldContract[];
   @Input() methods: MethodContract[];
 
@@ -106,13 +108,12 @@ export class ContractDefinitionComponent implements OnInit {
   constructor(
     private toastrService: NbToastrService,
     private formBuilder: FormBuilder,
-  ) {
-    this.contractDefinitionForm = this.formBuilder.group({
-      name: ['', Validators.required],
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.contractDefinitionForm = this.formBuilder.group({
+      name: [this.contractName || '', [Validators.required, classValidator('invalidFormat')]],
+    });
   }
 
   validateField(event) {
@@ -120,16 +121,26 @@ export class ContractDefinitionComponent implements OnInit {
     if (!name)  {
       event.confirm.reject();
       this.showValidationMessage('Atenção', 'O nome do campo é obrigatório.');
+    } else if (!validateMethodsAndFields(name)) {
+      event.confirm.reject();
+      this.showValidationMessage('Atenção', 'O nome do campo não possui um formato válido. Utilize camel case.');
     } else {
       event.confirm.resolve();
     }
   }
 
   validateMethod(event) {
-    const { name } = event.newData;
+    const { name, parameters } = event.newData;
     if (!name)  {
       event.confirm.reject();
       this.showValidationMessage('Atenção', 'O nome do método é obrigatório.');
+    } else if (!validateMethodsAndFields(name)) {
+      event.confirm.reject();
+      this.showValidationMessage('Atenção', 'O nome do método não possui um formato válido. Utilize camel case.');
+    } else if (!validateParameters(parameters)) {
+      event.confirm.reject();
+      this.showValidationMessage('Atenção',
+        'O formato dos parâmetros é inválido. Utilize camel case e separe-os por vírgula (,).');
     } else {
       event.confirm.resolve();
       this.tableErrors.methods.required = false;
@@ -160,7 +171,7 @@ export class ContractDefinitionComponent implements OnInit {
     const config = {
       status: type,
       destroyByClick: true,
-      duration: 3000,
+      duration: 5000,
       hasIcon: false,
       position: NbGlobalPhysicalPosition.TOP_RIGHT,
       preventDuplicates: true,

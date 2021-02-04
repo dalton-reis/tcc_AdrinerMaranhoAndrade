@@ -1,4 +1,4 @@
-import { ToolbarItem } from '../../../models/toolbar-item';
+import { ToolbarItem, ToolbarItemType } from '../../../models/toolbar-item';
 
 export class MonacoEditorToolbar {
 
@@ -7,8 +7,13 @@ export class MonacoEditorToolbar {
   static create(editorProvider: () => any): ToolbarItem[] {
     return [{
       id: 'executar',
+      type: ToolbarItemType.BUTTON,
       label: 'Executar',
-      action: (actionEmitter) => actionEmitter({ type: 'EXECUTE', params: { code: editorProvider().getValue() } }),
+      action: (actionEmitter) => {
+        editorProvider().then(editor => {
+          actionEmitter({ type: 'EXECUTE', params: { code: editor.getValue() } });
+        });
+      },
     }];
   }
 

@@ -18,16 +18,18 @@ import {
   NbDialogModule,
 } from '@nebular/theme';
 import { ProblemsListComponent } from './problems-list/problems-list.component';
-import { ProblemItemComponent } from './problems-list/problem-item/problem-item.component';
 import { FormsModule as ngFormsModule , ReactiveFormsModule as ngReactiveFormsModule } from '@angular/forms';
 import { ProblemExecutionComponent } from './problem-execution/problem-execution.component';
+import { LoginModule } from '../../auth/login.module';
+import { HelpModule } from '../../documentation/help/help.module';
+import { SelectFileModule } from '../../commom/select-file/select-file.module';
+import { ProblemItemModule } from '../problem-item/problem-item.module';
 
 @NgModule({
   declarations: [
     CodeExecutionComponent,
     ExecutionBarComponent,
     ProblemsListComponent,
-    ProblemItemComponent,
     ProblemExecutionComponent,
   ],
   imports: [
@@ -46,6 +48,10 @@ import { ProblemExecutionComponent } from './problem-execution/problem-execution
     NbAccordionModule,
     NbCardModule,
     NbDialogModule,
+    LoginModule,
+    HelpModule,
+    SelectFileModule,
+    ProblemItemModule,
   ],
   exports: [
     CodeExecutionComponent,

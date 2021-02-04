@@ -69,3 +69,10 @@
     border-color: #f7f9fc;
   }
 }
+
+.help-relative-wrapper {
+  position: relative;
+  // If padding not applied, help component doesn't stick on top. Bug??
+  padding-top: 1px;
+}
+

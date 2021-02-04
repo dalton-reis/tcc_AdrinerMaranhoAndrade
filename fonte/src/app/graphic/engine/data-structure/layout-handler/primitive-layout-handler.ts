@@ -2,7 +2,7 @@ import { CoreLayoutHandler } from './core-layout-handler';
 import { LayoutExecutor, LayoutExecutorContext as LayoutExecutorOptions } from './layout-executor';
 import { primitivesContainerBoundingBox } from './layout-utils';
 import { PrimitivesContainer } from '../global/primitives-container';
-import { $id } from '../../core/cytoscape/cytoscape-utils';
+import { $id, $remove } from '../../core/cytoscape/cytoscape-utils';
 
 export class PrimitiveLayoutHandler {
 
@@ -19,6 +19,12 @@ export class PrimitiveLayoutHandler {
     const primitivesContainer = $id(cytoscape, PrimitivesContainer.id);
     await this.coreLayoutHandler.moveToPosition(primitivesContainer.boundingBox(), primitiveElement, options);
     primitiveElement.move({ parent: primitivesContainer.id() });
+
+    const allPrimitives = primitivesContainer.descendants();
+    if (allPrimitives.length > 8) {
+      $remove(cytoscape, allPrimitives[0].data('id'));
+    }
+
     await this.adjustPrimitives(primitivesContainer);
   }
 

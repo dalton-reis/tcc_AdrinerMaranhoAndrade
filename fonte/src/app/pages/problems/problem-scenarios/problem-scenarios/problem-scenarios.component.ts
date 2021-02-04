@@ -16,13 +16,17 @@ export class ProblemScenariosComponent implements OnInit, OnChanges {
   @ViewChildren('codeEditor') codeEditors: QueryList<CodeEditorComponent>;
 
   @Input() contract: ClassContract;
+  @Input() preloadedScenarios: ProblemScenario[];
 
   scenarios: ProblemScenario[] = [];
+  selected = false;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.scenarios = this.preloadedScenarios || this.scenarios;
+  }
 
   addScenario() {
-    this.scenarios.push({ id: uuidV4(), name: 'Cenário', description: '', code: '' });
+    this.scenarios.push({ id: uuidV4(), name: 'Cenário', description: '', code: '// seu código aqui' });
   }
 
   removeScenario() {
@@ -35,6 +39,10 @@ export class ProblemScenariosComponent implements OnInit, OnChanges {
     }
   }
 
+  isSelected() {
+    this.resizeCodeEditor();
+  }
+
   resizeCodeEditor() {
     setTimeout(() => this.codeEditors?.forEach(codeEditor => codeEditor.resize()));
   }
@@ -43,11 +51,13 @@ export class ProblemScenariosComponent implements OnInit, OnChanges {
     return scenario.id;
   }
 
-  getScenarios(): Promise<ProblemScenario[]> {
-    const scenarios = this.scenarios.map(({ id, name, description }) => {
-      const code = this.codeEditors.find(codeEditor => codeEditor.uuid === id).getValue();
+  async getScenarios(): Promise<ProblemScenario[]> {
+    const scenariosAsync = this.scenarios.map(async ({ id, name, description }) => {
+      const code = await this.codeEditors.find(codeEditor => codeEditor.uuid === id).getValue();
       return { id, name, description, code };
     });
+
+    const scenarios = await Promise.all(scenariosAsync);
 
     if (!scenarios || scenarios.length === 0) {
       this.showValidationMessage(
@@ -57,10 +67,10 @@ export class ProblemScenariosComponent implements OnInit, OnChanges {
       return Promise.reject(new Error('Scenarios invalid.'));
     }
 
-    if (scenarios.find(scenario => !scenario.name || !scenario.code)) {
+    if (scenarios.find(scenario => !scenario.name || !scenario.description || !scenario.code)) {
       this.showValidationMessage(
         'Atenção',
-        'Alguns cenários estão inválidos. Verifique se todos possuem um nome e um código.',
+        'Alguns cenários estão inválidos. Verifique se todos possuem um nome, descrição e um código.',
       );
       return Promise.reject(new Error('Scenarios invalid.'));
     }
@@ -72,7 +82,7 @@ export class ProblemScenariosComponent implements OnInit, OnChanges {
     const config = {
       status: type,
       destroyByClick: true,
-      duration: 3000,
+      duration: 5000,
       hasIcon: false,
       position: NbGlobalPhysicalPosition.TOP_RIGHT,
       preventDuplicates: true,

@@ -14,6 +14,8 @@ import { DataScrutureEngineToolbar } from './data-structure-toolbar';
 import { stylesheet } from './data-structure-stylesheet';
 import { PrimitivesContainer } from './global/primitives-container';
 import { DataStructureEngineStates } from './data-structure-engine-states';
+import { DeleteElementAction } from './action-handler/delete-element-actions';
+import { SpeedHandler } from './speed-handler';
 
 export class DataStructureEngine implements GraphicEngine {
 
@@ -39,6 +41,7 @@ export class DataStructureEngine implements GraphicEngine {
     });
 
     this.toolbar = DataScrutureEngineToolbar.create(this);
+    SpeedHandler.defaultSpeed();
   }
 
   private registerActionHandlers() {
@@ -49,6 +52,7 @@ export class DataStructureEngine implements GraphicEngine {
     this.register(new GetObjAttrAction());
     this.register(new SetContainerSlotAction());
     this.register(new SetObjAttrAction());
+    this.register(new DeleteElementAction());
   }
 
   private register(actionHandler: CytoscapeActionHandler) {
@@ -69,6 +73,7 @@ export class DataStructureEngine implements GraphicEngine {
       this.cy.add(this.globalElements());
       this.executing = true;
       this.state.saveState(this.cy.elements());
+      this.center();
     }
     await actionHandler.handle(this.cy, action);
     this.state.saveState(this.cy.elements());

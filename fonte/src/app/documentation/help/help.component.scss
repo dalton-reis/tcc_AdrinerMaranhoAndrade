@@ -1,0 +1,13 @@
+.absolute {
+  position: absolute;
+  z-index: 99;
+}
+.right {
+  &.absolute {
+    left: calc(100% - 75px);
+  }
+  &:not(.absolute) {
+    float: right;
+  }
+}
+

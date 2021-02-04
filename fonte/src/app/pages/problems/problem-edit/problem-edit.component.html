@@ -1,0 +1,25 @@
+<nb-accordion *ngIf="!problem" [multi]="true" >
+  <nb-accordion-item>
+    <nb-accordion-item-header>
+      Meus problemas
+    </nb-accordion-item-header>
+    <nb-accordion-item-body [nbSpinner]="loading">
+      <app-login *ngIf="!loading && !loggedIn" message="Logue para visualizar seus problemas"></app-login>
+      <nb-list *ngIf="!loading && loggedIn">
+        <nb-list-item *ngFor="let problem of currentUserProblems">
+          <app-problem-item [problemInfo]="problem" (onSelect)="editProblem($event)"></app-problem-item>
+        </nb-list-item>
+      </nb-list>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+  <nb-accordion-item>
+    <nb-accordion-item-header>
+      Editar a partir de um arquivo
+    </nb-accordion-item-header>
+    <nb-accordion-item-body>
+      <app-select-file (onSelect)="fileSelected($event)"></app-select-file>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+</nb-accordion>
+
+<app-problem-definition *ngIf="problem" [problem]="problem"></app-problem-definition>

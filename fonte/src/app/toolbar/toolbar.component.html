@@ -1,7 +1,14 @@
 <div [ngClass]="collapse ? 'collapse' : 'row expand'" class="toolbar">
   <div [ngClass]="collapse ? '' : 'col-lg-12'">
     <div class="toolbar-button" *ngFor="let item of items; trackBy: itemId">
-      <button nbButton status="info" size="small" (click)="executeItem(item)">{{item.label}}</button>
+      <button *ngIf="item.type === 'BUTTON'" nbButton status="info" size="small" (click)="executeItem(item)">{{item.label}}</button>
+
+      <nb-select *ngIf="item.type === 'SELECT'"
+        size="small"
+        [placeholder]="item.label"
+        (selectedChange)="executeItem(item, $event)">
+          <nb-option *ngFor="let option of item.options" [value]="option.value">{{ option.label }}</nb-option>
+      </nb-select>
     </div>
   </div>
 </div>

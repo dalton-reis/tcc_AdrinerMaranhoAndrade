@@ -2,6 +2,8 @@ export const $unwrap = (collection: any) => collection[0];
 
 export const $id = (cytoscape: any, id: string) => $unwrap(cytoscape.$id(id));
 
+export const $remove = (cytoscape: any, id: string) => cytoscape.remove(`#${id}`);
+
 export const $addRelation = (cytoscape: any, source: any, target: any) => {
   const sourceId = source.id();
   const targetId = target.id();

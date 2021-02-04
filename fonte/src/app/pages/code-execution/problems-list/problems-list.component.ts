@@ -4,6 +4,7 @@ import { ProblemInfo } from '../../../models/problem/problem-info';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from '../../../user/user.service';
 import { ExecuteProblemService } from '../execute-problem.service';
+import { Problem } from '../../../models/problem/problem';
 
 @Component({
   selector: 'app-problems-list',
@@ -78,6 +79,10 @@ export class ProblemsListComponent implements OnInit {
 
   async fileSelected(file: File) {
     const problem = await this.problemsStorageService.load(file);
+    this.problemExecutionService.execute(problem);
+  }
+
+  executeProblem(problem: Problem) {
     this.problemExecutionService.execute(problem);
   }
 

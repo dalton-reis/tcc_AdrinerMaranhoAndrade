@@ -1,3 +1,5 @@
+import { SpeedHandler } from '../speed-handler';
+
 export interface LayoutExecutorContext {
 
   animate?: boolean;
@@ -14,7 +16,7 @@ export class LayoutExecutor {
     const {
       blockedElements = [],
       animate = true,
-      animationDuration = 1000,
+      animationDuration = SpeedHandler.speed,
     } = context;
     blockedElements.forEach(element => element.addClass('blocked'));
     return new Promise((resolve) => {

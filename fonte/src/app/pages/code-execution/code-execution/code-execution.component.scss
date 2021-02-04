@@ -49,3 +49,29 @@ $scenarioDetailWidth: 120px;
   height: 50vh;
   resize: none;
 }
+
+.perspective-container {
+  margin-left: 10px;
+  .corner-left {
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+  }
+  .middle {
+    border-radius: 0;
+  }
+  .corner-right {
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+  }
+  .selected {
+    background: #d6deea;
+    transition: none;
+    &:active, &:hover, &:focus {
+      background: #d6deea;
+    }
+  }
+}
+
+.hide {
+  display: none;
+}

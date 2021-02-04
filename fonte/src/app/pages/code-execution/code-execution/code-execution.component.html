@@ -7,10 +7,11 @@
           <nb-select
             id="selected-scenario"
             class="select-scenario"
-            [(selected)]="selectedScenario">
+            [(selected)]="selectedScenarioId"
+            (selectedChange)="open(scenarioDescriptionDialog)">
             <nb-option
               *ngFor="let scenario of scenarios; trackBy: scenarioId"
-              [value]="scenario"
+              [value]="scenario.id"
             >{{ scenario.name }}</nb-option>
           </nb-select>
           <button
@@ -25,12 +26,37 @@
             class="top-button"
             (click)="showSolution(solutionDialog)"
           >Solução</button>
+          <div *ngIf="selectedScenario" class="perspective-container">
+            <button nbButton
+              class="corner-left"
+              [ngClass]="{'selected': perspective === 'BOTH' }"
+              nbTooltip="Código e visualização"
+              (click)="updatePerspective('BOTH')">
+                <nb-icon icon="layout-outline" pack="eva"></nb-icon>
+            </button>
+            <button nbButton
+              class="middle"
+              [ngClass]="{'selected': perspective === 'ONLY_CODE' }"
+              nbTooltip="Somente código"
+              (click)="updatePerspective('ONLY_CODE')">
+                <nb-icon icon="code-outline" pack="eva"></nb-icon>
+              </button>
+            <button nbButton
+              class="corner-right"
+              [ngClass]="{'selected': perspective === 'ONLY_VISUALIZATION' }"
+              nbTooltip="Somente visualização"
+              (click)="updatePerspective('ONLY_VISUALIZATION')">
+                <nb-icon icon="eye-outline" pack="eva"></nb-icon>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <div class="row components-wrapper" *ngIf="selectedScenario">
-    <div class="col-sm-12 col-lg-6 code-editor-container">
+    <div
+      class="col-sm-12 code-editor-container"
+      [ngClass]="{'col-lg-6': perspective === 'BOTH', 'col-lg-12': perspective === 'ONLY_CODE', 'hide': perspective === 'ONLY_VISUALIZATION' }">
       <app-code-editor
         [type]="codeType"
         [hasError]="hasError"
@@ -40,7 +66,9 @@
         (action)="executeCodeEditorAction($event)"
       ></app-code-editor>
     </div>
-    <div class="col-sm-12 col-lg-6 graphic-container">
+    <div
+      class="col-sm-12 graphic-container"
+      [ngClass]="{'col-lg-6': perspective === 'BOTH', 'col-lg-12': perspective === 'ONLY_VISUALIZATION', 'hide': perspective === 'ONLY_CODE' }">
       <app-graphic
         (onLoad)="setGraphicEngine($event)"
       ></app-graphic>

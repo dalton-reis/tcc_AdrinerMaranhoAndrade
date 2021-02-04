@@ -36,6 +36,7 @@ export class CodeEditorComponent implements OnInit, AfterViewInit, OnDestroy, On
   @Input() errorContext: ErrorContext = null;
   @Input() config: any = null;
   @Input() showToolbar: boolean = false;
+  @Input() code: string;
   @Output() action = new EventEmitter<Action>();
 
   @ViewChild('codeEditorContainer') codeEditorContainer: ElementRef;
@@ -77,7 +78,7 @@ export class CodeEditorComponent implements OnInit, AfterViewInit, OnDestroy, On
     this.codeEditor?.resize();
   }
 
-  getValue(): string {
+  getValue(): Promise<string> {
     return this.codeEditor.getValue();
   }
 
@@ -107,6 +108,9 @@ export class CodeEditorComponent implements OnInit, AfterViewInit, OnDestroy, On
 
   private init() {
     this.codeEditorToolbar = this.codeEditor.getToolbar();
+    if (this.code) {
+      this.codeEditor.setValue(this.code);
+    }
   }
 
   ngOnDestroy(): void {

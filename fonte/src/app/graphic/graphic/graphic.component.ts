@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Input, AfterViewInit, ElementRef, Output,
 import { GraphicEngine } from '../engine/graphic-engine';
 import { GraphicEngineProvider } from '../engine/graphic-engine-provider';
 import { ToolbarItem } from '../../models/toolbar-item';
+import { SpeedHandler } from '../engine/data-structure/speed-handler';
 
 @Component({
   selector: 'app-graphic',

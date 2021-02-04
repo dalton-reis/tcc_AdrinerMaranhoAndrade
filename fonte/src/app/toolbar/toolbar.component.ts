@@ -4,7 +4,7 @@ import { Action } from '../models/toolbar-action';
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+  styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
 
@@ -21,8 +21,8 @@ export class ToolbarComponent implements OnInit {
     return toolbarItem.id;
   }
 
-  executeItem(toolbarItem: ToolbarItem) {
-    toolbarItem.action(action => this.action.emit(action));
+  executeItem(toolbarItem: ToolbarItem, params?: any) {
+    toolbarItem.action(action => this.action.emit(action), params);
   }
 
 }

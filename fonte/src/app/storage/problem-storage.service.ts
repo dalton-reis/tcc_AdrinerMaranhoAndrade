@@ -24,17 +24,29 @@ export class ProblemStorageService {
     return this.githubStorageService.save(authData, problem);
   }
 
+  async export(problem: Problem) {
+    return new Promise((resolve) => {
+      const element = document.createElement('a');
+      element.href = `data:text/plain;charset=utf-8,${JSON.stringify(problem)}`;
+      element.setAttribute('download', `${problem.name}.smgplt`);
+      element.style.display = 'none';
+      element.addEventListener('load', resolve);
+      document.body.appendChild(element);
+      element.click();
+    });
+  }
+
   async load(problemSource: string | File): Promise<Problem> {
-    const authData = this.authService.getData();
-    if (!authData) {
-      throw Error('Not authenticated');
-    }
     return await (typeof problemSource === 'string' ?
       this.loadFromUrl(problemSource) :
       this.readFromFile(problemSource));
   }
 
   private async loadFromUrl(url: string): Promise<Problem> {
+    const authData = this.authService.getData();
+    if (!authData) {
+      throw Error('Not authenticated');
+    }
     // @ts-ignore-start
     return this.http.get <Problem>(url, { responseType: 'arraybuffer' })
     // @ts-ignore-end

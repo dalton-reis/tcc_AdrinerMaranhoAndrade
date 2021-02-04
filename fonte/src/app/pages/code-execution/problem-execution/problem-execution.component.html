@@ -8,7 +8,7 @@
         Descrição
       </nb-accordion-item-header>
       <nb-accordion-item-body>
-        <div [innerHTML]="problem.description"></div>
+        <div class="problem-description-container" [innerHTML]="problem.description"></div>
       </nb-accordion-item-body>
     </nb-accordion-item>
     <nb-accordion-item [expanded]="true">
@@ -16,11 +16,14 @@
         Código
       </nb-accordion-item-header>
       <nb-accordion-item-body>
-        <app-code-execution
-          [contract]="problem.classContract"
-          [scenarios]="problem.scenarios"
-          [solution]="problem.solution"
-        ></app-code-execution>
+        <div class="help-relative-wrapper">
+          <app-help section="problemExecution" orientation="right" position="absolute"></app-help>
+          <app-code-execution
+            [contract]="problem.classContract"
+            [scenarios]="problem.scenarios"
+            [solution]="problem.solution"
+          ></app-code-execution>
+        </div>
       </nb-accordion-item-body>
     </nb-accordion-item>
   </nb-accordion>

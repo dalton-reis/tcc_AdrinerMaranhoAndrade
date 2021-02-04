@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NbStepperComponent, NbToastrService } from '@nebular/theme';
+import { NbStepperComponent, NbToastrService, NbDialogService } from '@nebular/theme';
 import { ClassContract } from '../../../../models/problem/problem-contract';
 import {
   ContractDefinitionComponent,
@@ -11,6 +11,7 @@ import { v4 as uuidV4 } from 'uuid';
 import { ProblemStorageService } from '../../../../storage/problem-storage.service';
 import { UserService } from '../../../../user/user.service';
 import { Router } from '@angular/router';
+import { Problem } from '../../../../models/problem/problem';
 
 @Component({
   selector: 'app-problem-definition',
@@ -19,7 +20,11 @@ import { Router } from '@angular/router';
 })
 export class ProblemDefinitionComponent implements OnInit {
 
+  @Input() problem: Problem;
+
   @ViewChild(NbStepperComponent) stepper: NbStepperComponent;
+  @ViewChild(ProblemScenariosComponent) scenariosComponent: ProblemScenariosComponent;
+  @ViewChild('problemSolution') problemSolutionCodeComponent: CodeExecutionComponent;
 
   descriptionForm: FormGroup;
   classContract: ClassContract;
@@ -34,21 +39,22 @@ export class ProblemDefinitionComponent implements OnInit {
     private toastrService: NbToastrService,
     private userService: UserService,
     private router: Router,
-  ) {
+    private dialogService: NbDialogService,
+  ) {}
+
+  ngOnInit(): void {
     this.descriptionForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
+      name: [this.problem?.name || '', Validators.required],
+      description: [this.problem?.description || '', Validators.required],
     });
-    this.classContract = {
+    this.classContract = this.problem?.classContract || ({
       name: '',
       fields: [],
       methods: [],
-    };
-    this.scenarios = [];
-    this.solution = '';
-  }
+    });
+    this.scenarios = this.problem?.scenarios || [];
+    this.solution = this.problem?.solution || '';
 
-  ngOnInit(): void {
     this.userService.getUser()
       .then(user => this.loggedIn = Boolean(user))
       .catch(() => this.loggedIn = false)
@@ -66,7 +72,10 @@ export class ProblemDefinitionComponent implements OnInit {
   saveProblemContract(contractDefinition: ContractDefinitionComponent) {
     contractDefinition.getData().then(contract => {
       this.classContract = contract;
-      setTimeout(() => this.stepper.next());
+      setTimeout(() => {
+        this.stepper.next();
+        this.scenariosComponent.isSelected();
+      });
     });
   }
 
@@ -77,14 +86,18 @@ export class ProblemDefinitionComponent implements OnInit {
     });
   }
 
-  saveProblemSolution(codeExecution: CodeExecutionComponent) {
-    codeExecution.getCode().then(code => {
+  proceedSave(type: string) {
+    this.problemSolutionCodeComponent.getCode().then(code => {
       this.solution = code;
-      this.saveProblem();
+      this.saveProblem(type);
     });
   }
 
-  saveProblem() {
+  confirmSaveProblem(dialog: TemplateRef<any>) {
+    this.dialogService.open(dialog, { autoFocus: false });
+  }
+
+  saveProblem(type: string) {
     const problem = {
       id: uuidV4(),
       name: this.name.value,
@@ -92,13 +105,18 @@ export class ProblemDefinitionComponent implements OnInit {
       classContract: this.classContract,
       scenarios: this.scenarios,
       solution: this.solution,
-    };
-    this.problemStorageService.save(problem)
-      .then(() => {
-        this.toastrService.success('Salvo com sucesso.');
-        this.router.navigate(['pages', 'code-execution']);
-      })
-      .catch(() => this.toastrService.danger('Erro ao salvar.'));
+    } as Problem;
+
+    if (type === 'persist') {
+      this.problemStorageService.save(problem)
+        .then(() => {
+          this.toastrService.success('Salvo com sucesso.');
+          this.router.navigate(['pages', 'code-execution']);
+        })
+        .catch(() => this.toastrService.danger('Erro ao salvar.'));
+    } else if (type === 'export') {
+      this.problemStorageService.export(problem);
+    }
   }
 
   get name() {

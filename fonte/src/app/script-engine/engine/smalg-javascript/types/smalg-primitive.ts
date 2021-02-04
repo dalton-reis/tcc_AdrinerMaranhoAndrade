@@ -1,5 +1,6 @@
 import { SmalgType } from './smalg-type';
 import { DataStructureAction } from '../../../../models/data-structure-action';
+import { isPrimitive } from '../../../../utils/js-utils';
 
 const ALLOWED_TYPES = ['string', 'boolean', 'number'];
 
@@ -15,6 +16,8 @@ export class SmalgPrimitive extends SmalgType {
     copiedFrom?: SmalgPrimitive,
   ) {
     super();
+    if (!isPrimitive(value)) throw Error(`Invalid primitve value: ${value}`);
+
     this.type = this.getType(value);
     actions.push({
       type: DataStructureAction.CREATE_PRIMITIVE,
@@ -35,6 +38,17 @@ export class SmalgPrimitive extends SmalgType {
     throw Error('not.allowed.type');
   }
 
+  equals(another: any): boolean {
+    if (!another) {
+      return false;
+    }
+    if (!another.typeDescriptor) {
+      return this.value === another;
+    }
+    const anotherPrimitive = another as SmalgPrimitive;
+    return this.value === anotherPrimitive.value;
+  }
+
   getValue(): string | number | boolean {
     return this.value;
   }
@@ -45,6 +59,14 @@ export class SmalgPrimitive extends SmalgType {
 
   __reference__(): SmalgType {
     return new SmalgPrimitive(this.value, this.actions, this);
+  }
+
+  __value__(): SmalgType | boolean | string | number {
+    return this.value;
+  }
+
+  toString(): string {
+    return this.value + '';
   }
 
 }

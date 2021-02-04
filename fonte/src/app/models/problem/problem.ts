@@ -7,5 +7,6 @@ export interface Problem {
   description: string;
   classContract: ClassContract;
   scenarios: ProblemScenario[];
+  solution: string;
 
 }

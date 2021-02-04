@@ -27,8 +27,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  loggedUserMenu = [ { title: 'Log out', icon: 'log-out-outline' } ];
-  anonymousUserMeny = [ { title: 'Log in', icon: 'github-outline' } ];
+  loggedUserMenu = [ { title: 'Desconectar', icon: 'log-out-outline' } ];
+  anonymousUserMeny = [ { title: 'Conectar', icon: 'github-outline' } ];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -71,7 +71,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         filter(({ tag }) => tag === 'logged-context-menu'),
         map(({ item: { title } }) => title),
       ).subscribe(title => {
-        if (title === 'Log out') {
+        if (title === 'Desconectar') {
           this.authService.logout();
           this.user = null;
         }
@@ -82,7 +82,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         filter(({ tag }) => tag === 'not-logged-context-menu'),
         map(({ item: { title } }) => title),
       ).subscribe(title => {
-        if (title === 'Log in') {
+        if (title === 'Conectar') {
           this.authService.requestAuthorization();
         }
       });

@@ -8,7 +8,7 @@ export class ContainerLayoutHandler {
   private layoutExecutor = new LayoutExecutor();
 
   async setInitialPosition(containerElement) {
-    await this.coreLayoutHandler.moveToPosition({ x1: 500, y1: 20, x2: 700, y2: 200 }, containerElement, {
+    await this.coreLayoutHandler.moveToPosition({ x1: 200, y1: 0, x2: 250, y2: 50 }, containerElement, {
       animate: false,
     });
   }
