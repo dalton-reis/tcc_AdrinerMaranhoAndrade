@@ -1,0 +1,34 @@
+INSTRUÇÃO DE INSTALAÇÃO E EXECUÇÃO
+
+O sistema desenvolvido foi uma aplicação web client side em  Angular 9+.
+
+Para rodar o sistema é necessário:
+
+- NodeJS versão >= 10.0.0
+- NPM (Node Package Manager) versão >= 6.0.0
+
+Para mais informações acesse: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+
+Após instalar o NodeJS e o NPM, basta acessar a pasta root do projeto, onde está o arquivo "package.json" e executar o comando no prompt "npm i".
+	- Esse comando irá instalar as dependências necessárias para executar o sistema.
+	
+Após instalar as depenências, execute o comando "npm start" para iniciar a aplicação.
+
+INTEGRAÇÃO COM O GITHUB
+
+Para funcionar a integração com o Github será necessário criar um OAuthApp conforme documentação abaixo na sua conta do Github:
+
+https://docs.github.com/en/developers/apps/creating-an-oauth-app
+
+Na pasta "aws-lambdas" estão duas lambdas que foram criadas para realizar a autenticação. Nelas terá que ser configurado como variável de ambiente o "GITHUB_CLIENT_ID" e o "GITHUB_CLIENT_SECRET" do seu OAuthApp.
+Como o nome já diz, essas variáveis se referem ao client id e a secret que somente você terá acesso.
+
+- A lambda "githubAuthorizeUrl-lambda.js" tem como objetivo encapsular a url de autorização do github encapsulando o client id.
+- A lambda "githubAuth-lambda.js" por sua vez, tem como objetivo realizar todo o processo de autenticação.
+
+Caso precisar de maiores informações, consulte: https://docs.aws.amazon.com/lambda/index.html.
+
+PONTOS A SE ATENTAR:
+
+- Não tente rodar a aplicação no Internet Explorer. Este navegador não é suportado.
+- A integração com o Github não funcionará enquanto não for criada a sua lambda e os seus ids de aplicação. Será necessário atualizar o código para apontar para as novas lambdas criadas.
